@@ -1,0 +1,29 @@
+{
+  "fragments": [
+    "現在のアストルティア防衛軍は「",
+    "KEY__currentDisplay",
+    "」に攻められています！\nあと",
+    "KEY__remain",
+    "で「",
+    "KEY__nextDisplay",
+    "」が攻めてきます！"
+  ],
+  "schedule": [
+    {
+      "display": "闇朱の獣牙兵団",
+      "duration": 120
+    },
+    {
+      "display": "紫炎の鉄機兵団",
+      "duration": 120
+    },
+    {
+      "display": "真碧の造魔兵団",
+      "duration": 120
+    },
+    {
+      "display": "ランダム軍団",
+      "duration": 60
+    }
+  ]
+}

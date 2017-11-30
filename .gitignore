@@ -1,0 +1,12 @@
+# ignore node modules.
+node_modules/
+
+# ignore saved token.
+.env
+
+# ignore transpiled.
+lib/*
+
+# ignore package-lock
+package-lock.json
+
