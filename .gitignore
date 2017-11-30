@@ -10,3 +10,5 @@ lib/*
 # ignore package-lock
 package-lock.json
 
+# ignore file for test drive
+nohup.out
