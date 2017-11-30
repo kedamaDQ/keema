@@ -4,7 +4,7 @@ Mastodon bot in foresdon.jp.
 ## install nvm and node.js v8.9.x
 `curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.6/install.sh | bash`
 
-`exit` and re-log in again to apply the environment variable.
+`exit` and re-login again to apply the environment variable.
 
 `nvm install lts/carbon`
 
