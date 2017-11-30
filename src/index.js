@@ -98,7 +98,7 @@ const getEnv = async () => {
 };
 
 getEnv()
-.catch((err) => { throw e })
+.catch((err) => { throw err })
 .then((env) => {
   if (opts.get('d') && opts.get('o')) {
     console.error("Options 'd' and 'o' are exclusive.");
