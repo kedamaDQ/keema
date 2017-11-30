@@ -88,7 +88,7 @@ const getEnv = async () => {
     console.info('Since .env found, will loading.');
     return JSON.parse(json);
   } catch (e) {
-    if (e.errno === -4058) {
+    if (e.code === 'ENOENT') {
       console.info('Since .env not found, will create.');
       return createEnv();
     } else {
