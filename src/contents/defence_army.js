@@ -1,6 +1,8 @@
 import ContentBase from './content_base';
 
 const CONFIG = 'defence_army.json';
+const START_TIME_OFFSET = (1000 * 60 * 60 * 6);  // 6 hours.
+
 const fs = require('fs');
 
 export default class DefenceArmy extends ContentBase {
@@ -20,7 +22,8 @@ export default class DefenceArmy extends ContentBase {
   }
 
   minutesOfWeek() {
-    return (this.now.getDay() * 24 * 60) + (this.now.getHours() * 60) + this.now.getMinutes();
+    const offsetted = new Date(this.now.getTime() + START_TIME_OFFSET);
+    return (offsetted.getDay() * 24 * 60) + (offsetted.getHours() * 60) + offsetted.getMinutes();
   }
 
   readableMinutes(minutes) {
