@@ -1,6 +1,19 @@
+const fs = require('fs');
+
 const JST_OFFSET = 1000 * 60 * 60 * 9;
 
 export default class ContentBase {
+
+  constructor(config) {
+    this.json = (config) ?
+      JSON.parse(fs.readFileSync(`${this.configDir()}/${config}`, {encoding: 'utf8'})) :
+      null;
+  }
+
+  config() {
+    return this.json;
+  }
+
   configDir() {
     return (__dirname + '/../../config');
   }
