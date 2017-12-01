@@ -1,0 +1,27 @@
+{
+  "start_date": "2017/12/01",
+  "fragments": [
+    "本日の常闇の聖戦は……",
+    " :m_slime: ", "KEY__regnadDisplay", ": ", "KEY__regnadLevel",
+    " :m_slime: ", "KEY__darkkingDisplay", ": ", "KEY__darkkingLevel",
+    " :m_slime: ", "KEY__medbDisplay", ": ", "KEY__medbLevel",
+    "……です！"
+  ],
+  "greek_numbers": [
+    "Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ"
+  ],
+  "enemies": {
+    "regnad": {
+      "display": "レグナード",
+      "offset": 0
+    },
+    "darkking": {
+      "display": "ダークキング",
+      "offset": 2
+    },
+    "medb": {
+      "display": "海冥主メイヴ",
+      "offset": 3
+    }
+  }
+}
