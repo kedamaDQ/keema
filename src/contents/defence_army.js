@@ -3,22 +3,15 @@ import ContentBase from './content_base';
 const CONFIG = 'defence_army.json';
 const START_TIME_OFFSET = (1000 * 60 * 60 * 6);  // 6 hours.
 
-const fs = require('fs');
-
 export default class DefenceArmy extends ContentBase {
   constructor(now = null) {
-    super();
-    const json = JSON.parse(fs.readFileSync(`${this.configDir()}/${CONFIG}`, {encoding: 'utf8'}));
-    this.fragments = json.fragments;
-    this.schedule = json.schedule;
+    super(CONFIG);
+    this.fragments = this.config().fragments;
+    this.schedule = this.config().schedule;
     this.cycle = this.schedule.reduce((acc, value) => {
       return acc + value.duration;
     }, 0);
-    if (now) {
-      this.now = now;
-    } else {
-      this.now = this.jst();
-    }
+    this.now = (now) ? now : this.jst();
   }
 
   minutesOfWeek() {
