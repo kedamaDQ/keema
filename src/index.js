@@ -86,7 +86,7 @@ const createEnv = () => {
     });
 }
 
-const loadEnv = () => {
+const loadEnv = async () => {
   try {
     const json = fs.readFileSync(ENV_FILE, {encoding: 'utf8'});
     console.info('Since .env found, will loading.');
