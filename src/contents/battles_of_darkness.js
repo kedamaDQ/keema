@@ -1,35 +1,50 @@
 import ContentBase from './content_base';
 
-const CONFIG = 'battle_of_darkness.json';
-const START_TIME_OFFSET = 1000 * 60 * 60 * 6; // 6 hours.
+const CONFIG = 'battles_of_darkness.json';
 
 export default class BattlesOfDarkness extends ContentBase {
 
   constructor(now) {
     super(CONFIG);
     this.now = (now) ? now : this.jst();
-    this.startDate = new Date(this.config().startDate);
+    this.startDate = new Date(this.config().start_date);
     this.enemies = this.config().enemies;
     this.greekNumbers = this.config().greek_numbers;
   }
 
   elapsedDays() {
-    const offsetted = new Date(this.now.getTime() - START_TIME_OFFSET);
-    return Math.floor((this.now - offsetted) / 1000 / 60 / 60 / 24);
+    return Math.floor((this.now - this.startDate) / 1000 / 60 / 60 / 24);
   }
 
-  currentFillings() {
+  currentLevel(offset) {
+    return this.greekNumbers[
+      (this.elapsedDays() + offset) % this.greekNumbers.length
+    ];
+  }
+
+  currentFillings(key) {
     const fillings = {};
-    Object.keys(this.enemies).forEach((key) => {
-      const enemy = this.enemies[key];
-      fillings[`${key}Level`] = this.greekNumbers[
-        (this.elapsedDays() + enemy.offset) % this.enemies.length
-      ];
-      fillings[`${key}Display`] = enemy.display;
-    });
+    if (key) {
+      this.enemies.find((enemy) => {
+        if (enemy.key === key) {
+          fillings['name'] = enemy.name;
+          fillings['level'] = this.currentLevel(enemy.offset);
+          return true;
+        }
+        return false;
+      });
+    } else {
+      this.enemies.forEach((enemy) => {
+        fillings[`${enemy.key}Level`] = this.currentLevel(enemy.offset);
+        fillings[`${enemy.key}Display`] = enemy.display;
+      });
+    }
+    return fillings;
   }
 
-  getMessage() {
-    return this.buildMessage(this.config().flagments, this.currentFillings())
+  getMessage(key = null) {
+    return this.buildMessage(
+      (key) ? this.config().fragments_single : this.config().fragments,
+      this.currentFillings(key))
   }
 }
