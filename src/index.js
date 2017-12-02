@@ -2,16 +2,14 @@ import Readline from 'readline';
 import Mastodon from 'mastodon-api';
 
 import KeemaDaemon from './keema_daemon';
-//import DefenceArmy from './contents/defence_army';
 
 // Settings
-const CONF_FILE='./.env';
+const ENV_FILE='./.env';
+const API_PATH = '/api/v1';
+const APPS_PATH = `${API_PATH}/apps`
 
-const BASE_URL = 'https://st.foresdon.jp';
-const API_URL = `${BASE_URL}/api/v1`;
-const APPS_URL = `${API_URL}/apps`
-
-const CLIENT_NAME = 'ting-a-ling';
+const DEF_INSTANCE_URL = 'https://st.foresdon.jp';
+const DEF_CLIENT_APP_NAME = 'bot';
 
 // Command-line options
 const opts = require('opts');
@@ -35,56 +33,62 @@ opts.parse(options, true);
 
 const fs = require('fs');
 
-// Run at first boot only.
-const createEnv = () => {
-  const save = {
-    api_url: API_URL,
-  };
-
-  return Mastodon.createOAuthApp(APPS_URL, CLIENT_NAME, 'read write')
-  .catch((err) => console.error(err))
-  .then((res) => {
-    save.id = res.id;
-    save.client_id = res.client_id;
-    save.client_secret = res.client_secret;
-
-    console.info(`id           : ${save.id}`);
-    console.info(`client_id    : ${save.client_id}`);
-    console.info(`client_secret: ${save.client_secret}`);
-
-    return Mastodon.getAuthorizationUrl(res.client_id, res.client_secret, BASE_URL, 'read write');
-  })
-  .then((url) => {
-    const rl = new Readline.createInterface({
+const getConsoleInput = (question) => {
+  return new Promise((resolve) => {
+    const rl = Readline.createInterface({
       input: process.stdin,
-      output: process.stdout,
+      output: process.stdout
     });
-
-    return new Promise((resolve) => {
-      console.info('Open the following url and authorize this app with account that is bot.');
-      console.info(`url: ${url}`);
-      rl.question(`Enter the published code from website: `, (code) => {
-        resolve(code);
-        rl.close();
-      })
-    })
-  })
-  .then((code) => {
-    return Mastodon.getAccessToken(save.client_id, save.client_secret, code, BASE_URL);
-  })
-  .catch((err) => { throw err; })
-  .then((access_token) => {
-    save.access_token = access_token;
-    console.info(`access_token : ${save.access_token}`);
-
-    fs.writeFileSync(CONF_FILE, JSON.stringify(save));
-    return save;
+    rl.question(question, (line) => {
+      resolve(line);
+      rl.close();
+    });
   });
 };
 
-const getEnv = async () => {
+// Run at first boot only.
+const createEnv = () => {
+  const save = {};
+
+  return getConsoleInput(`Enter the instance url (${DEF_INSTANCE_URL}) : `)
+    .then((url) => {
+      save.base_url = (url) ? url.replace(/\/$/, '') : DEF_INSTANCE_URL;
+      save.api_url = save.base_url + API_PATH;
+      save.apps_url = save.base_url + APPS_PATH;
+      return getConsoleInput(`Enter the client app name (${DEF_CLIENT_APP_NAME}) : `);
+    })
+    .then((clientName) => {
+      save.client_name = (clientName) ? clientName : DEF_CIENT_APP_NAME;
+      return Mastodon.createOAuthApp(save.apps_url, save.client_name, 'read write');
+    })
+    .catch((e) => { throw e; })
+    .then ((res) => {
+      save.id = res.id;
+      save.client_id = res.client_id;
+      save.client_secret = res.client_secret;
+
+      return Mastodon.getAuthorizationUrl(save.client_id, save.client_secret, save.base_url, 'read write');
+    })
+    .then((url) => {
+      console.info('Open the following url and authorize this app with account that is bot.');
+      console.info(`url: ${url}`);
+      return getConsoleInput(`Enter the published code from website: `);
+    })
+    .then((code) => {
+      return Mastodon.getAccessToken(save.client_id, save.client_secret, code, save.base_url);
+    })
+    .catch((e) => { throw e; })
+    .then((accessToken) => {
+      save.access_token = accessToken;
+      fs.writeFileSync(ENV_FILE, JSON.stringify(save));
+
+      return save;
+    });
+}
+
+const loadEnv = () => {
   try {
-    const json = fs.readFileSync(CONF_FILE, {encoding: 'utf8'});
+    const json = fs.readFileSync(ENV_FILE, {encoding: 'utf8'});
     console.info('Since .env found, will loading.');
     return JSON.parse(json);
   } catch (e) {
@@ -97,9 +101,9 @@ const getEnv = async () => {
   }
 };
 
-getEnv()
-.catch((err) => { throw err })
-.then((env) => {
+loadEnv()
+  .catch((e) => { throw e })
+  .then((env) => {
   if (opts.get('d') && opts.get('o')) {
     console.error("Options 'd' and 'o' are exclusive.");
     opts.help();
@@ -112,4 +116,5 @@ getEnv()
     opts.help();
     process.exit(0);
   }
+
 });

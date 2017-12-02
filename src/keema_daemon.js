@@ -1,4 +1,5 @@
 import Mastodon from 'mastodon-api';
+
 import DefenceArmy from './contents/defence_army';
 import BattlesOfDarkness from './contents/battles_of_darkness';
 
@@ -51,7 +52,6 @@ export default class KeemaDaemon {
   buildReplyMessage(content) {
     const replyContent = [];
 
-//    if (REGEXP_DEFENCE_ARMY.test(content)) {
     if (content.search(REGEXP_DEFENCE_ARMY) !== -1) {
       replyContent.push({
         pos: content.search(REGEXP_DEFENCE_ARMY),
@@ -107,7 +107,6 @@ export default class KeemaDaemon {
 
     this.M.post(POST_URL, postData)
     .catch((e) => {
-      console.error(e);
       throw e;
     })
     .then((resp) => {
