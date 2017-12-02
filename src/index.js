@@ -80,7 +80,7 @@ const createEnv = () => {
     .catch((e) => { throw e; })
     .then((accessToken) => {
       save.access_token = accessToken;
-      fs.writeFileSync(ENV_FILE, JSON.stringify(save));
+      fs.writeFileSync(ENV_FILE, JSON.stringify(save) + '\n');
 
       return save;
     });
