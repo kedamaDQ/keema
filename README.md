@@ -15,10 +15,6 @@ Mastodon bot in foresdon.jp.
 
 `npm install`
 
-`vi src/index.js`
-
-change BASE\_URL.
-
 `npm run transpile-es2015`
 
 `node lib/index.js -d`
