@@ -1,0 +1,71 @@
+{
+  "start_date": "2017-11-16-06:00:00.000Z",
+  "reset_dates": [10, 25],
+  "fragments": {
+    "short": [
+      "本日の邪神の宮殿は ",
+      "KEY__display",
+      " です！"
+    ],
+    "full": [
+      "本日の邪神の宮殿は ",
+      "KEY__display",
+      " です！\n",
+      " 相手は",
+      "KEY__members",
+      "、あると良い耐性は ",
+      "KEY__tolerrances",
+      " です！"
+    ],
+    "first_day": [
+      "邪神の宮殿は本日から ",
+      "KEY__display",
+      " です！\n",
+      " 相手は",
+      "KEY__members",
+      "、あると良い耐性は ",
+      "KEY__tolerrances",
+      " です！"
+    ],
+    "last_day": [
+      "邪神の宮殿 ",
+      "KEY__display",
+      " は本日までです！\n",
+      "明日からは ",
+      "KEY__next_display",
+      " が始まります！"
+    ]
+  },
+  "enemies": [
+    {
+      "display": "だれかさんず",
+      "members": [
+        "だれか",
+        "だれか"
+      ],
+      "tolerance": {
+        "sepalated": false,
+        "tolerances": [
+          "なにか"
+        ]
+      }
+    },
+    {
+      "display": "だれかさんず",
+      "members": [
+        "だれか",
+        "だれか"
+      ],
+      "tolerance": {
+        "sepalated": true,
+        "tolerances": [
+          ["", ""],
+          ["", ""],
+          ["", ""],
+          ["", ""]
+        ]
+      }
+    }
+
+  ]
+}
