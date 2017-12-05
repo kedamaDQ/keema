@@ -1,7 +1,7 @@
 export const SECOND = 1000;
 export const MINUTE = SECOND * 60;
 export const HOUR = MINUTE * 60;
-export const DATE = HOUR * 24;
+export const DAY = HOUR * 24;
 export const WEEK = DAY * 7;
 
 export const elapsedMonths = (fromDate, toDate) => {
@@ -20,10 +20,10 @@ export const isEndOfMonth = (date) => {
   return (new Date(date.getTime() + DAY).getMonth() !== date.getMonth());
 }
 
-export const isStartOfPeriod = (date, resetDates) => {
-  return resetDates.some((d) => {
+export const isStartOfPeriod = (date, resetDays) => {
+  return resetDays.some((d) => {
     if (d === -1) {
-      return (lastDateOfMonth(date) === date.getDate());
+      return (lastDayOfMonth(date) === date.getDate());
     } else {
       return (d === date.getDate());
     }
@@ -33,16 +33,16 @@ export const isStartOfPeriod = (date, resetDates) => {
 export const isEndOfPeriod = (date, resetDates) => {
   return resetDates.some((d) => {
     if (d === -1) {
-      return (lastDateOfMonth(date) - 1 === date.getDate());
+      return (lastDayOfMonth(date) - 1 === date.getDate());
     } else if (d === 1) {
-      return (lastDateOfMonth(date) === date.getDate());
+      return (lastDayOfMonth(date) === date.getDate());
     } else {
       return ((d - 1) === date.getDate());
     }
   });
 }
 
-export const lastDateOfMonth = (date) => {
+export const lastDayOfMonth = (date) => {
   return new Date(
     new Date(date.getFullYear(), date.getMonth() + 1, 1).getTime() - DAY
   ).getDate();

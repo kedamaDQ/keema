@@ -1,32 +1,49 @@
 import ContentBase from './content_base';
 import {
-  elapsedMonths
+  elapsedMonths,
+  isStartOfPeriod,
+  isEndOfPeriod,
 } from '../utils/date_utils';
 
 const CONFIG = 'palace_of_devils.json';
+
+export const PERIODIC = 'PERIODIC';
+export const FULL = 'FULL';
 
 export default class PalaceOfDevils extends ContentBase {
 
   constructor(now) {
     super(CONFIG);
-    this.startDate = new Date(this.config().start_date);
-    this.resetDates = this.config().reset_dates;
+    this.startDate = new Date(
+      this.config().start_date.year,
+      this.config().start_date.month,
+      this.config().start_date.day
+    );
+    this.resetDays = this.config().reset_days;
     this.fragments = this.config().fragments;
     this.enemies = this.config().enemies;
     this.now = (now) ? now : this.jst();
   }
 
-  currentEnemyIndex() {
-    if (this.now.date >= this.resetDates[this.resetDates.length - 1]) {
-      // last part of the month.
-      return (elapsedMonths() + 1) * this.resetDates.length;
-    } else {
+  elapsedEnemyIndex() {
+    const startOffset = this.resetDays.findIndex((resetDay) => {
+      return (this.startDate.getDate() < resetDay);
+    });
+
+    if (this.now.getDate() < this.resetDays[this.resetDays.length - 1]) {
       // first or middle part of the month.
-      const partOfMonth = this.resetDates.findIndex((resetDay) => {
-        return (this.now.date >= resetDay);
+      const partOfMonth = this.resetDays.findIndex((resetDay) => {
+        return (this.now.getDate() < resetDay);
       });
-      return elapsedMonths() * this.resetDates.length + partOfMonth;
+      return elapsedMonths(this.startDate, this.now) * this.resetDays.length + partOfMonth - startOffset;
+    } else {
+      // last part of the month.
+      return (elapsedMonths(this.startDate, this.now) + 1) * this.resetDays.length - startOffset;
     }
+  }
+
+  currentEnemyIndex() {
+    return this.elapsedEnemyIndex() % this.enemies.length;
   }
 
   nextEnemyIndex() {
@@ -53,7 +70,16 @@ export default class PalaceOfDevils extends ContentBase {
     };
   }
 
-  getMessage() {
-
+  getMessage(key = null) {
+    if (key === FULL) {
+      return this.buildMessage(this.fragments.full, this.currentFillings());
+    } else {
+      return this.buildMessage(
+        (isStartOfPeriod(this.now, this.resetDays)) ? this.fragments.first_day :
+        (isEndOfPeriod(this.now, this.resetDays)) ? this.fragments.last_day :
+        this.fragments.short,
+        this.currentFillings()
+      );
+    }
   }
 }
