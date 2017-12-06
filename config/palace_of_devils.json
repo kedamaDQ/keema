@@ -2,8 +2,8 @@
   "start_date": {
     "comment": "/* month starts with 0. */",
     "year": 2017,
-    "month": 10,
-    "day": 16
+    "month": 7,
+    "day": 10
   },
   "reset_days": [10, 25],
   "fragments": {
@@ -16,20 +16,20 @@
       "本日の邪神の宮殿は ",
       "KEY__display",
       " です！\n",
-      " 相手は",
+      "相手は",
       "KEY__members",
       "、あると良い耐性は ",
-      "KEY__tolerrances",
+      "KEY__tolerances",
       " です！"
     ],
     "first_day": [
       "邪神の宮殿は本日から ",
       "KEY__display",
       " です！\n",
-      " 相手は",
+      "相手は",
       "KEY__members",
       "、あると良い耐性は ",
-      "KEY__tolerrances",
+      "KEY__tolerances",
       " です！"
     ],
     "last_day": [
@@ -43,10 +43,10 @@
   },
   "enemies": [
     {
-      "display": "だれかさんず",
+      "display": "災いの神話と暴虐の悪夢",
       "members": [
-        "だれか",
-        "だれか"
+        "魔蝕おじさん",
+        "ギガスローおじさん"
       ],
       "tolerance": {
         "sepalated": false,
@@ -58,8 +58,21 @@
     {
       "display": "だれかさんず",
       "members": [
-        "だれか",
-        "だれか"
+        "ななしの",
+        "ごんべい"
+      ],
+      "tolerance": {
+        "sepalated": false,
+        "tolerances": [
+          "なにか"
+        ]
+      }
+    },
+    {
+      "display": "魔幻の覇王軍",
+      "members": [
+        "ジャックポットおじさん",
+        "ゆかいな絵画たち"
       ],
       "tolerance": {
         "sepalated": true,
@@ -70,7 +83,73 @@
           ["", ""]
         ]
       }
+    },
+    {
+      "display": "だれかさんず",
+      "members": [
+        "ななしの",
+        "ごんべい"
+      ],
+      "tolerance": {
+        "sepalated": false,
+        "tolerances": [
+          "なにか"
+        ]
+      }
+    },
+    {
+      "display": "覇道の双璧",
+      "members": [
+        "ぜるさん",
+        "らずさん"
+      ],
+      "tolerance": {
+        "sepalated": false,
+        "tolerances": [
+          "",
+          "",
+          ""
+        ]
+      }
+    },
+    {
+      "display": "だれかさんず",
+      "members": [
+        "ななしの",
+        "ごんべい"
+      ],
+      "tolerance": {
+        "sepalated": false,
+        "tolerances": [
+          "なにか"
+        ]
+      }
+    },
+    {
+      "display": "闇に堕ちた英雄の幻影",
+      "members": [
+        "魔ちゃん",
+        "お兄ちゃん"
+      ],
+      "tolerance": {
+        "sepalated": false,
+        "tolerances": [
+          "なにか"
+        ]
+      }
+    },
+    {
+      "display": "魔幻の最高幹部",
+      "members": [
+        "ぜるさん",
+        "お兄ちゃん"
+      ],
+      "tolerance": {
+        "sepalated": false,
+        "tolerances": [
+          "呪い"
+        ]
+      }
     }
-
   ]
 }

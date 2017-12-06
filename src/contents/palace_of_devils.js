@@ -1,14 +1,12 @@
 import ContentBase from './content_base';
 import {
+  HOUR,
   elapsedMonths,
   isStartOfPeriod,
   isEndOfPeriod,
 } from '../utils/date_utils';
 
 const CONFIG = 'palace_of_devils.json';
-
-export const PERIODIC = 'PERIODIC';
-export const FULL = 'FULL';
 
 export default class PalaceOfDevils extends ContentBase {
 
@@ -22,7 +20,9 @@ export default class PalaceOfDevils extends ContentBase {
     this.resetDays = this.config().reset_days;
     this.fragments = this.config().fragments;
     this.enemies = this.config().enemies;
-    this.now = (now) ? now : this.jst();
+    this.now = (now) ?
+      new Date(now.getTime() - 6 * HOUR) :
+      new Date(this.jst().getTime() - 6 * HOUR);
   }
 
   elapsedEnemyIndex() {
@@ -70,8 +70,8 @@ export default class PalaceOfDevils extends ContentBase {
     };
   }
 
-  getMessage(key = null) {
-    if (key === FULL) {
+  getMessage(full = false) {
+    if (full) {
       return this.buildMessage(this.fragments.full, this.currentFillings());
     } else {
       return this.buildMessage(
@@ -81,5 +81,9 @@ export default class PalaceOfDevils extends ContentBase {
         this.currentFillings()
       );
     }
+  }
+
+  getFullMessage() {
+    return this.getMessage(true);
   }
 }
