@@ -33,7 +33,7 @@ export const isStartOfPeriod = (date, resetDays) => {
 export const isEndOfPeriod = (date, resetDates) => {
   return resetDates.some((d) => {
     if (d === -1) {
-      return (lastDayOfMonth(date) - 1 === date.getDate());
+      return ((lastDayOfMonth(date) - 1) === date.getDate());
     } else if (d === 1) {
       return (lastDayOfMonth(date) === date.getDate());
     } else {
