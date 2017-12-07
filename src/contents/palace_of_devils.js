@@ -53,7 +53,7 @@ export default class PalaceOfDevils extends ContentBase {
   buildTolerances(tolerance) {
     if (tolerance.sepalated) {
       return tolerance.tolerances.map((t, i) => {
-        return `${i}獄は${t.join("・")}`;
+        return `${i + 1}獄は${t.join("・")}`;
       }).join("、");
     } else {
       return tolerance.tolerances.join("・");
