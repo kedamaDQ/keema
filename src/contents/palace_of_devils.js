@@ -1,9 +1,9 @@
 import ContentBase from './content_base';
 import {
   HOUR,
-  elapsedMonths,
+  elapsedPeriods,
   isStartOfPeriod,
-  isEndOfPeriod,
+  isEndOfPeriod
 } from '../utils/date_utils';
 
 const CONFIG = 'palace_of_devils.json';
@@ -25,25 +25,8 @@ export default class PalaceOfDevils extends ContentBase {
       new Date(this.jst().getTime() - 6 * HOUR);
   }
 
-  elapsedEnemyIndex() {
-    const startOffset = this.resetDays.findIndex((resetDay) => {
-      return (this.startDate.getDate() < resetDay);
-    });
-
-    if (this.now.getDate() < this.resetDays[this.resetDays.length - 1]) {
-      // first or middle part of the month.
-      const partOfMonth = this.resetDays.findIndex((resetDay) => {
-        return (this.now.getDate() < resetDay);
-      });
-      return elapsedMonths(this.startDate, this.now) * this.resetDays.length + partOfMonth - startOffset;
-    } else {
-      // last part of the month.
-      return (elapsedMonths(this.startDate, this.now) + 1) * this.resetDays.length - startOffset;
-    }
-  }
-
   currentEnemyIndex() {
-    return this.elapsedEnemyIndex() % this.enemies.length;
+    return elapsedPeriods(this.now, this.startDate, this.resetDays) % this.enemies.length;
   }
 
   nextEnemyIndex() {
