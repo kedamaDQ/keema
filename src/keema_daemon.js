@@ -89,11 +89,11 @@ export default class KeemaDaemon {
       }
     }
 
-    if (PALACE_OF_DEVILS.test(content)) {
+    if (REGEXP_PALACE_OF_DEVILS.test(content)) {
       replyContent.push({
         pos: content.search(REGEXP_MEDB),
-        message: new PalaceOfDevils().getMessageFull()
-      })
+        message: new PalaceOfDevils().getFullMessage()
+      });
     }
 
     if (replyContent.length === 0) {
