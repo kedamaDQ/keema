@@ -1,0 +1,164 @@
+{
+  "start_date": {
+    "comment": "/* month starts with 0. */",
+    "year": 2017,
+    "month": 7,
+    "day": 10
+  },
+  "reset_days": [10, 25],
+  "fragments": {
+    "short": [
+      "本日の邪神の宮殿は ",
+      "KEY__display",
+      " です！"
+    ],
+    "full": [
+      "本日の邪神の宮殿は ",
+      "KEY__display",
+      " です！\n",
+      "相手は",
+      "KEY__members",
+      "、あると良い耐性は ",
+      "KEY__tolerances",
+      " です！"
+    ],
+    "first_day": [
+      "邪神の宮殿は本日から ",
+      "KEY__display",
+      " です！\n",
+      "相手は",
+      "KEY__members",
+      "、あると良い耐性は ",
+      "KEY__tolerances",
+      " です！"
+    ],
+    "last_day": [
+      "邪神の宮殿 ",
+      "KEY__display",
+      " は本日までです！\n",
+      "明日からは ",
+      "KEY__next_display",
+      " が始まります！"
+    ]
+  },
+  "enemies": [
+    {
+      "display": "災いの神話と暴虐の悪夢",
+      "members": [
+        "魔蝕おじさん",
+        "ギガスローおじさん"
+      ],
+      "tolerance": {
+        "sepalated": false,
+        "tolerances": [
+          "呪い",
+          "即死",
+          "麻痺",
+          "混乱",
+          "封印",
+          "幻惑",
+          "転び"
+        ]
+      }
+    },
+    {
+      "display": "だれかさんず",
+      "members": [
+        "ななしの",
+        "ごんべい"
+      ],
+      "tolerance": {
+        "sepalated": false,
+        "tolerances": [
+          "折れない心"
+        ]
+      }
+    },
+    {
+      "display": "魔幻の覇王軍",
+      "members": [
+        "ジャックポットおじさん",
+        "ゆかいな絵画たち"
+      ],
+      "tolerance": {
+        "sepalated": true,
+        "tolerances": [
+          ["呪い", "麻痺", "どく", "眠り", "魅了"],
+          ["呪い", "麻痺", "どく", "混乱"],
+          ["呪い", "麻痺", "どく", "即死"],
+          ["呪い", "麻痺", "どく", "眠り", "魅了"]
+        ]
+      }
+    },
+    {
+      "display": "だれかさんず",
+      "members": [
+        "ななしの",
+        "ごんべい"
+      ],
+      "tolerance": {
+        "sepalated": false,
+        "tolerances": [
+          "折れない心"
+        ]
+      }
+    },
+    {
+      "display": "覇道の双璧",
+      "members": [
+        "ゼルさん",
+        "ラズさん"
+      ],
+      "tolerance": {
+        "sepalated": false,
+        "tolerances": [
+          "呪い",
+          "麻痺",
+          "幻惑"
+        ]
+      }
+    },
+    {
+      "display": "だれかさんず",
+      "members": [
+        "ななしの",
+        "ごんべい"
+      ],
+      "tolerance": {
+        "sepalated": false,
+        "tolerances": [
+          "なにか"
+        ]
+      }
+    },
+    {
+      "display": "闇に堕ちた英雄の幻影",
+      "members": [
+        "魔ちゃん",
+        "お兄ちゃん"
+      ],
+      "tolerance": {
+        "sepalated": false,
+        "tolerances": [
+          "呪い",
+          "麻痺",
+          "封印",
+          "怯え"
+        ]
+      }
+    },
+    {
+      "display": "魔幻の最高幹部",
+      "members": [
+        "ゼルさん",
+        "お兄ちゃん"
+      ],
+      "tolerance": {
+        "sepalated": false,
+        "tolerances": [
+          "呪い"
+        ]
+      }
+    }
+  ]
+}
