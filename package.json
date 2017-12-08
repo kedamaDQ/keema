@@ -4,9 +4,9 @@
   "description": "Daemon of drakeema who works in foresdon.jp.",
   "main": "index.js",
   "scripts": {
-    "transpile-es2015": "babel src -d lib",
+    "test": "jest",
     "build": "babel src -d lib",
-    "test": "jest"
+    "test-run": "node lib/index.js -d"
   },
   "author": "",
   "license": "ISC",
