@@ -13,7 +13,7 @@ const REGEXP_BATTLES_OF_DARKNESS = new RegExp(/(?:常闇|とこやみ)/);
 const REGEXP_REGNAD = new RegExp(/(?:レグ|れぐ)/);
 const REGEXP_DARKKING = new RegExp(/(?:ダークキング|だーくきんぐ|ＤＫ|ｄｋ|dk)/, 'i');
 const REGEXP_MEDB = new RegExp(/(?:メイヴ|メイブ|めいう゛|めいぶ|イカ|いか)/);
-const REGEXP_PALACE_OF_DEVILS = new RegExp(/(?:邪神|邪心|じゃしん|)/);
+const REGEXP_PALACE_OF_DEVILS = new RegExp(/(?:邪神|邪心|じゃしん)/);
 
 export default class KeemaDaemon {
 
@@ -91,7 +91,7 @@ export default class KeemaDaemon {
 
     if (REGEXP_PALACE_OF_DEVILS.test(content)) {
       replyContent.push({
-        pos: content.search(REGEXP_MEDB),
+        pos: content.search(REGEXP_PALACE_OF_DEVILS),
         message: new PalaceOfDevils().getFullMessage()
       });
     }
