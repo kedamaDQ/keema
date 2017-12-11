@@ -49,17 +49,26 @@ describe('PalaceOfDevils', () => {
   })
 
   describe('getMessage', () => {
-    const pod1 = new PalaceOfDevils(new Date(2017, 11, 8, 0, 0, 0));
-    const pod2 = new PalaceOfDevils(new Date(2017, 11, 9, 0, 0, 0));
-    const pod3 = new PalaceOfDevils(new Date(2017, 11, 10, 6, 0, 0));
-    const pod4 = new PalaceOfDevils(new Date(2017, 11, 11, 6, 0, 0));
-    expect(pod1.getMessage().length > 0).toBeTruthy();
-    expect(pod2.getMessage().length > 0).toBeTruthy();
-    expect(pod3.getMessage().length > 0).toBeTruthy();
-    expect(pod4.getMessage().length > 0).toBeTruthy();
-  })
-  describe('getFullMessage', () => {
-    const pod1 = new PalaceOfDevils();
-    expect(pod1.getMessage().length > 0).toBeTruthy();
+    const expected = [
+      expect.stringMatching(/KEY__/)
+    ];
+
+    for (let i = 0; i < enemies.length; i++) {
+      const subject = new Date(
+        y,
+        Math.floor(i / resetDays.length),
+        resetDays[i % resetDays.length],
+        6, 0, 0
+      );
+      const pod = new PalaceOfDevils(subject);
+      test(`getMessage subject:${subject}`, () => {
+        expect(pod.getMessage().length).toBeGreaterThan(0);
+        expect(pod.getMessage()).not.toEqual(expected);
+      });
+      test(`getFullMessage subject:${subject}`, () => {
+        expect(pod.getFullMessage().length).toBeGreaterThan(0);
+        expect(pod.getFullMessage()).not.toEqual(expected);
+      });
+    }
   })
 });
