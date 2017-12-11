@@ -7,6 +7,7 @@ import {
 } from '../utils/date_utils';
 
 const CONFIG = 'palace_of_devils.json';
+const OFFSET_HOURS = 6 * HOUR;
 
 export default class PalaceOfDevils extends ContentBase {
 
@@ -21,8 +22,8 @@ export default class PalaceOfDevils extends ContentBase {
     this.fragments = this.config().fragments;
     this.enemies = this.config().enemies;
     this.now = (now) ?
-      new Date(now.getTime() - 6 * HOUR) :
-      new Date(this.jst().getTime() - 6 * HOUR);
+      new Date(now.getTime() - OFFSET_HOURS) :
+      new Date(this.jst().getTime() - OFFSET_HOURS);
   }
 
   currentEnemyIndex() {

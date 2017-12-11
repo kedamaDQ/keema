@@ -57,3 +57,7 @@ export const isEndOfPeriod = (date, resetDates) => {
     return resetDates.includes(date.getDate() - 1);
   }
 }
+
+export const elapsedDays = (fromDate, toDate) => {
+  return Math.floor(toDate / DAY) - Math.floor(fromDate / DAY);
+}
