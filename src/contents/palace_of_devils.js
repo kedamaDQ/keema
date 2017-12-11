@@ -26,7 +26,7 @@ export default class PalaceOfDevils extends ContentBase {
   }
 
   currentEnemyIndex() {
-    return elapsedPeriods(this.now, this.startDate, this.resetDays) % this.enemies.length;
+    return elapsedPeriods(this.startDate, this.now, this.resetDays) % this.enemies.length;
   }
 
   nextEnemyIndex() {
