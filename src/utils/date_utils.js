@@ -26,20 +26,20 @@ export const isEndOfMonth = (date) => {
   return (new Date(date.getTime() + DAY).getMonth() !== date.getMonth());
 }
 
-export const elapsedPeriods = (date, startDate, resetDays) => {
-  const startOffset = (startDate.getDate() >= resetDays[resetDays.length - 1]) ?
+export const elapsedPeriods = (fromDate, toDate, resetDays) => {
+  const startOffset = (fromDate.getDate() >= resetDays[resetDays.length - 1]) ?
     resetDays.length :
     resetDays.findIndex((resetDay) => {
-      return (startDate.getDate() < resetDay);
+      return (fromDate.getDate() < resetDay);
     });
 
-  const periodOfThisMonth = (date.getDate() >= resetDays[resetDays.length - 1]) ?
+  const periodOfThisMonth = (toDate.getDate() >= resetDays[resetDays.length - 1]) ?
     resetDays.length :
     resetDays.findIndex((resetDay) => {
-      return (date.getDate() < resetDay);
+      return (toDate.getDate() < resetDay);
     });
 
-  return elapsedMonths(startDate, date) * resetDays.length + periodOfThisMonth - startOffset;
+  return elapsedMonths(fromDate, toDate) * resetDays.length + periodOfThisMonth - startOffset;
 }
 
 export const isStartOfPeriod = (date, resetDays) => {
