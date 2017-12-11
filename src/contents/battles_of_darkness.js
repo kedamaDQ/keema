@@ -17,14 +17,16 @@ const OFFSET_HOURS = 6 * HOUR;
 
 export default class BattlesOfDarkness extends ContentBase {
 
-  constructor(subject, now = null) {
+  constructor(subject, now = new Date()) {
     super(CONFIG, null, subject);
-    this.startDate = new Date(this.config().start_date);
+    this.startDate = new Date(
+      this.config().start_date.year,
+      this.config().start_date.month,
+      this.config().start_date.day,
+    );
     this.enemies = this.config().enemies;
     this.greekNumbers = this.config().greek_numbers;
-    this.now = (now) ?
-      new Date(now.getTime() - OFFSET_HOURS) :
-      new Date(this.jst().getTime() - OFFSET_HOURS);
+    this.now = new Date(now.getTime() - OFFSET_HOURS);
   }
 
   currentLevel(offset) {
@@ -69,12 +71,12 @@ export default class BattlesOfDarkness extends ContentBase {
       return {
         pos: this.subject.search(TRIGGER_REGEXP_FULL),
         message: this.buildMessage(
-          this.config().fragments, this.buildFullFillings()
+          this.config().fragments.full, this.buildFullFillings()
         )
       };
     } else {
       const replies = [];
-      const fragments = this.config().fragments_single;
+      const fragments = this.config().fragments.single;
 
       if (TRIGGER_REGEXP_REGNAD.test(this.subject)) {
         replies.push({
@@ -109,7 +111,7 @@ export default class BattlesOfDarkness extends ContentBase {
 
   getMessage(key = null) {
     return this.buildMessage(
-      (key) ? this.config().fragments_single : this.config().fragments,
+      (key) ? this.config().fragments.single : this.config().fragments.full,
       this.buildFullFillings(key))
   }
 }

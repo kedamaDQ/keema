@@ -12,7 +12,7 @@ const OFFSET_HOURS = 6 * HOUR;
 
 export default class PalaceOfDevils extends ContentBase {
 
-  constructor(subject, now = null) {
+  constructor(subject, now = new Date()) {
     super(CONFIG, TRIGGER_REGEXP, subject);
     this.startDate = new Date(
       this.config().start_date.year,
@@ -22,9 +22,7 @@ export default class PalaceOfDevils extends ContentBase {
     this.resetDays = this.config().reset_days;
     this.fragments = this.config().fragments;
     this.enemies = this.config().enemies;
-    this.now = (now) ?
-      new Date(now.getTime() - OFFSET_HOURS) :
-      new Date(this.jst().getTime() - OFFSET_HOURS);
+    this.now = new Date(now - OFFSET_HOURS);
   }
 
   currentEnemyIndex() {
@@ -56,8 +54,6 @@ export default class PalaceOfDevils extends ContentBase {
   }
 
   getReply() {
-    console.log(this.fragments.full);
-    console.log(this.buildFillings());
     return {
       pos: this.subject.search(TRIGGER_REGEXP),
       message: this.buildMessage(this.fragments.full, this.buildFillings())

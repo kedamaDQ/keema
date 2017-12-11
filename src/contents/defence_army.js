@@ -4,23 +4,22 @@ import {
 } from '../utils/date_utils';
 
 const CONFIG = 'defence_army.json';
-const START_TIME_OFFSET = 6 * HOUR;
+const OFFSET_HOURS = 6 * HOUR;
 const TRIGGER_REGEXP = new RegExp(/(?:防衛軍|ぼうえいぐん)/);
 
 export default class DefenceArmy extends ContentBase {
-  constructor(subject, now = null) {
+  constructor(subject, now = new Date()) {
     super(CONFIG, TRIGGER_REGEXP, subject);
     this.fragments = this.config().fragments;
-    this.schedule = this.config().schedule;
-    this.cycle = this.schedule.reduce((acc, value) => {
+    this.enemies = this.config().enemies;
+    this.cycle = this.enemies.reduce((acc, value) => {
       return acc + value.duration;
     }, 0);
-    this.now = (now) ? now : this.jst();
+    this.now = new Date(now.getTime() - OFFSET_HOURS);
   }
 
   minutesOfWeek() {
-    const offsetted = new Date(this.now.getTime() + START_TIME_OFFSET);
-    return (offsetted.getDay() * 24 * 60) + (offsetted.getHours() * 60) + offsetted.getMinutes();
+    return (this.now.getDay() * 24 * 60) + (this.now.getHours() * 60) + this.now.getMinutes();
   }
 
   readableMinutes(minutes) {
@@ -36,10 +35,10 @@ export default class DefenceArmy extends ContentBase {
   buildFillings() {
     const fillings = {};
     let elapsed = this.minutesOfWeek() % this.cycle;
-    this.schedule.find((v, i) => {
-      if (elapsed - this.schedule[i].duration < 0) {
+    this.enemies.find((v, i) => {
+      if (elapsed - this.enemies[i].duration < 0) {
         fillings.currentDisplay = v.display;
-        fillings.nextDisplay = this.schedule[(i + 1) % this.schedule.length].display;
+        fillings.nextDisplay = this.enemies[(i + 1) % this.enemies.length].display;
         fillings.remain = this.readableMinutes(v.duration - elapsed);
         return true;
       } else {

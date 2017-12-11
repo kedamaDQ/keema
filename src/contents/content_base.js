@@ -1,7 +1,5 @@
 const fs = require('fs');
 
-const JST_OFFSET = 1000 * 60 * 60 * 9;
-
 export default class ContentBase {
 
   constructor(config, triggerRegExp, subject) {
@@ -24,11 +22,6 @@ export default class ContentBase {
     return new RegExp(/^KEY__([a-zA-Z]+)$/);
   }
 
-  jst(date = new Date()) {
-    date.setTime(date.getTime() + JST_OFFSET);
-    return date;
-  }
-
   buildMessage(fragments, fillings) {
     const regExp = this.fillingKeyRegExp();
 
@@ -42,9 +35,6 @@ export default class ContentBase {
   }
 
   hasReply() {
-    console.log(this.subject);
-    console.log(this.trigger);
-    console.log(this.trigger.test(this.subject));
     return this.trigger.test(this.subject);
   }
 

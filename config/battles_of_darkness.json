@@ -1,15 +1,22 @@
 {
-  "start_date": "2017-11-16T06:00:00.000Z",
-  "fragments": [
-    "本日の常闇の聖戦は……",
-    "\n :m_slime: ", "KEY__regnadDisplay", "：", "KEY__regnadLevel",
-    "\n :m_slime: ", "KEY__darkkingDisplay", "：", "KEY__darkkingLevel",
-    "\n :m_slime: ", "KEY__medbDisplay", "：", "KEY__medbLevel",
-    "\n……です！"
-  ],
-  "fragments_single": [
-    "KEY__name", "は ", "KEY__level", " です！"
-  ],
+  "start_date": {
+    "comment": "/* month starts with 0. */",
+    "year": 2017,
+    "month": 10,
+    "day": 16
+  },
+  "fragments": {
+    "full": [
+      "本日の常闇の聖戦は……",
+      "\n :m_slime: ", "KEY__regnadDisplay", "：", "KEY__regnadLevel",
+      "\n :m_slime: ", "KEY__darkkingDisplay", "：", "KEY__darkkingLevel",
+      "\n :m_slime: ", "KEY__medbDisplay", "：", "KEY__medbLevel",
+      "\n……です！"
+    ],
+    "single": [
+      "KEY__name", "は ", "KEY__level", " です！"
+    ]
+  },
   "greek_numbers": [
     "Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ"
   ],
