@@ -12,7 +12,7 @@ describe('DefenceArmy', () => {
       expect.stringMatching(/KEY__/)
     ]
 
-    const da = new DefenceArmy();
+    const da = new DefenceArmy('');
     test('getMessage', () => {
       expect(da.getMessage().length).toBeGreaterThan(0);
       expect(da.getMessage()).not.toEqual(expected);

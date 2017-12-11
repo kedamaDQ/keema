@@ -5,10 +5,11 @@ import {
 
 const CONFIG = 'defence_army.json';
 const START_TIME_OFFSET = 6 * HOUR;
+const TRIGGER_REGEXP = new RegExp(/(?:防衛軍|ぼうえいぐん)/);
 
 export default class DefenceArmy extends ContentBase {
-  constructor(now = null) {
-    super(CONFIG);
+  constructor(subject, now = null) {
+    super(CONFIG, TRIGGER_REGEXP, subject);
     this.fragments = this.config().fragments;
     this.schedule = this.config().schedule;
     this.cycle = this.schedule.reduce((acc, value) => {
@@ -32,7 +33,7 @@ export default class DefenceArmy extends ContentBase {
     }
   }
 
-  currentFillings() {
+  buildFillings() {
     const fillings = {};
     let elapsed = this.minutesOfWeek() % this.cycle;
     this.schedule.find((v, i) => {
@@ -49,7 +50,14 @@ export default class DefenceArmy extends ContentBase {
     return fillings;
   }
 
+  getReply() {
+    return {
+      pos: this.subject.search(TRIGGER_REGEXP),
+      message: this.buildMessage(this.fragments, this.buildFillings())
+    };
+  }
+
   getMessage() {
-    return this.buildMessage(this.fragments, this.currentFillings());
+    return this.buildMessage(this.fragments, this.buildFillings());
   }
 }
