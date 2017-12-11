@@ -7,12 +7,13 @@ import {
 } from '../utils/date_utils';
 
 const CONFIG = 'palace_of_devils.json';
+const TRIGGER_REGEXP = new RegExp(/(?:邪神|邪心|じゃしん)/);
 const OFFSET_HOURS = 6 * HOUR;
 
 export default class PalaceOfDevils extends ContentBase {
 
-  constructor(now) {
-    super(CONFIG);
+  constructor(subject, now = new Date()) {
+    super(CONFIG, TRIGGER_REGEXP, subject);
     this.startDate = new Date(
       this.config().start_date.year,
       this.config().start_date.month,
@@ -21,9 +22,7 @@ export default class PalaceOfDevils extends ContentBase {
     this.resetDays = this.config().reset_days;
     this.fragments = this.config().fragments;
     this.enemies = this.config().enemies;
-    this.now = (now) ?
-      new Date(now.getTime() - OFFSET_HOURS) :
-      new Date(this.jst().getTime() - OFFSET_HOURS);
+    this.now = new Date(now - OFFSET_HOURS);
   }
 
   currentEnemyIndex() {
@@ -44,7 +43,7 @@ export default class PalaceOfDevils extends ContentBase {
     }
   }
 
-  currentFillings() {
+  buildFillings() {
     const enemy = this.enemies[this.currentEnemyIndex()];
     return {
       display: enemy.display,
@@ -54,15 +53,22 @@ export default class PalaceOfDevils extends ContentBase {
     };
   }
 
+  getReply() {
+    return {
+      pos: this.subject.search(TRIGGER_REGEXP),
+      message: this.buildMessage(this.fragments.full, this.buildFillings())
+    };
+  }
+
   getMessage(full = false) {
     if (full) {
-      return this.buildMessage(this.fragments.full, this.currentFillings());
+      return this.buildMessage(this.fragments.full, this.buildFillings());
     } else {
       return this.buildMessage(
         (isStartOfPeriod(this.now, this.resetDays)) ? this.fragments.first_day :
         (isEndOfPeriod(this.now, this.resetDays)) ? this.fragments.last_day :
         this.fragments.short,
-        this.currentFillings()
+        this.buildFillings()
       );
     }
   }

@@ -8,12 +8,6 @@ const STREAM_URL = '/streaming/public/local';
 const POST_URL = '/statuses';
 const REGEXP_TRIGGER1 = new RegExp(/(?:キーマ|きーま)さん/);
 const REGEXP_TRIGGER2 = new RegExp(/(?:教|おし)えて/);
-const REGEXP_DEFENCE_ARMY = new RegExp(/(?:防衛軍|ぼうえいぐん)/);
-const REGEXP_BATTLES_OF_DARKNESS = new RegExp(/(?:常闇|とこやみ)/);
-const REGEXP_REGNAD = new RegExp(/(?:レグ|れぐ)/);
-const REGEXP_DARKKING = new RegExp(/(?:ダークキング|だーくきんぐ|ＤＫ|ｄｋ|dk)/, 'i');
-const REGEXP_MEDB = new RegExp(/(?:メイヴ|メイブ|めいう゛|めいぶ|イカ|いか)/);
-const REGEXP_PALACE_OF_DEVILS = new RegExp(/(?:邪神|邪心|じゃしん)/);
 
 export default class KeemaDaemon {
 
@@ -52,48 +46,18 @@ export default class KeemaDaemon {
   }
 
   buildReplyMessage(content) {
-    const replyContent = [];
+    const contents = [
+      new BattlesOfDarkness(content),
+      new PalaceOfDevils(content),
+      new DefenceArmy(content)
+    ];
+    let replyContent = [];
 
-    if (content.search(REGEXP_DEFENCE_ARMY) !== -1) {
-      replyContent.push({
-        pos: content.search(REGEXP_DEFENCE_ARMY),
-        message: new DefenceArmy().getMessage()
-      });
-    }
-
-    if (REGEXP_BATTLES_OF_DARKNESS.test(content)) {
-      replyContent.push({
-        pos: content.search(REGEXP_BATTLES_OF_DARKNESS),
-        message: new BattlesOfDarkness().getMessage()
-      });
-    } else {
-      if (REGEXP_REGNAD.test(content)) {
-        replyContent.push({
-          pos: content.search(REGEXP_REGNAD),
-          message: new BattlesOfDarkness().getMessage('regnad')
-        });
+    for (const c of contents) {
+      if (c.hasReply()) {
+        replyContent = replyContent.concat(c.getReply());
       }
-
-      if (REGEXP_DARKKING.test(content)) {
-        replyContent.push({
-          pos: content.search(REGEXP_DARKKING),
-          message: new BattlesOfDarkness().getMessage('darkking')
-        });
-      }
-
-      if (REGEXP_MEDB.test(content)) {
-        replyContent.push({
-          pos: content.search(REGEXP_MEDB),
-          message: new BattlesOfDarkness().getMessage('medb')
-        });
-      }
-    }
-
-    if (REGEXP_PALACE_OF_DEVILS.test(content)) {
-      replyContent.push({
-        pos: content.search(REGEXP_PALACE_OF_DEVILS),
-        message: new PalaceOfDevils().getFullMessage()
-      });
+      console.log(replyContent);
     }
 
     if (replyContent.length === 0) {
