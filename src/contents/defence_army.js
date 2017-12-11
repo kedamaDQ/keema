@@ -1,7 +1,10 @@
 import ContentBase from './content_base';
+import {
+  HOUR
+} from '../utils/date_utils';
 
 const CONFIG = 'defence_army.json';
-const START_TIME_OFFSET = (1000 * 60 * 60 * 6);  // 6 hours.
+const START_TIME_OFFSET = 6 * HOUR;
 
 export default class DefenceArmy extends ContentBase {
   constructor(now = null) {

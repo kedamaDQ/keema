@@ -1,24 +1,27 @@
 import ContentBase from './content_base';
+import {
+  HOUR,
+  elapsedDays
+} from '../utils/date_utils';
 
 const CONFIG = 'battles_of_darkness.json';
+const OFFSET_HOURS = 6 * HOUR;
 
 export default class BattlesOfDarkness extends ContentBase {
 
   constructor(now) {
     super(CONFIG);
-    this.now = (now) ? now : this.jst();
     this.startDate = new Date(this.config().start_date);
     this.enemies = this.config().enemies;
     this.greekNumbers = this.config().greek_numbers;
-  }
-
-  elapsedDays() {
-    return Math.floor((this.now - this.startDate) / 1000 / 60 / 60 / 24);
+    this.now = (now) ?
+      new Date(now.getTime() - OFFSET_HOURS) :
+      new Date(this.jst().getTime() - OFFSET_HOURS);
   }
 
   currentLevel(offset) {
     return this.greekNumbers[
-      (this.elapsedDays() + offset) % this.greekNumbers.length
+      (elapsedDays(this.startDate, this.now) + offset) % this.greekNumbers.length
     ];
   }
 
