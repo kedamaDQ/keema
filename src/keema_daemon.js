@@ -3,6 +3,7 @@ import Mastodon from 'mastodon-api';
 import DefenceArmy from './contents/defence_army';
 import BattlesOfDarkness from './contents/battles_of_darkness';
 import PalaceOfDevils from './contents/palace_of_devils';
+import KantanNaKoto from './contents/kantan_na_koto';
 
 const STREAM_URL = '/streaming/public/local';
 const POST_URL = '/statuses';
@@ -15,11 +16,29 @@ export default class KeemaDaemon {
     this.M = new Mastodon(env);
     this.stream = this.M.stream(STREAM_URL);
     this.stream.on('message', (msg) => {
-      if (this.checkTrigger(msg)) {
-        this.postReplyMessage(
-          msg.data.account.acct, msg.data.id, msg.data.content);
+      if (!this.checkTrigger(msg)) {
+        return;
       }
-    })
+  
+      if (this.checkMessage(msg.data.content)) {
+        this.postReplyMessage(
+          msg.data.account.acct,
+//          msg.data.id,
+          null,
+          this.buildReplyMessage(msg.data.content),
+        );
+      } else {
+        const kantanNaKoto = new KantanNaKoto(msg.data.content);
+        if (!kantanNaKoto.hasReply()) {
+          return;
+        }
+        this.postReplyMessage(
+          msg.data.account.acct,
+          msg.data.id,
+          kantanNaKoto.getReply(),
+        );
+      }
+    });
   }
 
   checkEvent(event) {
@@ -31,17 +50,13 @@ export default class KeemaDaemon {
   }
 
   checkMessage(content) {
-    return (
-      REGEXP_TRIGGER1.test(content) &&
-      REGEXP_TRIGGER2.test(content)
-    );
+    return REGEXP_TRIGGER1.test(content) && REGEXP_TRIGGER2.test(content);
   }
 
   checkTrigger(msg) {
     return (
       this.checkEvent(msg.event) &&
-      this.checkLocal(msg.data.account) &&
-      this.checkMessage(msg.data.content)
+      this.checkLocal(msg.data.account)
     );
   }
 
@@ -57,7 +72,6 @@ export default class KeemaDaemon {
       if (c.hasReply()) {
         replyContent = replyContent.concat(c.getReply());
       }
-      console.log(replyContent);
     }
 
     if (replyContent.length === 0) {
@@ -68,14 +82,17 @@ export default class KeemaDaemon {
       return a.pos - b.pos;
     }).map((v) => {
       return v.message;
-    });
+    }).join("\n\n");
   }
 
   postReplyMessage(mention, reply_to, content) {
-    const status = `@${mention}\n\n` + this.buildReplyMessage(content).join("\n\n");
+    const status = `@${mention}\n\n${content}`;
     const postData = {
-      status: status,
-      in_reply_to_id: reply_to,
+      status: status
+    }
+
+    if (reply_to) {
+      postData.in_reply_to_id = reply_to;
     }
 
     this.M.post(POST_URL, postData)
