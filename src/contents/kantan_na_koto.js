@@ -3,8 +3,8 @@ import ContentBase from './content_base';
 const CONFIG = 'kantan_na_koto.json';
 
 export default class KantanNaKoto extends ContentBase {
-  constructor(subject, now = new Date) {
-    super(CONFIG, null, subject);
+  constructor() {
+    super(CONFIG, null);
     this.contents = this.config().contents.map((v) => {
       return {
         regexp: new RegExp(v.regexp),
@@ -13,13 +13,13 @@ export default class KantanNaKoto extends ContentBase {
     });
   }
 
-  hasReply() {
+  hasReply(subject) {
     return this.contents.some((v) => {
       return v.regexp.test(this.subject);
     });
   }
 
-  getReply() {
+  getReply(subject) {
     const found = this.contents.find((v) => {
       return v.regexp.test(this.subject);
     });

@@ -17,30 +17,32 @@ const OFFSET_HOURS = 6 * HOUR;
 
 export default class BattlesOfDarkness extends ContentBase {
 
-  constructor(subject, now = new Date()) {
-    super(CONFIG, null, subject);
+  constructor() {
+    super(CONFIG, null);
     this.startDate = new Date(
       this.config().start_date.year,
       this.config().start_date.month,
       this.config().start_date.day,
     );
+    this.fragments = this.config().fragments;
     this.enemies = this.config().enemies;
     this.greekNumbers = this.config().greek_numbers;
-    this.now = new Date(now.getTime() - OFFSET_HOURS);
   }
 
-  currentLevel(offset) {
+  currentLevel(now, offset) {
     return this.greekNumbers[
-      (elapsedDays(this.startDate, this.now) + offset) % this.greekNumbers.length
+      (
+        elapsedDays(this.startDate, new Date(now.getTime() - OFFSET_HOURS)) + offset
+      ) % this.greekNumbers.length
     ];
   }
 
-  buildSingleFillings(key) {
+  buildSingleFillings(now, key) {
     const fillings = {};
     this.enemies.find((enemy) => {
       if (enemy.key === key) {
         fillings['name'] = enemy.name;
-        fillings['level'] = this.currentLevel(enemy.offset);
+        fillings['level'] = this.currentLevel(now, enemy.offset);
         return true;
       }
       return false;
@@ -48,70 +50,69 @@ export default class BattlesOfDarkness extends ContentBase {
     return fillings;
   }
 
-  buildFullFillings() {
+  buildFullFillings(now) {
     const fillings = {};
     this.enemies.forEach((enemy) => {
-      fillings[`${enemy.key}Level`] = this.currentLevel(enemy.offset);
+      fillings[`${enemy.key}Level`] = this.currentLevel(now, enemy.offset);
       fillings[`${enemy.key}Display`] = enemy.display;
     });
     return fillings;
   }
 
-  hasReply() {
-    return (
-      TRIGGER_REGEXP_FULL.test(this.subject) ||
-      TRIGGER_REGEXP_REGNAD.test(this.subject) ||
-      TRIGGER_REGEXP_DARKKING.test(this.subject) ||
-      TRIGGER_REGEXP_MEDB.test(this.subject)
+  buildSingleMessage(now, key) {
+    return this.buildMessage(
+      this.fragments.single,
+      this.buildSingleFillings(now, key)
     );
   }
 
-  getReply() {
-    if (TRIGGER_REGEXP_FULL.test(this.subject)) {
+  buildFullMessage(now) {
+    return this.buildMessage(
+      this.fragments.full,
+      this.buildFullFillings(now)
+    );
+  }
+
+  hasReply(subject) {
+    return (
+      TRIGGER_REGEXP_FULL.test(subject) ||
+      TRIGGER_REGEXP_REGNAD.test(subject) ||
+      TRIGGER_REGEXP_DARKKING.test(subject) ||
+      TRIGGER_REGEXP_MEDB.test(subject)
+    );
+  }
+
+  getReply(subject, now = new Date()) {
+    if (TRIGGER_REGEXP_FULL.test(subject)) {
       return {
-        pos: this.subject.search(TRIGGER_REGEXP_FULL),
-        message: this.buildMessage(
-          this.config().fragments.full, this.buildFullFillings()
-        )
+        pos: subject.search(TRIGGER_REGEXP_FULL),
+        message: this.buildFullMessage(now)
       };
     } else {
       const replies = [];
-      const fragments = this.config().fragments.single;
 
-      if (TRIGGER_REGEXP_REGNAD.test(this.subject)) {
+      if (TRIGGER_REGEXP_REGNAD.test(subject)) {
         replies.push({
-          pos: this.subject.search(TRIGGER_REGEXP_REGNAD),
-          message: this.buildMessage(
-            fragments, this.buildSingleFillings(KEY_REGNAD)
-          )
+          pos: subject.search(TRIGGER_REGEXP_REGNAD),
+          message: this.buildSingleMessage(now, KEY_REGNAD)
         });
       }
 
-      if (TRIGGER_REGEXP_DARKKING.test(this.subject)) {
+      if (TRIGGER_REGEXP_DARKKING.test(subject)) {
         replies.push({
-          pos: this.subject.search(TRIGGER_REGEXP_DARKKING),
-          message: this.buildMessage(
-            fragments, this.buildSingleFillings(KEY_DARKKING)
-          )
+          pos: subject.search(TRIGGER_REGEXP_DARKKING),
+          message: this.buildSingleMessage(now, KEY_DARKKING)
         });
       }
 
-      if (TRIGGER_REGEXP_MEDB.test(this.subject)) {
+      if (TRIGGER_REGEXP_MEDB.test(subject)) {
         replies.push({
-          pos: this.subject.search(TRIGGER_REGEXP_MEDB),
-          message: this.buildMessage(
-            fragments, this.buildSingleFillings(KEY_MEDB)
-          )
+          pos: subject.search(TRIGGER_REGEXP_MEDB),
+          message: this.buildSingleMessage(now, KEY_MEDB)
         });
       }
 
       return replies;
     }
-  }
-
-  getMessage(key = null) {
-    return this.buildMessage(
-      (key) ? this.config().fragments.single : this.config().fragments.full,
-      this.buildFullFillings(key))
   }
 }

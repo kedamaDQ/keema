@@ -8,18 +8,18 @@ const OFFSET_HOURS = 6 * HOUR;
 const TRIGGER_REGEXP = new RegExp(/(?:防衛軍|ぼうえいぐん)/);
 
 export default class DefenceArmy extends ContentBase {
-  constructor(subject, now = new Date()) {
-    super(CONFIG, TRIGGER_REGEXP, subject);
+  constructor() {
+    super(CONFIG, TRIGGER_REGEXP);
     this.fragments = this.config().fragments;
     this.enemies = this.config().enemies;
     this.cycle = this.enemies.reduce((acc, value) => {
       return acc + value.duration;
     }, 0);
-    this.now = new Date(now.getTime() - OFFSET_HOURS);
   }
 
-  minutesOfWeek() {
-    return (this.now.getDay() * 24 * 60) + (this.now.getHours() * 60) + this.now.getMinutes();
+  minutesOfWeek(now) {
+    const n = new Date(now.getTime() - OFFSET_HOURS);
+    return (n.getDay() * 24 * 60) + (n.getHours() * 60) + n.getMinutes();
   }
 
   readableMinutes(minutes) {
@@ -32,9 +32,9 @@ export default class DefenceArmy extends ContentBase {
     }
   }
 
-  buildFillings() {
+  buildFillings(now) {
     const fillings = {};
-    let elapsed = this.minutesOfWeek() % this.cycle;
+    let elapsed = this.minutesOfWeek(now) % this.cycle;
     this.enemies.find((v, i) => {
       if (elapsed - this.enemies[i].duration < 0) {
         fillings.currentDisplay = v.display;
@@ -49,14 +49,10 @@ export default class DefenceArmy extends ContentBase {
     return fillings;
   }
 
-  getReply() {
+  getReply(subject, now = new Date()) {
     return {
-      pos: this.subject.search(TRIGGER_REGEXP),
-      message: this.buildMessage(this.fragments, this.buildFillings())
+      pos: subject.search(TRIGGER_REGEXP),
+      message: this.buildMessage(this.fragments, this.buildFillings(now))
     };
-  }
-
-  getMessage() {
-    return this.buildMessage(this.fragments, this.buildFillings());
   }
 }
