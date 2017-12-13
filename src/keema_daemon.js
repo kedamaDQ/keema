@@ -23,7 +23,7 @@ export default class KeemaDaemon {
     this.M = new Mastodon(env);
     this.stream = this.M.stream(STREAM_URL);
     this.stream.on('message', (msg) => {
-      if (!(this.checkLocak(msg) || this.checkUpdate(msg))) {
+      if (!(this.checkLocal(msg) || this.checkUpdate(msg))) {
         return;
       }
   
@@ -51,8 +51,8 @@ export default class KeemaDaemon {
     return (event === 'update');
   }
 
-  checkLocal({ account }) {
-    return (account.acct === account.username);
+  checkLocal({ data }) {
+    return (data.account.acct === data.account.username);
   }
 
   checkOshiete(content) {
@@ -80,7 +80,7 @@ export default class KeemaDaemon {
       return null;
     }
 
-    return replyContent.sort((a, b) => {
+    return replyContents.sort((a, b) => {
       return a.pos - b.pos;
     }).map((v) => {
       return v.message;
