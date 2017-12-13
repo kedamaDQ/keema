@@ -16,9 +16,10 @@ describe('KantanNaKoto', () => {
   ];
 
   describe('hasReply', () => {
+    const knk = new KantanNaKoto();
     for (const keyword of keywords) {
       test(`Check to hook keyword: ${keyword}`, () => {
-        expect(new KantanNaKoto(keyword).hasReply()).toBeTruthy();
+        expect(knk.hasReply(keyword)).toBeTruthy();
       });
     }
   });
@@ -28,13 +29,13 @@ describe('KantanNaKoto', () => {
       expect.stringMatching(/KEY__/)
     ];
 
+    const knk = new KantanNaKoto();
     for (const keyword of keywords) {
-      const knk = new KantanNaKoto(keyword);
       test(`Check length. ${keyword}`, () => {
-        expect(knk.getReply().length).toBeGreaterThan(0);
+        expect(knk.getReply(keyword).message.length).toBeGreaterThan(0);
       });
       test(`Check no placeholders left. ${keyword}`, () => {
-          expect(knk.getReply().message).not.toEqual(expected);
+          expect(knk.getReply(keyword).message).not.toEqual(expected);
       });
     }
 

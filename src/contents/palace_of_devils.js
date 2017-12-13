@@ -24,14 +24,14 @@ export default class PalaceOfDevils extends ContentBase {
     this.enemies = this.config().enemies;
   }
 
-  currentEnemyIndex(now) {
+  getEnemyIndex(now) {
     return elapsedPeriods(
       this.startDate, new Date(now.getTime() - OFFSET_HOURS), this.resetDays
     ) % this.enemies.length;
   }
 
-  nextEnemyIndex(now) {
-    return (this.currentEnemyIndex(now) + 1) % this.enemies.length;
+  getNextEnemyIndex(now) {
+    return (this.getEnemyIndex(now) + 1) % this.enemies.length;
   }
 
   buildTolerances(tolerance) {
@@ -45,10 +45,10 @@ export default class PalaceOfDevils extends ContentBase {
   }
 
   buildFillings(now) {
-    const enemy = this.enemies[this.currentEnemyIndex(now)];
+    const enemy = this.enemies[this.getEnemyIndex(now)];
     return {
       display: enemy.display,
-      next_display: this.enemies[this.nextEnemyIndex(now)].display,
+      next_display: this.enemies[this.getNextEnemyIndex(now)].display,
       members: enemy.members.join("と"),
       tolerances: this.buildTolerances(enemy.tolerance),
     };

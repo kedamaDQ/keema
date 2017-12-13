@@ -29,7 +29,7 @@ export default class BattlesOfDarkness extends ContentBase {
     this.greekNumbers = this.config().greek_numbers;
   }
 
-  currentLevel(now, offset) {
+  getLevel(now, offset) {
     return this.greekNumbers[
       (
         elapsedDays(this.startDate, new Date(now.getTime() - OFFSET_HOURS)) + offset
@@ -42,7 +42,7 @@ export default class BattlesOfDarkness extends ContentBase {
     this.enemies.find((enemy) => {
       if (enemy.key === key) {
         fillings['name'] = enemy.name;
-        fillings['level'] = this.currentLevel(now, enemy.offset);
+        fillings['level'] = this.getLevel(now, enemy.offset);
         return true;
       }
       return false;
@@ -53,7 +53,7 @@ export default class BattlesOfDarkness extends ContentBase {
   buildFullFillings(now) {
     const fillings = {};
     this.enemies.forEach((enemy) => {
-      fillings[`${enemy.key}Level`] = this.currentLevel(now, enemy.offset);
+      fillings[`${enemy.key}Level`] = this.getLevel(now, enemy.offset);
       fillings[`${enemy.key}Display`] = enemy.display;
     });
     return fillings;

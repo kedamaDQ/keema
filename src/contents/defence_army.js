@@ -8,6 +8,7 @@ const OFFSET_HOURS = 6 * HOUR;
 const TRIGGER_REGEXP = new RegExp(/(?:防衛軍|ぼうえいぐん)/);
 
 export default class DefenceArmy extends ContentBase {
+
   constructor() {
     super(CONFIG, TRIGGER_REGEXP);
     this.fragments = this.config().fragments;
@@ -17,7 +18,7 @@ export default class DefenceArmy extends ContentBase {
     }, 0);
   }
 
-  minutesOfWeek(now) {
+  getMinutesOfWeek(now) {
     const n = new Date(now.getTime() - OFFSET_HOURS);
     return (n.getDay() * 24 * 60) + (n.getHours() * 60) + n.getMinutes();
   }
@@ -34,7 +35,7 @@ export default class DefenceArmy extends ContentBase {
 
   buildFillings(now) {
     const fillings = {};
-    let elapsed = this.minutesOfWeek(now) % this.cycle;
+    let elapsed = this.getMinutesOfWeek(now) % this.cycle;
     this.enemies.find((v, i) => {
       if (elapsed - this.enemies[i].duration < 0) {
         fillings.currentDisplay = v.display;

@@ -15,14 +15,17 @@ export default class KantanNaKoto extends ContentBase {
 
   hasReply(subject) {
     return this.contents.some((v) => {
-      return v.regexp.test(this.subject);
+      return v.regexp.test(subject);
     });
   }
 
   getReply(subject) {
     const found = this.contents.find((v) => {
-      return v.regexp.test(this.subject);
+      return v.regexp.test(subject);
     });
-    return found.fragments.join('');
+    return {
+      pos: 0,
+      message: found.fragments.join('')
+    };
   }
 }

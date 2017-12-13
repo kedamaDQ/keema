@@ -11,10 +11,10 @@ const keywords = ['防衛軍', 'ぼうえいぐん'];
 describe('DefenceArmy', () => {
 
   describe('hasReply', () => {
+    const da = new DefenceArmy();
     for (const keyword of keywords) {
-      const da = new DefenceArmy(keyword);
       test(`Check hook keyword: ${keyword}`, () => {
-        expect(da.hasReply()).toBeTruthy();
+        expect(da.hasReply(keyword)).toBeTruthy();
       });
     }
   });
@@ -25,26 +25,14 @@ describe('DefenceArmy', () => {
       expect.stringMatching(/KEY__/)
     ];
 
+    const da = new DefenceArmy();
     for (const keyword of keywords) {
-      const da = new DefenceArmy(keyword);
       test(`Check length. ${keyword}`, () => {
-        expect(da.getReply().message.length).toBeGreaterThan(0);
+        expect(da.getReply(keyword).message.length).toBeGreaterThan(0);
       });
       test(`Check no placeholders left. ${keyword}`, () => {
-          expect(da.getReply().message).not.toEqual(expected);
+          expect(da.getReply(keyword).message).not.toEqual(expected);
       });
     }
   });
-
-  describe('getMessage', () => {
-    const expected = [
-      expect.stringMatching(/KEY__/)
-    ]
-
-    const da = new DefenceArmy('');
-    test('getMessage', () => {
-      expect(da.getMessage().length).toBeGreaterThan(0);
-      expect(da.getMessage()).not.toEqual(expected);
-    })
-  });
-})
+});
