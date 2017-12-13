@@ -14,7 +14,6 @@ export default class PeriodicResetContents extends ContentBase {
     this.fragments = this.config().fragments;
   }
 
-<<<<<<< HEAD
   buildFillings() {
 
   }
@@ -37,11 +36,6 @@ export default class PeriodicResetContents extends ContentBase {
     });
 
     
-=======
-  buildWeeklyMessage(now) {
-    const wDayOfToday = new Date(now.getTime() - OFFSET_HOURS).getDay();
-    const wDayOfTomorrow = (wDayOfToday) + 1 % 7;
->>>>>>> 3b7e97cd27152771f02b4231f4d3969ef30a84db
   }
 
   getMessage(now = new Date()) {
