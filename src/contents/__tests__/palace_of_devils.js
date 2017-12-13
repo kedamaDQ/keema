@@ -13,8 +13,9 @@ describe('PalaceOfDevils', () => {
 
   })
 
-  describe('currentEnemyIndex', () => {
-    const base = new PalaceOfDevils('', new Date(y, 0, resetDays[0], 6, 0, 0)).currentEnemyIndex();
+  describe('getEnemyIndex', () => {
+    const pod = new PalaceOfDevils();
+    const base = pod.getEnemyIndex(new Date(y, 0, resetDays[0], 6, 0, 0));
     for (let i = 0; i < enemies.length; i++) {
       const subject = new Date(
         y,                                // year
@@ -23,27 +24,26 @@ describe('PalaceOfDevils', () => {
         6, 0, 0);
 
       const expected = (base + i) % enemies.length;
-      test(`on: ${subject} expected: ${base}`, () => {
-        expect(new PalaceOfDevils('', subject).currentEnemyIndex()).toBe(expected);
+      test(`on: ${subject} expected: ${expected}`, () => {
+        expect(pod.getEnemyIndex(subject)).toBe(expected);
       });
 
       const before = new Date(subject.getTime() - 1000);
       test(`Switching. subject: ${subject}, before: ${before}`, () => {
-        expect(new PalaceOfDevils('', subject).currentEnemyIndex()).not.toBe(new PalaceOfDevils('', before).currentEnemyIndex());
-//        console.log(`current: ${new PalaceOfDevils('', subject).currentEnemyIndex()} before:${new PalaceOfDevils('', before).currentEnemyIndex()}`);
+        expect(pod.getEnemyIndex(subject)).not.toBe(pod.getEnemyIndex(before));
       });
     }
   });
 
-  describe.skip('nextEnemyIndex', () => {
+  describe.skip('getNextEnemyIndex', () => {
 
   })
 
   describe('hasReply', () => {
+      const pod = new PalaceOfDevils();
     for (const keyword of keywords) {
-      const pod = new PalaceOfDevils(keyword);
       test(`Check hook keyword: ${keyword}`, () => {
-        expect(pod.hasReply()).toBeTruthy();
+        expect(pod.hasReply(keyword)).toBeTruthy();
       });
     }
   });
@@ -53,6 +53,7 @@ describe('PalaceOfDevils', () => {
     const expected = [
       expect.stringMatching(/KEY__/)
     ];
+    const pod = new PalaceOfDevils();
 
     for (let i = 0; i < enemies.length; i++) {
       const subject = new Date(
@@ -61,13 +62,15 @@ describe('PalaceOfDevils', () => {
         resetDays[i % resetDays.length],
         6, 0, 0
       );
-      const pod = new PalaceOfDevils('邪神', subject);
-      test(`Check length. ${subject}`, () => {
-        expect(pod.getReply().message.length).toBeGreaterThan(0);
-      });
-      test(`Check no placeholders left. ${subject}`, () => {
-          expect(pod.getReply().message).not.toEqual(expected);
-      });
+
+      for (const keyword of keywords) {
+        test(`Check length. keyword:${keyword}, subject:${subject}`, () => {
+          expect(pod.getReply(keyword,subject).message.length).toBeGreaterThan(0);
+        });
+        test(`Check no placeholders left. keyword: ${keyword}, subject:${subject}`, () => {
+            expect(pod.getReply(keyword, subject).message).not.toEqual(expected);
+        });
+      }
     }
   });
 });

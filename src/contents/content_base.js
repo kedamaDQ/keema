@@ -2,11 +2,10 @@ const fs = require('fs');
 
 export default class ContentBase {
 
-  constructor(config, triggerRegExp, subject) {
+  constructor(config, triggerRegExp) {
     this.json = (config) ?
       JSON.parse(fs.readFileSync(`${this.configDir()}/${config}`, {encoding: 'utf8'})) :
       null;
-    this.subject = subject;
     this.trigger = triggerRegExp;
   }
 
@@ -34,12 +33,12 @@ export default class ContentBase {
     }).join('');
   }
 
-  hasReply() {
-    return this.trigger.test(this.subject);
+  hasReply(subject) {
+    return this.trigger.test(subject);
   }
 
   // Override this method.
-  getReply() {
+  getReply(subject) {
     return '';
   }
 

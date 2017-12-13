@@ -11,28 +11,28 @@ describe('BattlesOfDarkness', () => {
   const enemiesLength = new BattlesOfDarkness('').enemies.length;
   const keywords = ['レグ', 'DK', 'イカ', '常闇'];
 
-  describe('currentLevel', () => {
+  describe('getLevel', () => {
+    const bod = new BattlesOfDarkness();
     for (let i = 0; i < 366; i++) {
-      const tDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + i, 0, 0, 0);
 
-      const bod0000 = new BattlesOfDarkness('', tDate);
+      const d0000 = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + i, 0, 0, 0);
       for (let offset = 0; offset < enemiesLength; offset++) {
-        test(`enemies: ${enemiesLength}, day: ${i}, offset:${offset} at ${tDate}`, () => {
-          expect(bod0000.currentLevel(offset)).toBe(greekNumbers[(i + offset - 1) % greekNumbers.length]);
+        test(`enemies: ${enemiesLength}, day: ${i}, offset:${offset} at ${d0000}`, () => {
+          expect(bod.getLevel(d0000, offset)).toBe(greekNumbers[(i + offset - 1) % greekNumbers.length]);
         });
       }
 
-      const bod0559 = new BattlesOfDarkness('', new Date(tDate.getTime() + 5 * HOUR + 59 * MINUTE));
+      const d0559 = new Date(d0000.getTime() + 5 * HOUR + 59 * MINUTE);
       for (let offset = 0; offset < enemiesLength; offset++) {
-        test(`enemies: ${enemiesLength}, day: ${i}, offset:${offset} at ${bod0559.now}`, () => {
-          expect(bod0559.currentLevel(offset)).toBe(greekNumbers[(i + offset - 1) % greekNumbers.length]);
+        test(`enemies: ${enemiesLength}, day: ${i}, offset:${offset} at ${d0559}`, () => {
+          expect(bod.getLevel(d0559, offset)).toBe(greekNumbers[(i + offset - 1) % greekNumbers.length]);
         });
       }
 
-      const bod0600 = new BattlesOfDarkness('', new Date(tDate.getTime() + 6 * HOUR));
+      const d0600 = new Date(d0000.getTime() + 6 * HOUR);
       for (let offset = 0; offset < enemiesLength; offset++) {
-        test(`enemies: ${enemiesLength}, day: ${i}, offset:${offset} at ${bod0600.now}`, () => {
-          expect(bod0600.currentLevel(offset)).toBe(greekNumbers[(i + offset) % greekNumbers.length]);
+        test(`enemies: ${enemiesLength}, day: ${i}, offset:${offset} at ${d0600}`, () => {
+          expect(bod.getLevel(d0600, offset)).toBe(greekNumbers[(i + offset) % greekNumbers.length]);
         });
       }
     }
@@ -40,9 +40,9 @@ describe('BattlesOfDarkness', () => {
 
   describe('hasReply', () => {
     for (const keyword of keywords) {
-      const bod = new BattlesOfDarkness(keyword);
+      const bod = new BattlesOfDarkness();
       test(`Check hook keyword: ${keyword}`, () => {
-        expect(bod.hasReply()).toBeTruthy();
+        expect(bod.hasReply(keyword)).toBeTruthy();
       });
     }
   });
@@ -52,32 +52,17 @@ describe('BattlesOfDarkness', () => {
       expect.stringMatching(/KEY__/)
     ];
 
+    const bod = new BattlesOfDarkness();
     for (const keyword of keywords) {
-      const bod = new BattlesOfDarkness(keyword);
       test(`Check length: ${keyword}`, () => {
-        new Array().concat(bod.getReply()).forEach((v) => {
+        new Array().concat(bod.getReply(keyword)).forEach((v) => {
           expect(v.message.length).toBeGreaterThan(0);
         });
       });
       test(`Check no placeholder left: ${keyword}`, () => {
-        new Array().concat(bod.getReply()).forEach((v) => {
+        new Array().concat(bod.getReply(keyword)).forEach((v) => {
           expect(v.message).not.toEqual(expected);
         })
-      });
-
-    }
-  });
-
-  describe('getMessage', () => {
-    const bod = new BattlesOfDarkness('');
-    const expected = [
-      expect.stringMatching(/KEY__/)
-    ];
-
-    for (const type of [null, 'regnad', 'darkking', 'medb']) {
-      test(`${type}`, () => {
-        expect(bod.getMessage(type).length).toBeGreaterThan(0);
-        expect(bod.getMessage(type)).not.toEqual(expected);
       });
     }
   });
