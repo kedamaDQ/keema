@@ -7,75 +7,77 @@ import KantanNaKoto from './contents/kantan_na_koto';
 
 const STREAM_URL = '/streaming/public/local';
 const POST_URL = '/statuses';
-const REGEXP_TRIGGER1 = new RegExp(/(?:キーマ|きーま)さん/);
-const REGEXP_TRIGGER2 = new RegExp(/(?:教|おし)えて/);
+const REGEXP_OSHIETE_TRIGGER1 = new RegExp(/(?:キーマ|きーま)さん/);
+const REGEXP_OSHIETE_TRIGGER2 = new RegExp(/(?:教|おし)えて/);
 
 export default class KeemaDaemon {
 
   constructor(env) {
+    this.oshieteContents = [
+      new BattlesOfDarkness(),
+      new PalaceOfDevils(),
+      new DefenceArmy()
+    ];
+    this.kantanNaKoto = new KantanNaKoto();
+
     this.M = new Mastodon(env);
     this.stream = this.M.stream(STREAM_URL);
     this.stream.on('message', (msg) => {
-      if (!this.checkTrigger(msg)) {
+      if (!(this.checkLocak(msg) || this.checkUpdate(msg))) {
         return;
       }
   
-      if (this.checkMessage(msg.data.content)) {
+      if (this.checkOshiete(msg.data.content)) {
         this.postReplyMessage(
           msg.data.account.acct,
 //          msg.data.id,
           null,
-          this.buildReplyMessage(msg.data.content),
+          this.buildMultiMessage(msg.data.content, this.oshieteContents) || ['？'],
         );
       } else {
-        const kantanNaKoto = new KantanNaKoto(msg.data.content);
-        if (!kantanNaKoto.hasReply()) {
+        if (!this.kantanNaKoto.hasReply(msg.data.content)) {
           return;
         }
         this.postReplyMessage(
           msg.data.account.acct,
           msg.data.id,
-          kantanNaKoto.getReply(),
+          this.kantanNaKoto.getReply(msg.data.content).message,
         );
       }
     });
   }
 
-  checkEvent(event) {
+  checkUpdate({ event }) {
     return (event === 'update');
   }
 
-  checkLocal(account) {
+  checkLocal({ account }) {
     return (account.acct === account.username);
   }
 
-  checkMessage(content) {
-    return REGEXP_TRIGGER1.test(content) && REGEXP_TRIGGER2.test(content);
+  checkOshiete(content) {
+    return REGEXP_OSHIETE_TRIGGER1.test(content) && REGEXP_OSHIETE_TRIGGER2.test(content);
   }
 
-  checkTrigger(msg) {
-    return (
-      this.checkEvent(msg.event) &&
-      this.checkLocal(msg.data.account)
-    );
+
+  buildSingleMessage(content, contentsArray) {
+    const cl = contentsArray.find((c) => {
+      return c.hasReply(content);
+    });
+    return (cl) ? cl.getReply(content).message : null;
   }
 
-  buildReplyMessage(content) {
-    const contents = [
-      new BattlesOfDarkness(content),
-      new PalaceOfDevils(content),
-      new DefenceArmy(content)
-    ];
-    let replyContent = [];
+  buildMultiMessage(content, contentsArray) {
+    let replyContents = [];
 
-    for (const c of contents) {
-      if (c.hasReply()) {
-        replyContent = replyContent.concat(c.getReply());
+    contentsArray.forEach((c) => {
+      if (c.hasReply(content)) {
+        replyContents = replyContents.concat(c.getReply(content));
       }
-    }
+    });
 
-    if (replyContent.length === 0) {
-      return ['？'];
+    if (replyContents.length === 0) {
+      return null;
     }
 
     return replyContent.sort((a, b) => {
@@ -86,6 +88,11 @@ export default class KeemaDaemon {
   }
 
   postReplyMessage(mention, reply_to, content) {
+
+    if (!content) {
+      return;
+    }
+
     const status = `@${mention}\n\n${content}`;
     const postData = {
       status: status
