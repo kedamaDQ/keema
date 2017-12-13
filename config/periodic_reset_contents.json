@@ -1,0 +1,25 @@
+{
+  "fragments": {
+    "start_monthly": [
+      "KEY__displays",
+      "がリセットされました！"
+    ],
+    "end_monthly": [
+      "今月の ",
+      "KEY__displays",
+      "は今日までです！"
+    ]
+  },
+  "contents": [
+    {
+      "display": "",
+      "weekly": true,
+      "reset": [0, 3]
+    },
+    {
+      "display": "",
+      "weekly": false,
+      "reset": [10, 25]
+    }
+  ]
+}
