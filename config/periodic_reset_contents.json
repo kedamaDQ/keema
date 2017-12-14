@@ -1,25 +1,68 @@
 {
   "fragments": {
-    "start_monthly": [
+    "start_weekly": [
+      "今週の ",
       "KEY__displays",
-      "がリセットされました！"
+      " は今日からです！"
     ],
-    "end_monthly": [
-      "今月の ",
+    "end_weekly": [
+      "今週の ",
       "KEY__displays",
-      "は今日までです！"
+      " は今日までです！"
+    ],
+    "start_periodic": [
+      "今期の ",
+      "KEY__displays",
+      " は今日からです！"
+    ],
+    "end_periodic": [
+      "今期の ",
+      "KEY__displays",
+      " は今日までです！"
     ]
   },
   "contents": [
     {
-      "display": "",
+      "display": "レンダーシア討伐",
       "weekly": true,
-      "reset": [0, 3]
+      "reset_days": [0],
+      "sort_order": 100
     },
     {
-      "display": "",
+      "display": "ピラミッドの秘宝",
+      "weekly": true,
+      "reset_days": [0],
+      "sort_order": 200
+    },
+    {
+      "display": "王家の迷宮",
+      "weekly": true,
+      "reset_days": [0],
+      "sort_order": 300
+    },
+    {
+      "display": "達人クエスト",
+      "weekly": true,
+      "reset_days": [0],
+      "sort_order": 400
+    },
+    {
+      "display": "モンスタータロット販売",
+      "weekly": true,
+      "reset_days": [0],
+      "sort_order": 500
+    },
+    {
+      "display": "シアトリカルクロニクル",
       "weekly": false,
-      "reset": [10, 25]
+      "reset_days": [1, 15],
+      "sort_order": 100
+    },
+    {
+      "display": "不思議の魔塔",
+      "weekly": false,
+      "reset_days": [1],
+      "sort_order": 200
     }
   ]
 }
