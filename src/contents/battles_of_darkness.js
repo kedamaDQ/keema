@@ -117,6 +117,9 @@ export default class BattlesOfDarkness extends ContentBase {
   }
 
   getMessage(now = new Date()) {
-    return buildFullMessage(now);
+    return {
+      pos: 0,
+      message: this.buildFullMessage(now)
+    };
   }
 }
