@@ -66,4 +66,24 @@ describe('BattlesOfDarkness', () => {
       });
     }
   });
+
+  describe('getMessage', () => {
+    const expected = [
+      expect.stringMatching(/KEY__/)
+    ];
+    const y = Date.now().getFullYear + 1;
+    const bod = new BattlesOfDarkness();
+
+    for (let m = 0; m < 12; m++) {
+      for (let d = 1; d < 31; d++) {
+        const subject = new Date(y, m, d, 6, 0, 0);
+        test(`Check to message not empty. subject: ${subject}`, () => {
+          expect(bod.getMessage).toEqual(expect.anything());
+        })
+        test(`Check no placeholder left. subject: ${subject}`, () => {
+          expect(bod.getMessage).not.toEqual(expected);
+        })
+      }
+    }
+  })
 });
