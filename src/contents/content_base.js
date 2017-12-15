@@ -26,7 +26,7 @@ export default class ContentBase {
 
     return fragments.map((v) => {
       if (regExp.test(v)) {
-        return fillings[RegExp.$1];
+        return (fillings[RegExp.$1]) ? fillings[RegExp.$1] : v;
       } else {
         return v;
       }
