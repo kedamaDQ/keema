@@ -115,4 +115,8 @@ export default class BattlesOfDarkness extends ContentBase {
       return replies;
     }
   }
+
+  getMessage(now = new Date()) {
+    return buildFullMessage(now);
+  }
 }
