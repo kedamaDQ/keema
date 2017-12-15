@@ -15,7 +15,6 @@ export default class PeriodicResetContents extends ContentBase {
     this.contents = this.config().contents;
     this.fragments = this.config().fragments;
     this.foresdon = new Foresdon();
-    this.listHeaders = this.config().list_headers.slice(0);
   }
 
   buildMessage(fragments, day, isWeekly) {
