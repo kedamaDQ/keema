@@ -63,22 +63,28 @@
       "sort_order": 200
     },
     {
-      "display": "王家の迷宮",
+      "display": "試練の門",
       "type": "weekly",
       "reset_days": [0],
       "sort_order": 300
     },
     {
-      "display": "達人クエスト",
+      "display": "王家の迷宮",
       "type": "weekly",
       "reset_days": [0],
       "sort_order": 400
     },
     {
-      "display": "モンスタータロット販売",
+      "display": "達人クエスト",
       "type": "weekly",
       "reset_days": [0],
       "sort_order": 500
+    },
+    {
+      "display": "モンスタータロット販売",
+      "type": "weekly",
+      "reset_days": [0],
+      "sort_order": 600
     },
     {
       "display": "シアトリカルクロニクル",
