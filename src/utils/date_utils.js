@@ -23,7 +23,7 @@ export const isStartOfMonth = (date) => {
 }
 
 export const isEndOfMonth = (date) => {
-  return (new Date(date.getTime() + DAY).getMonth() !== date.getMonth());
+  return (new Date(date.getTime() + 1 * DAY).getMonth() !== date.getMonth());
 }
 
 export const elapsedPeriods = (fromDate, toDate, resetDays) => {

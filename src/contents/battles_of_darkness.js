@@ -84,10 +84,10 @@ export default class BattlesOfDarkness extends ContentBase {
 
   getReply(subject, now = new Date()) {
     if (TRIGGER_REGEXP_FULL.test(subject)) {
-      return {
+      return [{
         pos: subject.search(TRIGGER_REGEXP_FULL),
         message: this.buildFullMessage(now)
-      };
+      }];
     } else {
       const replies = [];
 
@@ -114,5 +114,12 @@ export default class BattlesOfDarkness extends ContentBase {
 
       return replies;
     }
+  }
+
+  getMessage(now = new Date()) {
+    return [{
+      pos: 0,
+      message: this.buildFullMessage(now)
+    }];
   }
 }

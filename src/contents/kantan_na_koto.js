@@ -28,4 +28,8 @@ export default class KantanNaKoto extends ContentBase {
       message: found.fragments.join('')
     };
   }
+
+  getMessage() {
+    throw new Error('Not implemented.');
+  }
 }

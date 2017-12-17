@@ -15,20 +15,26 @@ describe('PeriodicResetContents', () => {
       for (let d = 1; d < 31; d++) {
         const subject = new Date(y, m, d, 6, 0, 0);
         if (subject.getDate() === 1) {
-          test(`1st day of month.`, () => {
-            expect(prc.getMessage(subject)).toEqual(expect.anything());
-          });
-        }
-
-        if (new Date(subject.getTime() + 1000 * 60 * 60 * 24)) {
-          test(`last day of month.`, () => {
-            expect(prc.getMessage(subject)).toEqual(expect.anything());
+          prc.getMessage(subject).forEach((v) => {
+            test(`1st day of month.`, () => {
+              expect(v.message).toEqual(expect.anything());
+            });
           })
         }
 
-        test(`Check no placeholders left. date:${subject}`, () => {
-          expect(prc.getMessage(subject)).not.toEqual(expected);
-        });
+        if (new Date(subject.getTime() + 1000 * 60 * 60 * 24)) {
+          prc.getMessage(subject).forEach((v) => {
+            test(`last day of month.`, () => {
+              expect(v.message).toEqual(expect.anything());
+            })
+          });
+        }
+
+        prc.getMessage(subject).forEach((v) => {
+          test(`Check no placeholders left. date:${subject}`, () => {
+            expect(v.message).not.toEqual(expected);
+          });
+        })
       }
     }
   });

@@ -2,6 +2,7 @@ import Readline from 'readline';
 import Mastodon from 'mastodon-api';
 
 import KeemaDaemon from './keema_daemon';
+import KeemaPeriodic from './keema_periodic';
 
 // Settings
 const ENV_FILE='./.env';
@@ -111,7 +112,7 @@ loadEnv()
   } else if (opts.get('d')) {
     new KeemaDaemon(env);
   } else if (opts.get('o')) {
-    process.exit(0);
+    new KeemaPeriodic(env).toot();
   } else {
     opts.help();
     process.exit(0);

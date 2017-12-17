@@ -19,9 +19,30 @@
       "今期の ",
       "KEY__displays",
       " は今日までです！"
+    ],
+    "start_oneshot": [
+      "KEY__display",
+      " です！"
+    ],
+    "end_oneshot": [
+      "明日は ",
+      "KEY__display",
+      " です！"
     ]
   },
   "contents": [
+    {
+      "display": ":x_exkun: テンの日 :x_gyousha:",
+      "weekly": false,
+      "reset_days": [10],
+      "sort_order": 50
+    },
+    {
+      "display": ":x_pu01: :x_ku01: :x_ripo01: プクの日",
+      "weekly": false,
+      "reset_days": [29],
+      "sort_order": 50
+    },
     {
       "display": "レンダーシア討伐",
       "weekly": true,
