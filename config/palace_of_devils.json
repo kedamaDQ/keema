@@ -8,7 +8,7 @@
   "reset_days": [10, 25],
   "fragments": {
     "short": [
-      "本日の邪神の宮殿は ",
+      "邪神の宮殿は ",
       "KEY__display",
       " です！"
     ],
