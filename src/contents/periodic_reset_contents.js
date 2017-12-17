@@ -17,15 +17,15 @@ export default class PeriodicResetContents extends ContentBase {
     this.foresdon = new Foresdon();
   }
 
-  buildMessage(fragments, day, isWeekly) {
-    const fillings = this.buildFillings(day, isWeekly);
+  buildMessage(fragments, day, type) {
+    const fillings = this.buildFillings(day, type);
     return (fillings) ? super.buildMessage(fragments, fillings) : null;
   }
 
-  buildFillings(day, isWeekly) {
+  buildFillings(day, type) {
     const displays = [];
     const contents = this.contents.filter((c) => {
-      return (c.weekly === isWeekly && c.reset_days.includes(day));
+      return (c.type === type && c.reset_days.includes(day));
     }).sort((a, b) => {
       return a.sort_order - b.sort_order;
     });
@@ -55,33 +55,49 @@ export default class PeriodicResetContents extends ContentBase {
       {
         pos: 0,
         message: this.buildMessage(
-          this.fragments.start_weekly,
-          offsetted.getDay(),
-          true
-        ),
-      },
-      {
-        pos: 0,
-        message: this.buildMessage(
-          this.fragments.end_weekly,
-          (offsetted.getDay() + 1) % 7,
-          true
-        ),
-      },
-      {
-        pos: 0,
-        message: this.buildMessage(
-          this.fragments.start_periodic,
+          this.fragments.oneshot.start,
           offsetted.getDate(),
-          false
+          'oneshot'
+        )
+      },
+      {
+        pos: 0,
+        message: this.buildMessage(
+          this.fragments.oneshot.end,
+          new Date(offsetted.getTime() + 1 * DAY).getDate(),
+          'oneshot'
+        )
+      },
+      {
+        pos: 0,
+        message: this.buildMessage(
+          this.fragments.weekly.start,
+          offsetted.getDay(),
+          'weekly'
         ),
       },
       {
         pos: 0,
         message: this.buildMessage(
-          this.fragments.end_periodic,
+          this.fragments.weekly.end,
+          (offsetted.getDay() + 1) % 7,
+          'weekly'
+        ),
+      },
+      {
+        pos: 0,
+        message: this.buildMessage(
+          this.fragments.periodically.start,
+          offsetted.getDate(),
+          'periodically'
+        ),
+      },
+      {
+        pos: 0,
+        message: this.buildMessage(
+          this.fragments.periodically.end,
           new Date(offsetted.getTime() + 1 * DAY).getDate(),
-          false
+          'periodically'
         )
       }
     ].filter(v => v.message); 
