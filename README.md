@@ -15,6 +15,8 @@ Mastodon bot in foresdon.jp.
 
 `npm install`
 
-`npm run transpile-es2015`
+`npm run build`
 
-`node lib/index.js -d`
+## run keema
+Run `node lib/index.js -d`, then listen to local timeline and reply to specified keywords.
+Run `node lib/index.js -o`, then announce today's event menus.
