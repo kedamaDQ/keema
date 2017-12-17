@@ -52,27 +52,39 @@ export default class PeriodicResetContents extends ContentBase {
   getMessage(now = new Date()) {
     const offsetted = new Date(now.getTime() - OFFSET_HOURS);
     return [
-      this.buildMessage(
-        this.fragments.start_weekly,
-        offsetted.getDay(),
-        true
-      ),
-      this.buildMessage(
-        this.fragments.end_weekly,
-        (offsetted.getDay() + 1) % 7,
-        true
-      ),
-      this.buildMessage(
-        this.fragments.start_periodic,
-        offsetted.getDate(),
-        false
-      ),
-      this.buildMessage(
-        this.fragments.end_periodic,
-        new Date(offsetted.getTime() + 1 * DAY).getDate(),
-        false
-      )
-    ].filter(v => v); 
+      {
+        pos: 0,
+        message: this.buildMessage(
+          this.fragments.start_weekly,
+          offsetted.getDay(),
+          true
+        ),
+      },
+      {
+        pos: 0,
+        message: this.buildMessage(
+          this.fragments.end_weekly,
+          (offsetted.getDay() + 1) % 7,
+          true
+        ),
+      },
+      {
+        pos: 0,
+        message: this.buildMessage(
+          this.fragments.start_periodic,
+          offsetted.getDate(),
+          false
+        ),
+      },
+      {
+        pos: 0,
+        message: this.buildMessage(
+          this.fragments.end_periodic,
+          new Date(offsetted.getTime() + 1 * DAY).getDate(),
+          false
+        )
+      }
+    ].filter(v => v.message); 
   }
 
   hasReply(subject) {
@@ -83,16 +95,3 @@ export default class PeriodicResetContents extends ContentBase {
     throw new Error('Not implemented.');
   }
 }
-
-/*
-const prc = new PeriodicResetContents();
-console.log('today:' + prc.getMessage());
-console.log('1201: ' + prc.getMessage(new Date(2017, 11, 1, 10, 0, 0)));
-console.log('1202: ' + prc.getMessage(new Date(2017, 11, 2, 10, 0, 0)));
-console.log('1203: ' + prc.getMessage(new Date(2017, 11, 3, 10, 0, 0)));
-console.log('1209: ' + prc.getMessage(new Date(2017, 11, 9, 10, 0, 0)));
-console.log('1210: ' + prc.getMessage(new Date(2017, 11, 10, 10, 0, 0)));
-console.log('1215: ' + prc.getMessage(new Date(2017, 11, 14, 10, 0, 0)));
-console.log('1215: ' + prc.getMessage(new Date(2017, 11, 15, 10, 0, 0)));
-console.log('1231: ' + prc.getMessage(new Date(2017, 11, 31, 10, 0, 0)));
-*/

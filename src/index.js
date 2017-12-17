@@ -112,8 +112,7 @@ loadEnv()
   } else if (opts.get('d')) {
     new KeemaDaemon(env);
   } else if (opts.get('o')) {
-    new KeemaPeriodic(env).toot(now);
-    process.exit(0);
+    new KeemaPeriodic(env).toot();
   } else {
     opts.help();
     process.exit(0);
