@@ -54,15 +54,13 @@ describe('BattlesOfDarkness', () => {
 
     const bod = new BattlesOfDarkness();
     for (const keyword of keywords) {
-      test(`Check length: ${keyword}`, () => {
-        new Array().concat(bod.getReply(keyword)).forEach((v) => {
-          expect(v.message.length).toBeGreaterThan(0);
+      bod.getReply(keyword).forEach((v) => {
+        test(`Check length: ${keyword}`, () => {
+          expect(v.message).toEqual(expect.anything());
         });
-      });
-      test(`Check no placeholder left: ${keyword}`, () => {
-        new Array().concat(bod.getReply(keyword)).forEach((v) => {
+        test(`Check no placeholder left: ${keyword}`, () => {
           expect(v.message).not.toEqual(expected);
-        })
+        });
       });
     }
   });
@@ -77,12 +75,14 @@ describe('BattlesOfDarkness', () => {
     for (let m = 0; m < 12; m++) {
       for (let d = 1; d < 31; d++) {
         const subject = new Date(y, m, d, 6, 0, 0);
-        test(`Check to message not empty. subject: ${subject}`, () => {
-          expect(bod.getMessage).toEqual(expect.anything());
-        })
-        test(`Check no placeholder left. subject: ${subject}`, () => {
-          expect(bod.getMessage).not.toEqual(expected);
-        })
+        bod.getMessage().forEach((v) => {
+          test(`Check to message not empty. subject: ${subject}`, () => {
+            expect(v.message).toEqual(expect.anything());
+          })
+          test(`Check no placeholder left. subject: ${subject}`, () => {
+            expect(v.message).not.toEqual(expected);
+          })
+        });
       }
     }
   })

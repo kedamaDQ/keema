@@ -55,29 +55,29 @@ export default class PalaceOfDevils extends ContentBase {
   }
 
   getReply(subject, now = new Date()) {
-    return {
+    return [{
       pos: subject.search(TRIGGER_REGEXP),
       message: this.buildMessage(this.fragments.full, this.buildFillings(now))
-    };
+    }];
   }
 
   getMessage(now = new Date()) {
     const offsetted = new Date(now.getTime() - OFFSET_HOURS);
     if (isStartOfPeriod(offsetted, this.resetDays)) {
-      return {
+      return [{
         pos: 0,
         message: this.buildMessage(this.fragments.first_day, this.buildFillings(now))
-      };
+      }];
     } else if (isEndOfPeriod(offsetted, this.resetDays)) {
-      return {
+      return [{
         pos: 0,
         message: this.buildMessage(this.fragments.last_day, this.buildFillings(now))
-      };
+      }];
     } else {
-      return {
+      return [{
         pos: 0,
         message: this.buildMessage(this.fragments.short, this.buildFillings(now))
-      }
+      }];
     }
   }
 }

@@ -64,12 +64,14 @@ describe('PalaceOfDevils', () => {
       );
 
       for (const keyword of keywords) {
-        test(`Check length. keyword:${keyword}, subject:${subject}`, () => {
-          expect(pod.getReply(keyword,subject).message.length).toBeGreaterThan(0);
-        });
-        test(`Check no placeholders left. keyword: ${keyword}, subject:${subject}`, () => {
-            expect(pod.getReply(keyword, subject).message).not.toEqual(expected);
-        });
+        pod.getReply(keyword).forEach((v) => {
+          test(`Check length. keyword:${keyword}, subject:${subject}`, () => {
+            expect(v.message).toEqual(expect.anything());
+          });
+          test(`Check no placeholders left. keyword: ${keyword}, subject:${subject}`, () => {
+              expect(v.message).not.toEqual(expected);
+          });
+        })
       }
     }
   });
@@ -84,11 +86,13 @@ describe('PalaceOfDevils', () => {
     for (let m = 0; m < 12; m++) {
       for (let d = 1; d < 31; d++) {
         const subject = new Date(y, m, d, 6, 0, 0);
-        test(`Check to message not empty. subject: ${subject}`, () => {
-          expect(pod.getMessage).toEqual(expect.anything());
-        })
-        test(`Check no placeholder left. subject: ${subject}`, () => {
-          expect(pod.getMessage).not.toEqual(expected);
+        pod.getMessage().forEach((v) => {
+          test(`Check to message not empty. subject: ${subject}`, () => {
+            expect(v.message).toEqual(expect.anything());
+          })
+          test(`Check no placeholder left. subject: ${subject}`, () => {
+            expect(v.message).not.toEqual(expected);
+          })
         })
       }
     }

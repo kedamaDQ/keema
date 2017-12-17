@@ -27,12 +27,14 @@ describe('DefenceArmy', () => {
 
     const da = new DefenceArmy();
     for (const keyword of keywords) {
-      test(`Check length. ${keyword}`, () => {
-        expect(da.getReply(keyword).message.length).toBeGreaterThan(0);
-      });
-      test(`Check no placeholders left. ${keyword}`, () => {
-          expect(da.getReply(keyword).message).not.toEqual(expected);
-      });
+      da.getReply(keyword).forEach((v) => {
+        test(`Check length. ${keyword}`, () => {
+          expect(v.message).toEqual(expect.anything());
+        });
+        test(`Check no placeholders left. ${keyword}`, () => {
+            expect(v.message).not.toEqual(expected);
+        });
+      })
     }
   });
 });

@@ -51,9 +51,13 @@ export default class DefenceArmy extends ContentBase {
   }
 
   getReply(subject, now = new Date()) {
-    return {
+    return [{
       pos: subject.search(TRIGGER_REGEXP),
       message: this.buildMessage(this.fragments, this.buildFillings(now))
-    };
+    }];
+  }
+
+  getMessage() {
+    throw new Error('Not implemented.');
   }
 }
