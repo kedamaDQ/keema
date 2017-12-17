@@ -1,4 +1,6 @@
 import ContentBase from './content_base';
+import Foresdon from '../utils/foresdon_utils';
+
 import {
   HOUR,
   elapsedDays
@@ -52,9 +54,11 @@ export default class BattlesOfDarkness extends ContentBase {
 
   buildFullFillings(now) {
     const fillings = {};
+    const foresdon = new Foresdon();
     this.enemies.forEach((enemy) => {
       fillings[`${enemy.key}Level`] = this.getLevel(now, enemy.offset);
       fillings[`${enemy.key}Display`] = enemy.display;
+      fillings[`${enemy.key}Icon`] = foresdon.getMonster();
     });
     return fillings;
   }

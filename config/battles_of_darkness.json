@@ -7,11 +7,11 @@
   },
   "fragments": {
     "full": [
-      "本日の常闇の聖戦は……",
-      "\n :m_slime: ", "KEY__regnadDisplay", "：", "KEY__regnadLevel",
-      "\n :m_slime: ", "KEY__darkkingDisplay", "：", "KEY__darkkingLevel",
-      "\n :m_slime: ", "KEY__medbDisplay", "：", "KEY__medbLevel",
-      "\n……です！"
+      "本日の常闇の聖戦は……\n",
+      "KEY__regnadIcon", " ",  "KEY__regnadDisplay", "：", "KEY__regnadLevel", "\n",
+      "KEY__darkkingIcon", " ", "KEY__darkkingDisplay", "：", "KEY__darkkingLevel", "\n",
+      "KEY__medbIcon", " ", "KEY__medbDisplay", "：", "KEY__medbLevel", "\n",
+      "……です！"
     ],
     "single": [
       "KEY__name", "は ", "KEY__level", " です！"
