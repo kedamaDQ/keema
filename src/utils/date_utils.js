@@ -61,3 +61,7 @@ export const isEndOfPeriod = (date, resetDates) => {
 export const elapsedDays = (fromDate, toDate) => {
   return Math.floor((toDate - fromDate) / DAY);
 }
+
+export const nextDayOf = (date) => {
+  return new Date(date.getTime() + 1 * DAY);
+}

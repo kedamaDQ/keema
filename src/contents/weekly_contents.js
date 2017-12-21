@@ -2,7 +2,8 @@ import ContentBase from './content_base';
 import Foresdon from '../utils/foresdon_utils';
 import {
   HOUR,
-  DAY
+  DAY,
+  nextDayOf
 } from '../utils/date_utils';
 
 const CONFIG = 'weekly_contents.json';
@@ -46,12 +47,15 @@ export default class WeeklyContents extends ContentBase {
       },
       {
         fragments: this.fragments.end,
-        fillings: this.buildFillings(new Date(now.getTime() + 1 * DAY))
+        fillings: this.buildFillings(nextDayOf(now))
       }
     ]
     .filter((v) => v.fillings)
     .map((v) => {
-      return this.buildMessage(v.fragments, v.fillings);
+      return {
+        pos: 0,
+        message: this.buildMessage(v.fragments, v.fillings)
+      };
     });
   }
 }

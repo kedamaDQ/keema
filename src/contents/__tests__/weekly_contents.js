@@ -17,12 +17,14 @@ describe('WeeklyContents', () => {
       });
 
       test(`subject: ${subject}, hasMessages: ${hasMessages}`, () => {
-        const msg = wc.getMessage(subject);
+        const msgs = wc.getMessage(subject);
         if (hasMessages) {
-          expect(msg).toEqual(expect.anything());
-          expect(msg).not.toEqual(expected);
+          msgs.forEach((msg) => {
+            expect(msg.message).toEqual(expect.anything());
+            expect(msg.message).not.toEqual(expected);
+          })
         } else {
-          expect(msg).not.toBeFalsy();
+          expect(msgs.length).toBe(0);
         }
       });
     }
