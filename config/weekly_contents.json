@@ -1,0 +1,40 @@
+{
+  "fragments": {
+    "start": [
+      "今週の ",
+      "KEY__displays",
+      " は今日からです！"
+    ],
+    "end": [
+      "今週の ",
+      "KEY__displays",
+      " は今日までです！"
+    ]
+  },
+  "contents": [
+    {
+      "display": "レンダーシア討伐",
+      "reset_days": [0]
+    },
+    {
+      "display": "ピラミッドの秘宝",
+      "reset_days": [0]
+    },
+    {
+      "display": "試練の門",
+      "reset_days": [0]
+    },
+    {
+      "display": "王家の迷宮",
+      "reset_days": [0]
+    },
+    {
+      "display": "達人クエスト",
+      "reset_days": [0]
+    },
+    {
+      "display": "モンスタータロット販売",
+      "reset_days": [0]
+    }
+  ]
+}
