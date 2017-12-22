@@ -32,7 +32,7 @@ export default class PeriodicContents extends ContentBase {
     } else {
       const foresdon = new Foresdon();
       const displaysText = displays.map((d) => {
-        return `${foresdon.getMonster()}${d}`
+        return `${foresdon.getMonster()} ${d}`
       }).join('\n');
       return {displays: `\n${displaysText}\n`};
     }
@@ -70,17 +70,3 @@ export default class PeriodicContents extends ContentBase {
     });
   }
 }
-
-const pc = new PeriodicContents();
-
-console.log(pc.getMessage(new Date(2017, 10, 30, 6, 0, 0)));
-console.log(pc.getMessage(new Date(2017, 11, 1, 6, 0, 0)));
-console.log(pc.getMessage(new Date(2017, 11, 9, 6, 0, 0)));
-console.log(pc.getMessage(new Date(2017, 11, 10, 6, 0, 0)));
-console.log(pc.getMessage(new Date(2017, 11, 14, 6, 0, 0)));
-console.log(pc.getMessage(new Date(2017, 11, 15, 6, 0, 0)));
-console.log(pc.getMessage(new Date(2017, 11, 24, 6, 0, 0)));
-console.log(pc.getMessage(new Date(2017, 11, 25, 6, 0, 0)));
-console.log(pc.getMessage(new Date(2017, 11, 29, 6, 0, 0)));
-console.log(pc.getMessage(new Date(2017, 11, 30, 6, 0, 0)));
-console.log(pc.getMessage(new Date(2017, 11, 31, 6, 0, 0)));

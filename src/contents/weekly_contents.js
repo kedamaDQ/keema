@@ -29,7 +29,7 @@ export default class WeeklyContents extends ContentBase {
     } else {
       const foresdon = new Foresdon();
       const displaysText = displays.map((d) => {
-        return `${foresdon.getMonster()}${d}`
+        return `${foresdon.getMonster()} ${d}`
       }).join('\n');
       return {displays: `\n${displaysText}\n`};
     }
