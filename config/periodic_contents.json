@@ -1,0 +1,50 @@
+{
+  "fragments": {
+    "periodic": {
+      "start": [
+        "今期の ",
+        "KEY__displays",
+        " は今日からです！"
+      ],
+      "end": [
+        "今期の ",
+        "KEY__displays",
+        " は今日までです！"
+      ]
+    },
+    "oneshot": {
+      "start": [
+        ":x_pu01: x_ku01: :x_ripo01: ",
+        "KEY__displays",
+        " です！ :x_exkun: :x_gyousha:"
+      ],
+      "end": [
+        "明日は ",
+        "KEY__displays",
+        " です！"
+      ]
+    }
+  },
+  "contents": [
+    {
+      "display": "テンの日" ,
+      "type": "oneshot",
+      "reset_days": [10]
+    },
+    {
+      "display": "プクの日",
+      "type": "oneshot",
+      "reset_days": [29]
+    },
+    {
+      "display": "シアトリカルクロニクル",
+      "type": "periodic",
+      "reset_days": [1, 15]
+    },
+    {
+      "display": "不思議の魔塔",
+      "type": "periodic",
+      "reset_days": [1]
+    }
+  ]
+}

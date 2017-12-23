@@ -1,6 +1,7 @@
 import Mastodon from 'mastodon-api';
 
-import PeriodicResetContents from './contents/periodic_reset_contents';
+import PeriodicContents from './contents/periodic_contents';
+import WeeklyContents from './contents/weekly_contents';
 import BattlesOfDarkness from './contents/battles_of_darkness';
 import PalaceOfDevils from './contents/palace_of_devils';
 
@@ -31,7 +32,8 @@ export default class KeemaPeriodic {
       this.buildDateString(now)
     )
     .concat(  // Each contents
-      new PeriodicResetContents().getMessage(now),
+      new PeriodicContents().getMessage(now),
+      new WeeklyContents().getMessage(),
       new BattlesOfDarkness().getMessage(now),
       new PalaceOfDevils().getMessage(now)
     )
