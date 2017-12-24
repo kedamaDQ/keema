@@ -37,7 +37,7 @@
       "KEY__display",
       " は本日までです！\n",
       "明日からは ",
-      "KEY__next_display",
+      "KEY__nextDisplay",
       " が始まります！"
     ]
   },
@@ -64,8 +64,8 @@
     {
       "display": "だれかさんず",
       "members": [
-        "ななしの",
-        "ごんべい"
+        "ななしのさん",
+        "ごんべいさん"
       ],
       "tolerance": {
         "sepalated": false,
@@ -93,13 +93,13 @@
     {
       "display": "だれかさんず",
       "members": [
-        "ななしの",
-        "ごんべい"
+        "だれかさん",
+        "だれかさん"
       ],
       "tolerance": {
         "sepalated": false,
         "tolerances": [
-          "折れない心"
+          "とりあえずぜんぶ"
         ]
       }
     },
@@ -121,13 +121,13 @@
     {
       "display": "だれかさんず",
       "members": [
-        "ななしの",
-        "ごんべい"
+        "へのへのさん",
+        "もへじさん"
       ],
       "tolerance": {
         "sepalated": false,
         "tolerances": [
-          "なにか"
+          "優しい気持ち"
         ]
       }
     },

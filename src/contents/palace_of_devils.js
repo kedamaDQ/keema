@@ -48,7 +48,7 @@ export default class PalaceOfDevils extends ContentBase {
     const enemy = this.enemies[this.getEnemyIndex(now)];
     return {
       display: enemy.display,
-      next_display: this.enemies[this.getNextEnemyIndex(now)].display,
+      nextDisplay: this.enemies[this.getNextEnemyIndex(now)].display,
       members: enemy.members.join("と"),
       tolerances: this.buildTolerances(enemy.tolerance),
     };
@@ -81,3 +81,4 @@ export default class PalaceOfDevils extends ContentBase {
     }
   }
 }
+
