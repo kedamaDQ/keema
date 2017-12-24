@@ -51,10 +51,10 @@ export const isStartOfPeriod = (date, resetDays) => {
 }
 
 export const isEndOfPeriod = (date, resetDates) => {
-  if (isStartOfMonth(date)) {
-    return resetDates.includes(new Date(date.getTime() - 1 * DAY).getDate());
+  if (isEndOfMonth(date)) {
+    return resetDates.includes(1);
   } else {
-    return resetDates.includes(date.getDate() - 1);
+    return resetDates.includes(date.getDate() + 1);
   }
 }
 
