@@ -19,10 +19,11 @@ export default class KeemaDaemon {
       new DefenceArmy()
     ];
     this.kantanNaKoto = new KantanNaKoto();
-
     this.M = new Mastodon(env);
-    this.stream = this.M.stream(STREAM_URL);
-    this.stream.on('message', (msg) => {
+  }
+
+  connectToStream() {
+    this.M.stream(STREAM_URL).on('message', (msg) => {
       if (!(this.checkLocal(msg) || this.checkUpdate(msg))) {
         return;
       }
@@ -30,7 +31,8 @@ export default class KeemaDaemon {
       if (this.checkOshiete(msg.data.content)) {
         this.postReplyMessage(
           msg.data.account.acct,
-//          msg.data.id,
+/* Post as a mention rather than reply. */
+//        msg.data.id,
           null,
           this.buildMultiMessage(msg.data.content, this.oshieteContents) || ['？'],
         );

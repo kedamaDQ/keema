@@ -110,7 +110,7 @@ loadEnv()
     opts.help();
     process.exit(1);
   } else if (opts.get('d')) {
-    new KeemaDaemon(env);
+    new KeemaDaemon(env).connectToStream();
   } else if (opts.get('o')) {
     new KeemaPeriodic(env).toot();
   } else {
