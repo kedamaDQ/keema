@@ -14,7 +14,7 @@
     },
     "oneshot": {
       "start": [
-        ":x_pu01: x_ku01: :x_ripo01: ",
+        ":x_pu01: :x_ku01: :x_ripo01: ",
         "KEY__displays",
         " です！ :x_exkun: :x_gyousha:"
       ],
