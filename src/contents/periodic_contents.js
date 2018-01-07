@@ -14,7 +14,7 @@ const TYPE_ONESHOT = 'oneshot';
 
 export default class PeriodicContents extends ContentBase {
   constructor() {
-    super(CONFIG, null);
+    super(CONFIG);
     this.fragments = this.config().fragments;
     this.contents = this.config().contents;
   }

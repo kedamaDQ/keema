@@ -10,7 +10,7 @@ const TRIGGER_REGEXP = new RegExp(/(?:防衛軍|ぼうえいぐん)/);
 export default class DefenceArmy extends ContentBase {
 
   constructor() {
-    super(CONFIG, TRIGGER_REGEXP);
+    super(CONFIG);
     this.fragments = this.config().fragments;
     this.enemies = this.config().enemies;
     this.cycle = this.enemies.reduce((acc, value) => {

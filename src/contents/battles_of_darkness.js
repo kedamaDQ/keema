@@ -12,7 +12,7 @@ const OFFSET_HOURS = 6 * HOUR;
 export default class BattlesOfDarkness extends ContentBase {
 
   constructor() {
-    super(CONFIG, null);
+    super(CONFIG);
     this.startDate = new Date(
       this.config().start_date.year,
       this.config().start_date.month,
@@ -68,12 +68,6 @@ export default class BattlesOfDarkness extends ContentBase {
       this.fragments.full,
       this.buildFullFillings(now)
     );
-  }
-
-  hasReply(subject) {
-    return Object.keys(this.triggers).some((key) => {
-      return new RegExp(this.triggers[key], 'i').test(subject);
-    });
   }
 
   getReply(subject, now = new Date()) {

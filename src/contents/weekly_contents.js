@@ -11,7 +11,7 @@ const OFFSET_HOURS = 6 * HOUR;
 
 export default class WeeklyContents extends ContentBase {
   constructor() {
-    super(CONFIG, null);
+    super(CONFIG);
     this.fragments = this.config().fragments;
     this.contents = this.config().contents;
   }

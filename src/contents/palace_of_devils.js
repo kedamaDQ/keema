@@ -13,7 +13,7 @@ const OFFSET_HOURS = 6 * HOUR;
 export default class PalaceOfDevils extends ContentBase {
 
   constructor() {
-    super(CONFIG, TRIGGER_REGEXP);
+    super(CONFIG);
     this.startDate = new Date(
       this.config().start_date.year,
       this.config().start_date.month,
