@@ -7,14 +7,6 @@ import {
 } from '../utils/date_utils';
 
 const CONFIG = 'battles_of_darkness.json';
-const TRIGGER_REGEXP_FULL = new RegExp(/(?:常闇|とこやみ)/);
-const TRIGGER_REGEXP_REGNAD = new RegExp(/(?:レグ|れぐ)/);
-const TRIGGER_REGEXP_DARKKING = new RegExp(/(?:ダークキング|だーくきんぐ|ＤＫ|ｄｋ|dk)/, 'i');
-const TRIGGER_REGEXP_MEDB = new RegExp(/(?:メイヴ|メイブ|めいう゛|めいぶ|イカ|いか|ｲｶ)/);
-const KEY_REGNAD = 'regnad';
-const KEY_DARKKING = 'darkking';
-const KEY_MEDB = 'medb';
-
 const OFFSET_HOURS = 6 * HOUR;
 
 export default class BattlesOfDarkness extends ContentBase {
@@ -29,6 +21,7 @@ export default class BattlesOfDarkness extends ContentBase {
     this.fragments = this.config().fragments;
     this.enemies = this.config().enemies;
     this.greekNumbers = this.config().greek_numbers;
+    this.triggers = this.config().triggers;
   }
 
   getLevel(now, offset) {
@@ -78,46 +71,31 @@ export default class BattlesOfDarkness extends ContentBase {
   }
 
   hasReply(subject) {
-    return (
-      TRIGGER_REGEXP_FULL.test(subject) ||
-      TRIGGER_REGEXP_REGNAD.test(subject) ||
-      TRIGGER_REGEXP_DARKKING.test(subject) ||
-      TRIGGER_REGEXP_MEDB.test(subject)
-    );
+    return Object.keys(this.triggers).some((key) => {
+      return new RegExp(this.triggers[key], 'i').test(subject);
+    });
   }
 
   getReply(subject, now = new Date()) {
-    if (TRIGGER_REGEXP_FULL.test(subject)) {
-      return [{
-        pos: subject.search(TRIGGER_REGEXP_FULL),
+    const regexpFull = new RegExp(this.triggers.full, 'i');
+    if (regexpFull.test(subject)) {
+      return[{
+        pos: subject.search(regexpFull),
         message: this.buildFullMessage(now)
       }];
-    } else {
-      const replies = [];
-
-      if (TRIGGER_REGEXP_REGNAD.test(subject)) {
-        replies.push({
-          pos: subject.search(TRIGGER_REGEXP_REGNAD),
-          message: this.buildSingleMessage(now, KEY_REGNAD)
-        });
-      }
-
-      if (TRIGGER_REGEXP_DARKKING.test(subject)) {
-        replies.push({
-          pos: subject.search(TRIGGER_REGEXP_DARKKING),
-          message: this.buildSingleMessage(now, KEY_DARKKING)
-        });
-      }
-
-      if (TRIGGER_REGEXP_MEDB.test(subject)) {
-        replies.push({
-          pos: subject.search(TRIGGER_REGEXP_MEDB),
-          message: this.buildSingleMessage(now, KEY_MEDB)
-        });
-      }
-
-      return replies;
     }
+
+    const replies = [];
+    Object.keys(this.triggers).forEach((key) => {
+      const regexp = new RegExp(this.triggers[key], 'i');
+      if (regexp.test(subject)) {
+        replies.push({
+          pos: subject.search(regexp),
+          message: this.buildSingleMessage(now, key)
+        });
+      }
+    });
+    return replies;
   }
 
   getMessage(now = new Date()) {
