@@ -7,7 +7,6 @@ import {
 } from '../utils/date_utils';
 
 const CONFIG = 'palace_of_devils.json';
-const TRIGGER_REGEXP = new RegExp(/(?:邪神|邪心|じゃしん)/);
 const OFFSET_HOURS = 6 * HOUR;
 
 export default class PalaceOfDevils extends ContentBase {
@@ -21,6 +20,7 @@ export default class PalaceOfDevils extends ContentBase {
     );
     this.resetDays = this.config().reset_days;
     this.fragments = this.config().fragments;
+    this.triggers = this.config().triggers;
     this.enemies = this.config().enemies;
   }
 
@@ -56,7 +56,7 @@ export default class PalaceOfDevils extends ContentBase {
 
   getReply(subject, now = new Date()) {
     return [{
-      pos: subject.search(TRIGGER_REGEXP),
+      pos: subject.search(new RegExp(this.triggers['full'], 'i')),
       message: this.buildMessage(this.fragments.full, this.buildFillings(now))
     }];
   }

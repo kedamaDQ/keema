@@ -5,13 +5,13 @@ import {
 
 const CONFIG = 'defence_army.json';
 const OFFSET_HOURS = 6 * HOUR;
-const TRIGGER_REGEXP = new RegExp(/(?:防衛軍|ぼうえいぐん)/);
 
 export default class DefenceArmy extends ContentBase {
 
   constructor() {
     super(CONFIG);
     this.fragments = this.config().fragments;
+    this.triggers = this.config().triggers;
     this.enemies = this.config().enemies;
     this.cycle = this.enemies.reduce((acc, value) => {
       return acc + value.duration;
@@ -52,7 +52,7 @@ export default class DefenceArmy extends ContentBase {
 
   getReply(subject, now = new Date()) {
     return [{
-      pos: subject.search(TRIGGER_REGEXP),
+      pos: subject.search(new RegExp(this.triggers['full'], 'i')),
       message: this.buildMessage(this.fragments, this.buildFillings(now))
     }];
   }

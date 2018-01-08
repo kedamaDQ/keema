@@ -8,6 +8,9 @@
     "KEY__nextDisplay",
     "」が攻めてきます！"
   ],
+  "triggers": {
+    "full": "(?:防衛軍|ぼうえいぐん)"
+  },
   "enemies": [
     {
       "display": "闇朱の獣牙兵団",

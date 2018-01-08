@@ -6,7 +6,7 @@ export default class ContentBase {
     this.json = (config) ?
       JSON.parse(fs.readFileSync(`${this.configDir()}/${config}`, {encoding: 'utf8'})) :
       null;
-    this.triggers = json.triggers || {};
+    this.triggers = this.json.triggers || {};
   }
 
   config() {
