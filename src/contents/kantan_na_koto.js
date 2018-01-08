@@ -4,7 +4,7 @@ const CONFIG = 'kantan_na_koto.json';
 
 export default class KantanNaKoto extends ContentBase {
   constructor() {
-    super(CONFIG, null);
+    super(CONFIG);
     this.contents = this.config().contents.map((v) => {
       return {
         regexp: new RegExp(v.regexp),

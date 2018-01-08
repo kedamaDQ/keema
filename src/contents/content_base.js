@@ -2,11 +2,11 @@ const fs = require('fs');
 
 export default class ContentBase {
 
-  constructor(config, triggerRegExp) {
+  constructor(config) {
     this.json = (config) ?
       JSON.parse(fs.readFileSync(`${this.configDir()}/${config}`, {encoding: 'utf8'})) :
       null;
-    this.trigger = triggerRegExp;
+    this.triggers = this.json.triggers || {};
   }
 
   config() {
@@ -34,7 +34,9 @@ export default class ContentBase {
   }
 
   hasReply(subject) {
-    return this.trigger.test(subject);
+    return Object.keys(this.triggers).some((key) => {
+      return new RegExp(this.triggers[key], 'i').test(subject);
+    });
   }
 
   // Override this method.
