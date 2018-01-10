@@ -1,13 +1,15 @@
 {
-  "fragments": [
-    "現在のアストルティア防衛軍は「",
-    "KEY__currentDisplay",
-    "」に攻められています！\nあと",
-    "KEY__remain",
-    "で「",
-    "KEY__nextDisplay",
-    "」が攻めてきます！"
-  ],
+  "fragments": {
+    "full": [
+      "現在のアストルティア防衛軍は「",
+      "KEY__currentDisplay",
+      "」に攻められています！\nあと",
+      "KEY__remain",
+      "で「",
+      "KEY__nextDisplay",
+      "」が攻めてきます！"
+    ]
+  },
   "triggers": {
     "full": "(?:防衛軍|ぼうえいぐん)"
   },

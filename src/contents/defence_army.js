@@ -57,7 +57,7 @@ export default class DefenceArmy extends ContentBase {
   getReply(subject, now = new Date()) {
     return [{
       pos: subject.search(new RegExp(this.triggers['full'], 'i')),
-      message: this.buildMessage(this.fragments, this.buildFillings(now))
+      message: this.buildMessage(this.fragments['full'], this.buildFillings(now))
     }];
   }
 

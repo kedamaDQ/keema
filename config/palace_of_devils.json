@@ -7,11 +7,6 @@
   },
   "reset_days": [10, 25],
   "fragments": {
-    "short": [
-      "邪神の宮殿は ",
-      "KEY__display",
-      " です！"
-    ],
     "full": [
       "本日の邪神の宮殿は ",
       "KEY__display",
@@ -20,6 +15,11 @@
       "KEY__members",
       "、あると良い耐性は ",
       "KEY__tolerances",
+      " です！"
+    ],
+    "short": [
+      "邪神の宮殿は ",
+      "KEY__display",
       " です！"
     ],
     "first_day": [
