@@ -6,7 +6,11 @@ export default class ContentBase {
     this.json = (config) ?
       JSON.parse(fs.readFileSync(`${this.configDir()}/${config}`, {encoding: 'utf8'})) :
       null;
-    this.triggers = this.json.triggers || {};
+  }
+
+  // Pesudo abstract method.
+  getTriggers() {
+    throw new Error('Not implemented, Override is required.')
   }
 
   config() {
@@ -34,8 +38,8 @@ export default class ContentBase {
   }
 
   hasReply(subject) {
-    return Object.keys(this.triggers).some((key) => {
-      return new RegExp(this.triggers[key], 'i').test(subject);
+    return Object.keys(this.getTriggers()).some((key) => {
+      return new RegExp(this.getTriggers()[key], 'i').test(subject);
     });
   }
 

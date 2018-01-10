@@ -24,6 +24,10 @@ export default class PalaceOfDevils extends ContentBase {
     this.enemies = this.config().enemies;
   }
 
+  getTriggers() {
+    return this.triggers;
+  }
+
   getEnemyIndex(now) {
     return elapsedPeriods(
       this.startDate, new Date(now.getTime() - OFFSET_HOURS), this.resetDays

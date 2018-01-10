@@ -24,6 +24,10 @@ export default class BattlesOfDarkness extends ContentBase {
     this.triggers = this.config().triggers;
   }
 
+  getTriggers() {
+    return this.triggers;
+  }
+
   getLevel(now, offset) {
     return this.greekNumbers[
       (

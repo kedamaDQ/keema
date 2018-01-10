@@ -18,6 +18,10 @@ export default class DefenceArmy extends ContentBase {
     }, 0);
   }
 
+  getTriggers() {
+    return this.triggers;
+  }
+
   getMinutesOfWeek(now) {
     const n = new Date(now.getTime() - OFFSET_HOURS);
     return (n.getDay() * 24 * 60) + (n.getHours() * 60) + n.getMinutes();
