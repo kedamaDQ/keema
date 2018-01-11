@@ -18,10 +18,22 @@
     ]
   },
   "triggers": {
-    "full": "(?:常闇|とこやみ)",
-    "regnad": "(?:レグ|れぐ)",
-    "darkking": "(?:ダークキング|だーくきんぐ|ＤＫ|ｄｋ|dk)",
-    "medb": "(?:メイヴ|メイブ|めいう゛|めいぶ|イカ|いか|ｲｶ)"
+    "full": {
+      "trigger": "(?:常闇|とこやみ)",
+      "fragments": "full"
+    },
+    "regnad": {
+      "trigger": "(?:レグ|れぐ)",
+      "fragments": "single"
+    },
+    "darkking": {
+      "trigger": "(?:ダークキング|だーくきんぐ|ＤＫ|ｄｋ|dk)",
+      "fragments": "single"
+    },
+    "medb": {
+      "trigger": "(?:メイヴ|メイブ|めいう゛|めいぶ|イカ|いか|ｲｶ)",
+      "fragments": "single"
+    }
   },
   "greek_numbers": [
     "Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ"

@@ -1,3 +1,7 @@
+'use strict';
+
+import deepFreeze from '../utils/deep_freeze';
+
 const fs = require('fs');
 
 export default class ContentBase {
@@ -6,11 +10,7 @@ export default class ContentBase {
     this.json = (config) ?
       JSON.parse(fs.readFileSync(`${this.configDir()}/${config}`, {encoding: 'utf8'})) :
       null;
-  }
-
-  // Pesudo abstract method.
-  getTriggers() {
-    throw new Error('Not implemented, Override is required.')
+    deepFreeze(this.json);
   }
 
   config() {
@@ -38,18 +38,65 @@ export default class ContentBase {
   }
 
   hasReply(subject) {
-    return Object.keys(this.getTriggers()).some((key) => {
-      return new RegExp(this.getTriggers()[key], 'i').test(subject);
+    return Object.keys(this.triggers()).some((key) => {
+      return new RegExp(this.triggers()[key], 'i').test(subject);
     });
   }
 
-  // Override this method.
-  getReply(subject) {
-    return '';
+  getReply(subject, now = new Date()) {
+    const regExpFull = new RegExp(this.triggers()['full'], 'i');
+    if (regExpFull.test(subject)) {
+      return [{
+        pos: subject.search(regExpFull),
+        message: this.buildMessage(this.fragments()['full'], this.fillings(this.offsetTime(now)))
+      }];
+    }
+
+    // singles
+    // triggers の中に fragments_name でも入れとくか……?
+    const replies = [];
+    Object.keys(this.triggers()).forEach((key) => {
+      // ここ、object そのものをループした方が綺麗に書けるね。 for in ?
+      const regExp = new RegExp(this.triggers()[key].regexp, 'i');
+      if (regExp.test(subject)) {
+        replies.push({
+          pos: subject.search(regExp),
+          message: this.buildMessage(this.fragments()[this.triggers()[key].fragments], this.fillings(this.offsetTime(now)))
+        });
+      }
+    });
+    return replies;
   }
 
-  // Override this method.
-  getMessage() {
-    return '';
+  getMessage(now = new Date()) {
+    return [{
+      pos: 0,
+      message: this.buildMessage(this.fragments(), this.fillings(this.offsetTime(now)))
+    }];
+  }
+
+  /*
+   * Pseudo abstract methods.
+   * 
+   * Override these methods in chiled classes.
+   */
+  offsetTime(now) {
+    throw new Error('Not implemented, Override is required.')
+  }
+
+  triggers() {
+    throw new Error('Not implemented, Override is required.')
+  }
+
+  triggerPos(subject) {
+    throw new Error('Not impmelented, Override is required.')
+  }
+
+  fragments() {
+    throw new Error('Not impmelented, Override is required.')
+  }
+
+  fillings(now) {
+    throw new Error('Not impmelented, Override is required.')
   }
 }

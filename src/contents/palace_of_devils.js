@@ -24,10 +24,17 @@ export default class PalaceOfDevils extends ContentBase {
     this.enemies = this.config().enemies;
   }
 
-  getTriggers() {
+  offsetTime(now) {
+    return new Date(now.getTime() - OFFSET_HOURS);
+  }
+
+  triggers() {
     return this.triggers;
   }
 
+  triggerPos(subject) {
+    return subject.search(new RegExp(this.triggers.full, 'i'));
+  }
   getEnemyIndex(now) {
     return elapsedPeriods(
       this.startDate, new Date(now.getTime() - OFFSET_HOURS), this.resetDays
@@ -48,7 +55,7 @@ export default class PalaceOfDevils extends ContentBase {
     }
   }
 
-  buildFillings(now) {
+  fillings(now) {
     const enemy = this.enemies[this.getEnemyIndex(now)];
     return {
       display: enemy.display,
