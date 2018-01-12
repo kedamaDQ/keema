@@ -14,7 +14,7 @@ export default class ContentBase {
   }
 
   config() {
-    return this.json;
+    return {...this.json};
   }
 
   configDir() {
@@ -45,33 +45,45 @@ export default class ContentBase {
 
   getReply(subject, now = new Date()) {
     const regExpFull = new RegExp(this.triggers()['full'], 'i');
+    const offsettedNow = this.offsetTime(now);
+
     if (regExpFull.test(subject)) {
       return [{
         pos: subject.search(regExpFull),
-        message: this.buildMessage(this.fragments()['full'], this.fillings(this.offsetTime(now)))
+        message: this.buildMessage(
+          // palace_of_devils cannot work.
+          // separate out into message_type & reply_type?
+          this.replyFragments(offsettedNow, 'full'),
+          this.fillings(offsettedNow, 'full')
+        )
       }];
     }
 
-    // singles
-    // triggers の中に fragments_name でも入れとくか……?
     const replies = [];
-    Object.keys(this.triggers()).forEach((key) => {
-      // ここ、object そのものをループした方が綺麗に書けるね。 for in ?
-      const regExp = new RegExp(this.triggers()[key].regexp, 'i');
+    for (const key in this.triggers()) {
+      const trigger = this.triggers[key];
+      const regExp = new RegExp(trigger.regexp, 'i');
       if (regExp.test(subject)) {
         replies.push({
           pos: subject.search(regExp),
-          message: this.buildMessage(this.fragments()[this.triggers()[key].fragments], this.fillings(this.offsetTime(now)))
+          message: this.buildMessage(
+            this.replyFragments(offsettedNow, trigger.fragments),
+            this.fillings(offsettedNow, trigger.fragments)
+          )
         });
       }
-    });
+    };
     return replies;
   }
 
   getMessage(now = new Date()) {
+    const offsettedNow = this.offsetTime(now);
     return [{
       pos: 0,
-      message: this.buildMessage(this.fragments(), this.fillings(this.offsetTime(now)))
+      message: this.buildMessage(
+        this.messageFragments(offsettedNow, 'full'),
+        this.fillings(offsettedNow, 'full')
+      )
     }];
   }
 
@@ -88,11 +100,11 @@ export default class ContentBase {
     throw new Error('Not implemented, Override is required.')
   }
 
-  triggerPos(subject) {
+  replyFragments() {
     throw new Error('Not impmelented, Override is required.')
   }
 
-  fragments() {
+  messageFragments() {
     throw new Error('Not impmelented, Override is required.')
   }
 

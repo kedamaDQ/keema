@@ -41,8 +41,11 @@
       " が始まります！"
     ]
   },
-  "triggers": {
-    "full": "(?:邪神|邪心|じゃしん)"
+  "message_types": {
+    "full": {
+      "regexp": "(?:邪神|邪心|じゃしん)",
+      "fragments": "?????"
+    }
   },
   "enemies": [
     {

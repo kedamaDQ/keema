@@ -17,7 +17,7 @@
       "KEY__name", "は ", "KEY__level", " です！"
     ]
   },
-  "triggers": {
+  "message_types": {
     "full": {
       "trigger": "(?:常闇|とこやみ)",
       "fragments": "full"

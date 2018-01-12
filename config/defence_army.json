@@ -10,8 +10,11 @@
       "」が攻めてきます！"
     ]
   },
-  "triggers": {
-    "full": "(?:防衛軍|ぼうえいぐん)"
+  "message_types": {
+    "full": {
+      "regexp": "(?:防衛軍|ぼうえいぐん)",
+      "fragments": "full"
+    }
   },
   "enemies": [
     {
