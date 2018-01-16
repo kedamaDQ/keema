@@ -8,4 +8,4 @@ const deepFreeze = (o) => {
   });
 };
 
-export default deepFreezer;
+export default deepFreeze;

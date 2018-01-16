@@ -2,6 +2,9 @@
 
 import deepFreeze from '../utils/deep_freeze';
 
+export const KEY_FULL = 'full';
+export const KEY_PERIODIC = 'periodic';
+
 const fs = require('fs');
 
 export default class ContentBase {
@@ -14,7 +17,7 @@ export default class ContentBase {
   }
 
   config() {
-    return {...this.json};
+    return Object.assign({}, this.json);
   }
 
   configDir() {
@@ -25,10 +28,12 @@ export default class ContentBase {
     return new RegExp(/^KEY__([a-zA-Z]+)$/);
   }
 
-  buildMessage(fragments, fillings) {
+  buildMessage(now, templateKey = null, fillingsKey = null) {
     const regExp = this.fillingKeyRegExp();
+    const template = this.getTemplate(now, templateKey);
+    const fillings = this.getFillings(now, fillingsKey);
 
-    return fragments.map((v) => {
+    return template.fragments.map((v) => {
       if (regExp.test(v)) {
         return (fillings[RegExp.$1]) ? fillings[RegExp.$1] : v;
       } else {
@@ -38,38 +43,33 @@ export default class ContentBase {
   }
 
   hasReply(subject) {
-    return Object.keys(this.triggers()).some((key) => {
-      return new RegExp(this.triggers()[key], 'i').test(subject);
+    const types = this.getMessageTypes();
+    return Object.keys(types).some((t) => {
+      return new RegExp(types[t].regexp, 'i').test(subject);
     });
   }
 
   getReply(subject, now = new Date()) {
-    const regExpFull = new RegExp(this.triggers()['full'], 'i');
-    const offsettedNow = this.offsetTime(now);
-
+    const types = this.getMessageTypes();
+    const regExpFull = new RegExp(types[KEY_FULL].regexp, 'i');
     if (regExpFull.test(subject)) {
       return [{
         pos: subject.search(regExpFull),
-        message: this.buildMessage(
-          // palace_of_devils cannot work.
-          // separate out into message_type & reply_type?
-          this.replyFragments(offsettedNow, 'full'),
-          this.fillings(offsettedNow, 'full')
-        )
-      }];
+        message: this.buildMessage(now, types[KEY_FULL].template_key, types[KEY_FULL].fillings_key)
+      }]
     }
 
     const replies = [];
-    for (const key in this.triggers()) {
-      const trigger = this.triggers[key];
-      const regExp = new RegExp(trigger.regexp, 'i');
+    for (const t in types) {
+      if (!types[t].regexp) {
+        continue;
+      }
+
+      const regExp = new RegExp(types[t].regexp, 'i');
       if (regExp.test(subject)) {
         replies.push({
           pos: subject.search(regExp),
-          message: this.buildMessage(
-            this.replyFragments(offsettedNow, trigger.fragments),
-            this.fillings(offsettedNow, trigger.fragments)
-          )
+          message: this.buildMessage(now, types[t].template_key, types[t].fillings_key)
         });
       }
     };
@@ -77,13 +77,10 @@ export default class ContentBase {
   }
 
   getMessage(now = new Date()) {
-    const offsettedNow = this.offsetTime(now);
+    const type = this.getMessageTypes()[KEY_PERIODIC];
     return [{
       pos: 0,
-      message: this.buildMessage(
-        this.messageFragments(offsettedNow, 'full'),
-        this.fillings(offsettedNow, 'full')
-      )
+      message: this.buildMessage(now, type.template_key, type.fillings_key)
     }];
   }
 
@@ -92,23 +89,15 @@ export default class ContentBase {
    * 
    * Override these methods in chiled classes.
    */
-  offsetTime(now) {
+  getMessageTypes() {
     throw new Error('Not implemented, Override is required.')
   }
 
-  triggers() {
-    throw new Error('Not implemented, Override is required.')
-  }
-
-  replyFragments() {
+  getTemplates(now, templateKey) {
     throw new Error('Not impmelented, Override is required.')
   }
 
-  messageFragments() {
-    throw new Error('Not impmelented, Override is required.')
-  }
-
-  fillings(now) {
+  getFillings(now, fillingsKey) {
     throw new Error('Not impmelented, Override is required.')
   }
 }

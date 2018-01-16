@@ -1,4 +1,10 @@
+'use strict';
+
 import ContentBase from './content_base';
+import {
+  KEY_FULL,
+  KEY_PERIODIC
+} from './content_base';
 import {
   HOUR
 } from '../utils/date_utils';
@@ -10,21 +16,20 @@ export default class DefenceArmy extends ContentBase {
 
   constructor() {
     super(CONFIG);
-    this.fragments = this.config().fragments;
-    this.triggers = this.config().triggers;
-    this.enemies = this.config().enemies;
+    this.templates = this.config().templates;
+    this.messageTypes = this.config().message_types;
+    this.enemies = this.config().fillings;
     this.cycle = this.enemies.reduce((acc, value) => {
       return acc + value.duration;
     }, 0);
   }
 
-  getTriggers() {
-    return this.triggers;
+  offsetTime(now) {
+    return new Date(now.getTime() - OFFSET_HOURS);
   }
 
   getMinutesOfWeek(now) {
-    const n = new Date(now.getTime() - OFFSET_HOURS);
-    return (n.getDay() * 24 * 60) + (n.getHours() * 60) + n.getMinutes();
+    return (now.getDay() * 24 * 60) + (now.getHours() * 60) + now.getMinutes();
   }
 
   readableMinutes(minutes) {
@@ -37,7 +42,21 @@ export default class DefenceArmy extends ContentBase {
     }
   }
 
-  buildFillings(now) {
+  /* Override pseudo abstract methods. */
+  getMessageTypes() {
+    return this.messageTypes;
+  }
+
+  getTemplate(now, templateKey) {
+    if (!templateKey) {
+      throw new Error('Periodical message is not Implemented.');
+    }
+    return this.templates.find((template) => {
+      return template.key === templateKey;
+    });
+  }
+
+  getFillings(now, fillingsKey) {
     const fillings = {};
     let elapsed = this.getMinutesOfWeek(now) % this.cycle;
     this.enemies.find((v, i) => {
@@ -52,16 +71,5 @@ export default class DefenceArmy extends ContentBase {
       }
     });
     return fillings;
-  }
-
-  getReply(subject, now = new Date()) {
-    return [{
-      pos: subject.search(new RegExp(this.triggers['full'], 'i')),
-      message: this.buildMessage(this.fragments['full'], this.buildFillings(now))
-    }];
-  }
-
-  getMessage() {
-    throw new Error('Not implemented.');
   }
 }
