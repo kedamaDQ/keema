@@ -28,10 +28,14 @@ export default class ContentBase {
     return new RegExp(/^KEY__([a-zA-Z]+)$/);
   }
 
-  buildMessage(now, templateKey = null, fillingsKey = null) {
+  buildMessage(now, prop) {
     const regExp = this.fillingKeyRegExp();
-    const template = this.getTemplate(now, templateKey);
-    const fillings = this.getFillings(now, fillingsKey);
+    const template = this.getTemplate(now, prop);
+    const fillings = this.getFillings(now, prop);
+
+    if (!(template && fillings)) {
+      return null;
+    }
 
     return template.fragments.map((v) => {
       if (regExp.test(v)) {
@@ -43,45 +47,48 @@ export default class ContentBase {
   }
 
   hasReply(subject) {
-    const types = this.getMessageTypes();
-    return Object.keys(types).some((t) => {
-      return new RegExp(types[t].regexp, 'i').test(subject);
+    const props = this.getMessageProps();
+    return Object.keys(props).some((key) => {
+      return new RegExp(props[key].regexp, 'i').test(subject);
     });
   }
 
   getReply(subject, now = new Date()) {
-    const types = this.getMessageTypes();
-    const regExpFull = new RegExp(types[KEY_FULL].regexp, 'i');
+    const props = this.getMessageProps();
+    const regExpFull = new RegExp(props[KEY_FULL].regexp, 'i');
     if (regExpFull.test(subject)) {
       return [{
         pos: subject.search(regExpFull),
-        message: this.buildMessage(now, types[KEY_FULL].template_key, types[KEY_FULL].fillings_key)
-      }]
+        message: this.buildMessage(now, props[KEY_FULL])
+      }].filter((v) => v.message);
     }
 
     const replies = [];
-    for (const t in types) {
-      if (!types[t].regexp) {
+    for (const key in props) {
+      if (!props[key].regexp) {
         continue;
       }
 
-      const regExp = new RegExp(types[t].regexp, 'i');
+      const regExp = new RegExp(props[key].regexp, 'i');
       if (regExp.test(subject)) {
         replies.push({
           pos: subject.search(regExp),
-          message: this.buildMessage(now, types[t].template_key, types[t].fillings_key)
+          message: this.buildMessage(now, props[key])
         });
       }
     };
-    return replies;
+    return replies.filter((v) => v.message);
   }
 
   getMessage(now = new Date()) {
-    const type = this.getMessageTypes()[KEY_PERIODIC];
-    return [{
-      pos: 0,
-      message: this.buildMessage(now, type.template_key, type.fillings_key)
-    }];
+    const messages = [];
+    this.getMessageProps()[KEY_PERIODIC].forEach((prop) => {
+      messages.push({
+        pos: 0,
+        message: this.buildMessage(now, prop)
+      });
+    });
+    return messages.filter((v) => v.message);
   }
 
   /*
@@ -89,15 +96,15 @@ export default class ContentBase {
    * 
    * Override these methods in chiled classes.
    */
-  getMessageTypes() {
+  getMessageProps() {
     throw new Error('Not implemented, Override is required.')
   }
 
-  getTemplates(now, templateKey) {
+  getTemplate(now, messageProps) {
     throw new Error('Not impmelented, Override is required.')
   }
 
-  getFillings(now, fillingsKey) {
+  getFillings(now, messageProps) {
     throw new Error('Not impmelented, Override is required.')
   }
 }

@@ -27,7 +27,7 @@ export default class BattlesOfDarkness extends ContentBase {
     this.templates = this.config().templates;
     this.enemies = this.config().fillings;
     this.levelNumbers = this.config().level_numbers;
-    this.messageTypes = this.config().message_types;
+    this.messageProps = this.config().message_props;
   }
 
   offsetTime(now) {
@@ -43,18 +43,18 @@ export default class BattlesOfDarkness extends ContentBase {
   }
 
   /* Override pseudo abstract methods. */
-  getMessageTypes() {
-    return this.messageTypes;
+  getMessageProps() {
+    return this.messageProps;
   }
 
-  getTemplate(now, templateKey) {
+  getTemplate(now, messageProps) {
     return this.templates.find((template) => {
-      return template.key === templateKey;
+      return template.key === messageProps.template_key;
     });
   }
 
-  getFillings(now, fillingsKey) {
-    if (fillingsKey === ContentBase.KEY_PERIODIC) {
+  getFillings(now, messageProps) {
+    if (messageProps.fillings_key === ContentBase.KEY_PERIODIC) {
       const fillings = {};
       const foresdon = new Foresdon();
       this.enemies.forEach((enemy) => {
@@ -66,7 +66,7 @@ export default class BattlesOfDarkness extends ContentBase {
     } else {
       const fillings = {};
       this.enemies.find((enemy) => {
-        if (enemy.key === fillingsKey) {
+        if (enemy.key === messageProps.fillings_key) {
           fillings['name'] = enemy.name;
           fillings['level'] = this.getLevel(this.offsetTime(now), enemy.offset);
           return true;

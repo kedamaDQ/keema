@@ -1,9 +1,11 @@
 {
-  "message_types": {
-    "periodic": {
-      "template_key": "full",
-      "fillings_key": "full"
-    },
+  "message_props": {
+    "periodic": [
+      {
+        "template_key": "full",
+        "fillings_key": "full"
+      }
+    ],
     "full": {
       "regexp": "(?:防衛軍|ぼうえいぐん)",
       "template_key": "full",

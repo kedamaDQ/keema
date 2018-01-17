@@ -6,11 +6,13 @@
     "day": 10
   },
   "reset_days": [10, 25],
-  "message_types": {
-    "periodic": {
-      "template_key": null,
-      "fillings_key": null
-    },
+  "message_props": {
+    "periodic": [
+      {
+        "template_key": null,
+        "fillings_key": null
+      }
+    ],
     "full": {
       "regexp": "(?:邪神|邪心|じゃしん)",
       "template_key": "full",

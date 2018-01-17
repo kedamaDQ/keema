@@ -12,14 +12,28 @@ const OFFSET_HOURS = 6 * HOUR;
 export default class WeeklyContents extends ContentBase {
   constructor() {
     super(CONFIG);
-    this.fragments = this.config().fragments;
-    this.contents = this.config().contents;
+    this.messageProps = this.config().message_props;
+    this.templates = this.config().templates;
+    this.contents = this.config().fillings;
   }
 
-  buildFillings(now) {
+  getMessageProps() {
+    return this.messageProps;
+  }
+
+  getTemplate(now, messageProps) {
+    return this.templates.find((t) => {
+      return (t.key === messageProps.template_key);
+    })
+  }
+
+  getFillings(now, messageProps) {
     const offsetted = new Date(now.getTime() - OFFSET_HOURS);
+    const subject =
+      (messageProps.fillings_key === 'end') ? nextDayOf(offsetted) :
+      (messageProps.filling_key === 'start') ? offsetted.getDate() : null;
     const displays = this.contents.filter((c => {
-      return c.reset_days.includes(offsetted.getDay());
+      return c.reset_days.includes(subject);
     })).map(c => c.display);
 
     if (displays.length === 0) {
@@ -37,25 +51,5 @@ export default class WeeklyContents extends ContentBase {
 
   getReply() {
     throw new Error('Not implemented.');
-  }
-
-  getMessage(now = new Date()) {
-    return [
-      {
-        fragments: this.fragments.start,
-        fillings: this.buildFillings(now)
-      },
-      {
-        fragments: this.fragments.end,
-        fillings: this.buildFillings(nextDayOf(now))
-      }
-    ]
-    .filter((v) => v.fillings)
-    .map((v) => {
-      return {
-        pos: 0,
-        message: this.buildMessage(v.fragments, v.fillings)
-      };
-    });
   }
 }

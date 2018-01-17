@@ -25,12 +25,12 @@ describe('PalaceOfDevils', () => {
 
       const expected = (base + i) % enemies.length;
       test(`on: ${subject} expected: ${expected}`, () => {
-        expect(pod.getEnemyIndex(subject)).toBe(expected);
+        expect(pod.getEnemyIndex(pod.offsetTime(subject))).toBe(expected);
       });
 
       const before = new Date(subject.getTime() - 1000);
       test(`Switching. subject: ${subject}, before: ${before}`, () => {
-        expect(pod.getEnemyIndex(subject)).not.toBe(pod.getEnemyIndex(before));
+        expect(pod.getEnemyIndex(pod.offsetTime(subject))).not.toBe(pod.getEnemyIndex(pod.offsetTime(before)));
       });
     }
   });

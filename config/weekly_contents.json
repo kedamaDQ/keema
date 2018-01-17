@@ -1,17 +1,39 @@
 {
-  "fragments": {
-    "start": [
-      "今週の ",
-      "KEY__displays",
-      " は今日からです！"
+  "message_props": {
+    "periodic": [
+      {
+        "template_key": "start",
+        "fillings_key": "start"
+      },
+      {
+        "template_key": "end",
+        "fillings_key": "end"
+      }
     ],
-    "end": [
-      "今週の ",
-      "KEY__displays",
-      " は今日までです！"
-    ]
+    "full": {
+      "template_key": null,
+      "fillings_key": null
+    }
   },
-  "contents": [
+  "templates": [
+    {
+      "key": "start",
+      "fragments": [
+        "今週の ",
+        "KEY__displays",
+        " は今日からです！"
+      ]
+    },
+    {
+      "key": "end", 
+      "fragments": [
+        "今週の ",
+        "KEY__displays",
+        " は今日までです！"
+      ]
+    }
+  ],
+  "fillings": [
     {
       "display": "レンダーシア討伐",
       "reset_days": [0]

@@ -25,7 +25,7 @@ export default class PalaceOfDevils extends ContentBase {
       this.config().start_date.day
     );
     this.resetDays = this.config().reset_days;
-    this.messageTypes = this.config().message_types;
+    this.messageProps = this.config().message_props;
     this.templates = this.config().templates;
     this.enemies = this.config().fillings;
   }
@@ -55,22 +55,22 @@ export default class PalaceOfDevils extends ContentBase {
   }
 
   /* Override pseudo abstract methods. */
-  getMessageTypes() {
-    return this.messageTypes;
+  getMessageProps() {
+    return this.messageProps;
   }
 
-  getTemplate(now, templateKey) {
-    if (templateKey) {
-      return this.templates[templateKey];
+  getTemplate(now, messageProps) {
+    if (messageProps.template_key) {
+      return this.templates[messageProps.template_key];
     }
 
-    // templateKey === null
+    // messageProps.template_key === null
     if (isStartOfPeriod(this.offsetTime(now), this.resetDays)) {
       return this.templates.find((template) => {
         return template.key === 'first_day';
       });
     }
-    
+
     if (isEndOfPeriod(this.offsetTime(now), this.resetDays)) {
       return this.templates.find((template) => {
         return template.key === 'last_day';
@@ -82,7 +82,7 @@ export default class PalaceOfDevils extends ContentBase {
     });
   }
 
-  getFillings(now, fillingsKey) {
+  getFillings(now, messageProps) {
     const enemy = this.enemies[this.getEnemyIndex(this.offsetTime(now))];
     return {
       display: enemy.display,

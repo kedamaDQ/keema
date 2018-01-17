@@ -17,7 +17,7 @@ export default class DefenceArmy extends ContentBase {
   constructor() {
     super(CONFIG);
     this.templates = this.config().templates;
-    this.messageTypes = this.config().message_types;
+    this.messageProps = this.config().message_props;
     this.enemies = this.config().fillings;
     this.cycle = this.enemies.reduce((acc, value) => {
       return acc + value.duration;
@@ -43,20 +43,20 @@ export default class DefenceArmy extends ContentBase {
   }
 
   /* Override pseudo abstract methods. */
-  getMessageTypes() {
-    return this.messageTypes;
+  getMessageProps() {
+    return this.messageProps;
   }
 
-  getTemplate(now, templateKey) {
-    if (!templateKey) {
+  getTemplate(now, messageProps) {
+    if (!messageProps.template_key) {
       throw new Error('Periodical message is not Implemented.');
     }
     return this.templates.find((template) => {
-      return template.key === templateKey;
+      return template.key === messageProps.template_key;
     });
   }
 
-  getFillings(now, fillingsKey) {
+  getFillings(now, messageProps) {
     const fillings = {};
     let elapsed = this.getMinutesOfWeek(now) % this.cycle;
     this.enemies.find((v, i) => {

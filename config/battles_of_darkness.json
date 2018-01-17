@@ -8,11 +8,13 @@
   "level_numbers": [
     "Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ"
   ],
-  "message_types": {
-    "periodic": {
-      "template_key": "full",
-      "fillings_key": "full"
-    },
+  "message_props": {
+    "periodic": [
+      {
+        "template_key": "full",
+        "fillings_key": "full"
+      }
+    ],
     "full": {
       "trigger": "(?:常闇|とこやみ)",
       "template_key": "full",
