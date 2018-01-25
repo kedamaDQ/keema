@@ -122,16 +122,20 @@
       }
     },
     {
-      "key": "someone02",
-      "display": "だれかさんず",
+      "key": "destroyer_and_creator",
+      "display": "破壊と創造の神々",
       "members": [
-        "だれかさん",
-        "だれかさん"
+        "ギガスローおじさん",
+        "ジャックポットおじさん"
       ],
       "tolerance": {
         "sepalated": false,
         "tolerances": [
-          "とりあえずぜんぶ"
+          "混乱",
+          "麻痺",
+          "封印",
+          "どく",
+          "呪い"
         ]
       }
     },
