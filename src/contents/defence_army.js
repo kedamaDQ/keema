@@ -58,7 +58,7 @@ export default class DefenceArmy extends ContentBase {
 
   getFillings(now, messageProps) {
     const fillings = {};
-    let elapsed = this.getMinutesOfWeek(now) % this.cycle;
+    let elapsed = this.getMinutesOfWeek(this.offsetTime(now)) % this.cycle;
     this.enemies.find((v, i) => {
       if (elapsed - this.enemies[i].duration < 0) {
         fillings.currentDisplay = v.display;

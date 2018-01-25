@@ -29,7 +29,7 @@ export default class PeriodicContents extends ContentBase {
     let prefix = "";
     if (messageProps.reset_days.includes(offsetted.getDate())) {
       prefix = "start";
-    } else if (messageProps.reset_days.includes(nextDayOf(offsetted))) {
+    } else if (messageProps.reset_days.includes(nextDayOf(offsetted).getDate())) {
       prefix = "end";
     } else {
       return null;
@@ -44,7 +44,7 @@ export default class PeriodicContents extends ContentBase {
     const displays = this.contents.filter((c) => {
       if (c.key === messageProps.fillings_key) {
         return messageProps.reset_days.includes(offsetted.getDate()) ||
-               messageProps.reset_days.includes(nextDayOf(offsetted));
+               messageProps.reset_days.includes(nextDayOf(offsetted).getDate());
       } else {
         return false;
       }
@@ -63,26 +63,19 @@ export default class PeriodicContents extends ContentBase {
     }
   }
 
-  buildFillings(now, type) {
-    const offsetted = new Date(now.getTime() - OFFSET_HOURS);
-    const displays = this.contents.filter((c) => {
-      return c.type === type && c.reset_days.includes(offsetted.getDate());
-    }).map(c => c.display);
-
-    if (displays.length === 0) {
-      return null;
-    } else if (displays.length === 1) {
-      return {displays: displays[0]};
-    } else {
-      const foresdon = new Foresdon();
-      const displaysText = displays.map((d) => {
-        return `${foresdon.getMonster()} ${d}`
-      }).join('\n');
-      return {displays: `\n${displaysText}\n`};
-    }
-  }
-
   getReply() {
     throw new Error('Not implemented.');
   }
 }
+
+/* for test, now buggy.
+const pc = new PeriodicContents();
+//console.log(pc.getMessage(new Date(2018, 0, 1, 6, 0, 0)));
+//console.log(pc.getMessage(new Date(2018, 0, 9, 6, 0, 0)));
+//console.log(pc.getMessage(new Date(2018, 0, 10, 6, 0, 0)));
+//console.log(pc.getMessage(new Date(2018, 0, 14, 6, 0, 0)));
+//console.log(pc.getMessage(new Date(2018, 0, 15, 6, 0, 0)));
+//console.log(pc.getMessage(new Date(2018, 0, 28, 6, 0, 0)));
+//console.log(pc.getMessage(new Date(2018, 0, 29, 6, 0, 0)));
+console.log(pc.getMessage(new Date(2018, 0, 31, 6, 0, 0)));
+*/

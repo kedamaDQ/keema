@@ -54,7 +54,7 @@ export default class BattlesOfDarkness extends ContentBase {
   }
 
   getFillings(now, messageProps) {
-    if (messageProps.fillings_key === ContentBase.KEY_PERIODIC) {
+    if (messageProps.fillings_key === KEY_PERIODIC || messageProps.fillings_key === KEY_FULL) {
       const fillings = {};
       const foresdon = new Foresdon();
       this.enemies.forEach((enemy) => {

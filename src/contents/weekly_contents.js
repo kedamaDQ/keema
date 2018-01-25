@@ -30,8 +30,8 @@ export default class WeeklyContents extends ContentBase {
   getFillings(now, messageProps) {
     const offsetted = new Date(now.getTime() - OFFSET_HOURS);
     const subject =
-      (messageProps.fillings_key === 'end') ? nextDayOf(offsetted) :
-      (messageProps.filling_key === 'start') ? offsetted.getDate() : null;
+      (messageProps.fillings_key === 'start') ? offsetted.getDay() :
+      (messageProps.fillings_key === 'end') ? nextDayOf(offsetted).getDay() : null;
     const displays = this.contents.filter((c => {
       return c.reset_days.includes(subject);
     })).map(c => c.display);

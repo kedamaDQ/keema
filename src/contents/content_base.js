@@ -49,7 +49,7 @@ export default class ContentBase {
   hasReply(subject) {
     const props = this.getMessageProps();
     return Object.keys(props).some((key) => {
-      return new RegExp(props[key].regexp, 'i').test(subject);
+      return (key === 'periodic') ? false : new RegExp(props[key].regexp, 'i').test(subject);
     });
   }
 

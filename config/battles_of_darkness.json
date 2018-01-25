@@ -16,22 +16,22 @@
       }
     ],
     "full": {
-      "trigger": "(?:常闇|とこやみ)",
+      "regexp": "(?:常闇|とこやみ)",
       "template_key": "full",
       "fillings_key": "full"
     },
     "regnad": {
-      "trigger": "(?:レグ|れぐ)",
+      "regexp": "(?:レグ|れぐ)",
       "template_key": "single",
       "fillings_key": "regnad"
     },
     "darkking": {
-      "trigger": "(?:ダークキング|だーくきんぐ|ＤＫ|ｄｋ|dk)",
+      "regexp": "(?:ダークキング|だーくきんぐ|ＤＫ|ｄｋ|dk)",
       "template_key": "single",
       "fillings_key": "darkking"
     },
     "medb": {
-      "trigger": "(?:メイヴ|メイブ|めいう゛|めいぶ|イカ|いか|ｲｶ)",
+      "regexp": "(?:メイヴ|メイブ|めいう゛|めいぶ|イカ|いか|ｲｶ)",
       "template_key": "single",
       "fillings_key": "medb"
     }
