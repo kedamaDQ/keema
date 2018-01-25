@@ -1,4 +1,10 @@
+'use strict';
+
 import ContentBase from './content_base';
+import {
+  KEY_FULL,
+  KEY_PERIODIC
+} from './content_base';
 import {
   HOUR
 } from '../utils/date_utils';
@@ -10,17 +16,20 @@ export default class DefenceArmy extends ContentBase {
 
   constructor() {
     super(CONFIG);
-    this.fragments = this.config().fragments;
-    this.triggers = this.config().triggers;
-    this.enemies = this.config().enemies;
+    this.templates = this.config().templates;
+    this.messageProps = this.config().message_props;
+    this.enemies = this.config().fillings;
     this.cycle = this.enemies.reduce((acc, value) => {
       return acc + value.duration;
     }, 0);
   }
 
+  offsetTime(now) {
+    return new Date(now.getTime() - OFFSET_HOURS);
+  }
+
   getMinutesOfWeek(now) {
-    const n = new Date(now.getTime() - OFFSET_HOURS);
-    return (n.getDay() * 24 * 60) + (n.getHours() * 60) + n.getMinutes();
+    return (now.getDay() * 24 * 60) + (now.getHours() * 60) + now.getMinutes();
   }
 
   readableMinutes(minutes) {
@@ -33,9 +42,23 @@ export default class DefenceArmy extends ContentBase {
     }
   }
 
-  buildFillings(now) {
+  /* Override pseudo abstract methods. */
+  getMessageProps() {
+    return this.messageProps;
+  }
+
+  getTemplate(now, messageProps) {
+    if (!messageProps.template_key) {
+      throw new Error('Periodical message is not Implemented.');
+    }
+    return this.templates.find((template) => {
+      return template.key === messageProps.template_key;
+    });
+  }
+
+  getFillings(now, messageProps) {
     const fillings = {};
-    let elapsed = this.getMinutesOfWeek(now) % this.cycle;
+    let elapsed = this.getMinutesOfWeek(this.offsetTime(now)) % this.cycle;
     this.enemies.find((v, i) => {
       if (elapsed - this.enemies[i].duration < 0) {
         fillings.currentDisplay = v.display;
@@ -48,16 +71,5 @@ export default class DefenceArmy extends ContentBase {
       }
     });
     return fillings;
-  }
-
-  getReply(subject, now = new Date()) {
-    return [{
-      pos: subject.search(new RegExp(this.triggers['full'], 'i')),
-      message: this.buildMessage(this.fragments, this.buildFillings(now))
-    }];
-  }
-
-  getMessage() {
-    throw new Error('Not implemented.');
   }
 }

@@ -1,10 +1,16 @@
-import ContentBase from './content_base';
-import Foresdon from '../utils/foresdon_utils';
+'use strict';
 
+import ContentBase from './content_base';
+import {
+  KEY_FULL,
+  KEY_PERIODIC
+} from './content_base';
 import {
   HOUR,
   elapsedDays
 } from '../utils/date_utils';
+
+import Foresdon from '../utils/foresdon_utils';
 
 const CONFIG = 'battles_of_darkness.json';
 const OFFSET_HOURS = 6 * HOUR;
@@ -18,84 +24,56 @@ export default class BattlesOfDarkness extends ContentBase {
       this.config().start_date.month,
       this.config().start_date.day,
     );
-    this.fragments = this.config().fragments;
-    this.enemies = this.config().enemies;
-    this.greekNumbers = this.config().greek_numbers;
-    this.triggers = this.config().triggers;
+    this.templates = this.config().templates;
+    this.enemies = this.config().fillings;
+    this.levelNumbers = this.config().level_numbers;
+    this.messageProps = this.config().message_props;
+  }
+
+  offsetTime(now) {
+    return new Date(now.getTime() - OFFSET_HOURS);
   }
 
   getLevel(now, offset) {
-    return this.greekNumbers[
+    return this.levelNumbers[
       (
-        elapsedDays(this.startDate, new Date(now.getTime() - OFFSET_HOURS)) + offset
-      ) % this.greekNumbers.length
+        elapsedDays(this.startDate, now) + offset
+      ) % this.levelNumbers.length
     ];
   }
 
-  buildSingleFillings(now, key) {
-    const fillings = {};
-    this.enemies.find((enemy) => {
-      if (enemy.key === key) {
-        fillings['name'] = enemy.name;
-        fillings['level'] = this.getLevel(now, enemy.offset);
-        return true;
-      }
-      return false;
+  /* Override pseudo abstract methods. */
+  getMessageProps() {
+    return this.messageProps;
+  }
+
+  getTemplate(now, messageProps) {
+    return this.templates.find((template) => {
+      return template.key === messageProps.template_key;
     });
-    return fillings;
   }
 
-  buildFullFillings(now) {
-    const fillings = {};
-    const foresdon = new Foresdon();
-    this.enemies.forEach((enemy) => {
-      fillings[`${enemy.key}Level`] = this.getLevel(now, enemy.offset);
-      fillings[`${enemy.key}Display`] = enemy.display;
-      fillings[`${enemy.key}Icon`] = foresdon.getMonster();
-    });
-    return fillings;
-  }
-
-  buildSingleMessage(now, key) {
-    return this.buildMessage(
-      this.fragments.single,
-      this.buildSingleFillings(now, key)
-    );
-  }
-
-  buildFullMessage(now) {
-    return this.buildMessage(
-      this.fragments.full,
-      this.buildFullFillings(now)
-    );
-  }
-
-  getReply(subject, now = new Date()) {
-    const regexpFull = new RegExp(this.triggers.full, 'i');
-    if (regexpFull.test(subject)) {
-      return[{
-        pos: subject.search(regexpFull),
-        message: this.buildFullMessage(now)
-      }];
+  getFillings(now, messageProps) {
+    if (messageProps.fillings_key === KEY_PERIODIC || messageProps.fillings_key === KEY_FULL) {
+      const fillings = {};
+      const foresdon = new Foresdon();
+      this.enemies.forEach((enemy) => {
+        fillings[`${enemy.key}Level`] = this.getLevel(this.offsetTime(now), enemy.offset);
+        fillings[`${enemy.key}Display`] = enemy.display;
+        fillings[`${enemy.key}Icon`] = foresdon.getMonster();
+      });
+      return fillings;
+    } else {
+      const fillings = {};
+      this.enemies.find((enemy) => {
+        if (enemy.key === messageProps.fillings_key) {
+          fillings['name'] = enemy.name;
+          fillings['level'] = this.getLevel(this.offsetTime(now), enemy.offset);
+          return true;
+        }
+        return false;
+      });
+      return fillings;
     }
-
-    const replies = [];
-    Object.keys(this.triggers).forEach((key) => {
-      const regexp = new RegExp(this.triggers[key], 'i');
-      if (regexp.test(subject)) {
-        replies.push({
-          pos: subject.search(regexp),
-          message: this.buildSingleMessage(now, key)
-        });
-      }
-    });
-    return replies;
-  }
-
-  getMessage(now = new Date()) {
-    return [{
-      pos: 0,
-      message: this.buildFullMessage(now)
-    }];
   }
 }

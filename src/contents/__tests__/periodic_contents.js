@@ -8,7 +8,7 @@ describe('PeriodicContents', () => {
     for (let d = 1; d < 100; d++) {
       const subject = new Date(2018, 0, d, 6, 0, 0);
 
-      const hasMessages = pc.contents.find((c) => {
+      const hasMessages = pc.messageProps.periodic.find((c) => {
         return (
           c.reset_days.includes(subject.getDate()) ||
           c.reset_days.includes(new Date(subject.getTime() + 1000 * 60 * 60 * 24).getDate())

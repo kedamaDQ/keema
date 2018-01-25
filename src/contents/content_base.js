@@ -1,3 +1,10 @@
+'use strict';
+
+import deepFreeze from '../utils/deep_freeze';
+
+export const KEY_FULL = 'full';
+export const KEY_PERIODIC = 'periodic';
+
 const fs = require('fs');
 
 export default class ContentBase {
@@ -6,11 +13,11 @@ export default class ContentBase {
     this.json = (config) ?
       JSON.parse(fs.readFileSync(`${this.configDir()}/${config}`, {encoding: 'utf8'})) :
       null;
-    this.triggers = this.json.triggers || {};
+    deepFreeze(this.json);
   }
 
   config() {
-    return this.json;
+    return Object.assign({}, this.json);
   }
 
   configDir() {
@@ -21,10 +28,16 @@ export default class ContentBase {
     return new RegExp(/^KEY__([a-zA-Z]+)$/);
   }
 
-  buildMessage(fragments, fillings) {
+  buildMessage(now, prop) {
     const regExp = this.fillingKeyRegExp();
+    const template = this.getTemplate(now, prop);
+    const fillings = this.getFillings(now, prop);
 
-    return fragments.map((v) => {
+    if (!(template && fillings)) {
+      return null;
+    }
+
+    return template.fragments.map((v) => {
       if (regExp.test(v)) {
         return (fillings[RegExp.$1]) ? fillings[RegExp.$1] : v;
       } else {
@@ -34,18 +47,64 @@ export default class ContentBase {
   }
 
   hasReply(subject) {
-    return Object.keys(this.triggers).some((key) => {
-      return new RegExp(this.triggers[key], 'i').test(subject);
+    const props = this.getMessageProps();
+    return Object.keys(props).some((key) => {
+      return (key === 'periodic') ? false : new RegExp(props[key].regexp, 'i').test(subject);
     });
   }
 
-  // Override this method.
-  getReply(subject) {
-    return '';
+  getReply(subject, now = new Date()) {
+    const props = this.getMessageProps();
+    const regExpFull = new RegExp(props[KEY_FULL].regexp, 'i');
+    if (regExpFull.test(subject)) {
+      return [{
+        pos: subject.search(regExpFull),
+        message: this.buildMessage(now, props[KEY_FULL])
+      }].filter((v) => v.message);
+    }
+
+    const replies = [];
+    for (const key in props) {
+      if (!props[key].regexp) {
+        continue;
+      }
+
+      const regExp = new RegExp(props[key].regexp, 'i');
+      if (regExp.test(subject)) {
+        replies.push({
+          pos: subject.search(regExp),
+          message: this.buildMessage(now, props[key])
+        });
+      }
+    };
+    return replies.filter((v) => v.message);
   }
 
-  // Override this method.
-  getMessage() {
-    return '';
+  getMessage(now = new Date()) {
+    const messages = [];
+    this.getMessageProps()[KEY_PERIODIC].forEach((prop) => {
+      messages.push({
+        pos: 0,
+        message: this.buildMessage(now, prop)
+      });
+    });
+    return messages.filter((v) => v.message);
+  }
+
+  /*
+   * Pseudo abstract methods.
+   * 
+   * Override these methods in chiled classes.
+   */
+  getMessageProps() {
+    throw new Error('Not implemented, Override is required.')
+  }
+
+  getTemplate(now, messageProps) {
+    throw new Error('Not impmelented, Override is required.')
+  }
+
+  getFillings(now, messageProps) {
+    throw new Error('Not impmelented, Override is required.')
   }
 }

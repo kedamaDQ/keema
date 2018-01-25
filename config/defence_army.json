@@ -1,30 +1,49 @@
 {
-  "fragments": [
-    "現在のアストルティア防衛軍は「",
-    "KEY__currentDisplay",
-    "」に攻められています！\nあと",
-    "KEY__remain",
-    "で「",
-    "KEY__nextDisplay",
-    "」が攻めてきます！"
-  ],
-  "triggers": {
-    "full": "(?:防衛軍|ぼうえいぐん)"
+  "message_props": {
+    "periodic": [
+      {
+        "template_key": "full",
+        "fillings_key": "full"
+      }
+    ],
+    "full": {
+      "regexp": "(?:防衛軍|ぼうえいぐん)",
+      "template_key": "full",
+      "fillings_key": "full"
+    }
   },
-  "enemies": [
+  "templates": [
     {
+      "key": "full",
+      "fragments": [
+        "現在のアストルティア防衛軍は「",
+        "KEY__currentDisplay",
+        "」に攻められています！\nあと",
+        "KEY__remain",
+        "で「",
+        "KEY__nextDisplay",
+        "」が攻めてきます！"
+      ]
+    }
+  ],
+  "fillings": [
+    {
+      "key": "red",
       "display": "闇朱の獣牙兵団",
       "duration": 120
     },
     {
+      "key": "purple",
       "display": "紫炎の鉄機兵団",
       "duration": 120
     },
     {
+      "key": "green",
       "display": "真碧の造魔兵団",
       "duration": 120
     },
     {
+      "key": "random",
       "display": "ランダム軍団",
       "duration": 60
     }

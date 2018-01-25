@@ -6,46 +6,69 @@
     "day": 10
   },
   "reset_days": [10, 25],
-  "fragments": {
-    "short": [
-      "邪神の宮殿は ",
-      "KEY__display",
-      " です！"
+  "message_props": {
+    "periodic": [
+      {
+        "template_key": null,
+        "fillings_key": null
+      }
     ],
-    "full": [
-      "本日の邪神の宮殿は ",
-      "KEY__display",
-      " です！\n",
-      "相手は",
-      "KEY__members",
-      "、あると良い耐性は ",
-      "KEY__tolerances",
-      " です！"
-    ],
-    "first_day": [
-      "邪神の宮殿は本日から ",
-      "KEY__display",
-      " です！\n",
-      "相手は",
-      "KEY__members",
-      "、あると良い耐性は ",
-      "KEY__tolerances",
-      " です！"
-    ],
-    "last_day": [
-      "邪神の宮殿 ",
-      "KEY__display",
-      " は本日までです！\n",
-      "明日からは ",
-      "KEY__nextDisplay",
-      " が始まります！"
-    ]
+    "full": {
+      "regexp": "(?:邪神|邪心|じゃしん)",
+      "template_key": "full",
+      "fillings_key": null
+    }
   },
-  "triggers": {
-    "full": "(?:邪神|邪心|じゃしん)"
-  },
-  "enemies": [
+  "templates": [
     {
+      "key": "full",
+      "fragments": [
+        "本日の邪神の宮殿は ",
+        "KEY__display",
+        " です！\n",
+        "相手は",
+        "KEY__members",
+        "、あると良い耐性は ",
+        "KEY__tolerances",
+        " です！"
+      ]
+    },
+    {
+      "key": "short",
+      "fragments": [
+        "邪神の宮殿は ",
+        "KEY__display",
+        " です！"
+      ]
+    },
+    {
+      "key": "first_day",
+      "fragments": [
+        "邪神の宮殿は本日から ",
+        "KEY__display",
+        " です！\n",
+        "相手は",
+        "KEY__members",
+        "、あると良い耐性は ",
+        "KEY__tolerances",
+        " です！"
+      ]
+    },
+    {
+      "key": "last_day",
+      "fragments": [
+        "邪神の宮殿 ",
+        "KEY__display",
+        " は本日までです！\n",
+        "明日からは ",
+        "KEY__nextDisplay",
+        " が始まります！"
+      ]
+    }
+  ],
+  "fillings": [
+    {
+      "key": "saiyaku_dream",
       "display": "災いの神話と暴虐の悪夢",
       "members": [
         "魔蝕おじさん",
@@ -65,6 +88,7 @@
       }
     },
     {
+      "key": "malucia_saiyaku",
       "display": "妖女と災獣",
       "members": [
         "魔ちゃん",
@@ -81,6 +105,7 @@
       }
     },
     {
+      "key": "masako_friends",
       "display": "魔幻の覇王軍",
       "members": [
         "ジャックポットおじさん",
@@ -97,6 +122,7 @@
       }
     },
     {
+      "key": "someone02",
       "display": "だれかさんず",
       "members": [
         "だれかさん",
@@ -110,6 +136,7 @@
       }
     },
     {
+      "key": "zel_raz",
       "display": "覇道の双璧",
       "members": [
         "ゼルさん",
@@ -125,6 +152,7 @@
       }
     },
     {
+      "key": "someone03",
       "display": "だれかさんず",
       "members": [
         "へのへのさん",
@@ -138,6 +166,7 @@
       }
     },
     {
+      "key": "malucia_thoma",
       "display": "闇に堕ちた英雄の幻影",
       "members": [
         "魔ちゃん",
@@ -154,6 +183,7 @@
       }
     },
     {
+      "key": "zel_thoma",
       "display": "魔幻の最高幹部",
       "members": [
         "ゼルさん",

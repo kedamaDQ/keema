@@ -5,44 +5,72 @@
     "month": 10,
     "day": 16
   },
-  "fragments": {
-    "full": [
-      "本日の常闇の聖戦は……\n",
-      "KEY__regnadIcon", " ",  "KEY__regnadDisplay", "：", "KEY__regnadLevel", "\n",
-      "KEY__darkkingIcon", " ", "KEY__darkkingDisplay", "：", "KEY__darkkingLevel", "\n",
-      "KEY__medbIcon", " ", "KEY__medbDisplay", "：", "KEY__medbLevel", "\n",
-      "……です！"
-    ],
-    "single": [
-      "KEY__name", "は ", "KEY__level", " です！"
-    ]
-  },
-  "triggers": {
-    "full": "(?:常闇|とこやみ)",
-    "regnad": "(?:レグ|れぐ)",
-    "darkking": "(?:ダークキング|だーくきんぐ|ＤＫ|ｄｋ|dk)",
-    "medb": "(?:メイヴ|メイブ|めいう゛|めいぶ|イカ|いか|ｲｶ)"
-  },
-  "greek_numbers": [
+  "level_numbers": [
     "Ⅰ", "Ⅱ", "Ⅲ", "Ⅳ"
   ],
-  "enemies": [
+  "message_props": {
+    "periodic": [
+      {
+        "template_key": "full",
+        "fillings_key": "full"
+      }
+    ],
+    "full": {
+      "regexp": "(?:常闇|とこやみ)",
+      "template_key": "full",
+      "fillings_key": "full"
+    },
+    "regnad": {
+      "regexp": "(?:レグ|れぐ)",
+      "template_key": "single",
+      "fillings_key": "regnad"
+    },
+    "darkking": {
+      "regexp": "(?:ダークキング|だーくきんぐ|ＤＫ|ｄｋ|dk)",
+      "template_key": "single",
+      "fillings_key": "darkking"
+    },
+    "medb": {
+      "regexp": "(?:メイヴ|メイブ|めいう゛|めいぶ|イカ|いか|ｲｶ)",
+      "template_key": "single",
+      "fillings_key": "medb"
+    }
+  },
+  "templates": [
+    {
+      "key": "full",
+      "fragments": [
+        "本日の常闇の聖戦は……\n",
+        "KEY__regnadIcon", " ",  "KEY__regnadDisplay", "：", "KEY__regnadLevel", "\n",
+        "KEY__darkkingIcon", " ", "KEY__darkkingDisplay", "：", "KEY__darkkingLevel", "\n",
+        "KEY__medbIcon", " ", "KEY__medbDisplay", "：", "KEY__medbLevel", "\n",
+        "……です！"
+      ]
+    },
+    {
+      "key": "single",
+      "fragments": [
+        "KEY__name", "は ", "KEY__level", " です！"
+      ]
+    }
+  ],
+  "fillings": [
     {
       "key": "regnad",
-      "name": "常闇の竜レグナード",
       "display": "レグナード　",
+      "name": "常闇の竜レグナード",
       "offset": 0
     },
     {
       "key": "darkking",
-      "name": "ダークキング",
       "display": "ダークキング",
+      "name": "ダークキング",
       "offset": 2
     },
     {
       "key": "medb",
-      "name": "海冥主メイヴ",
       "display": "海冥主メイヴ",
+      "name": "海冥主メイヴ",
       "offset": 1
     }
   ]

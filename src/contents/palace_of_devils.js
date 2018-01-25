@@ -1,4 +1,10 @@
+'use strict';
+
 import ContentBase from './content_base';
+import {
+  KEY_FULL,
+  KEY_PERIODIC
+} from './content_base';
 import {
   HOUR,
   elapsedPeriods,
@@ -19,14 +25,18 @@ export default class PalaceOfDevils extends ContentBase {
       this.config().start_date.day
     );
     this.resetDays = this.config().reset_days;
-    this.fragments = this.config().fragments;
-    this.triggers = this.config().triggers;
-    this.enemies = this.config().enemies;
+    this.messageProps = this.config().message_props;
+    this.templates = this.config().templates;
+    this.enemies = this.config().fillings;
+  }
+
+  offsetTime(now) {
+    return new Date(now.getTime() - OFFSET_HOURS);
   }
 
   getEnemyIndex(now) {
     return elapsedPeriods(
-      this.startDate, new Date(now.getTime() - OFFSET_HOURS), this.resetDays
+      this.startDate, now, this.resetDays
     ) % this.enemies.length;
   }
 
@@ -44,41 +54,44 @@ export default class PalaceOfDevils extends ContentBase {
     }
   }
 
-  buildFillings(now) {
-    const enemy = this.enemies[this.getEnemyIndex(now)];
+  /* Override pseudo abstract methods. */
+  getMessageProps() {
+    return this.messageProps;
+  }
+
+  getTemplate(now, messageProps) {
+    if (messageProps.template_key) {
+      return this.templates.find((template) => {
+        return template.key === messageProps.template_key;
+      });
+    }
+
+    // messageProps.template_key === null
+    if (isStartOfPeriod(this.offsetTime(now), this.resetDays)) {
+      return this.templates.find((template) => {
+        return template.key === 'first_day';
+      });
+    }
+
+    if (isEndOfPeriod(this.offsetTime(now), this.resetDays)) {
+      return this.templates.find((template) => {
+        return template.key === 'last_day';
+      });
+    }
+
+    return this.templates.find((template) => {
+      return template.key === 'short';
+    });
+  }
+
+  getFillings(now, messageProps) {
+    const enemy = this.enemies[this.getEnemyIndex(this.offsetTime(now))];
+    const nextEnemy = this.enemies[this.getNextEnemyIndex(now)];
     return {
       display: enemy.display,
-      nextDisplay: this.enemies[this.getNextEnemyIndex(now)].display,
+      nextDisplay: nextEnemy.display,
       members: enemy.members.join("と"),
       tolerances: this.buildTolerances(enemy.tolerance),
     };
   }
-
-  getReply(subject, now = new Date()) {
-    return [{
-      pos: subject.search(new RegExp(this.triggers['full'], 'i')),
-      message: this.buildMessage(this.fragments.full, this.buildFillings(now))
-    }];
-  }
-
-  getMessage(now = new Date()) {
-    const offsetted = new Date(now.getTime() - OFFSET_HOURS);
-    if (isStartOfPeriod(offsetted, this.resetDays)) {
-      return [{
-        pos: 0,
-        message: this.buildMessage(this.fragments.first_day, this.buildFillings(now))
-      }];
-    } else if (isEndOfPeriod(offsetted, this.resetDays)) {
-      return [{
-        pos: 0,
-        message: this.buildMessage(this.fragments.last_day, this.buildFillings(now))
-      }];
-    } else {
-      return [{
-        pos: 0,
-        message: this.buildMessage(this.fragments.short, this.buildFillings(now))
-      }];
-    }
-  }
 }
-

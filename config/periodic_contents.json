@@ -1,50 +1,82 @@
 {
-  "fragments": {
-    "periodic": {
-      "start": [
+  "message_props": {
+    "periodic": [
+      {
+        "template_key": "oneshot",
+        "fillings_key": "ten_day",
+        "reset_days": [10]
+      },
+      {
+        "template_key": "oneshot",
+        "fillings_key": "puku_day",
+        "reset_days": [29]
+      },
+      {
+        "template_key": "periodic",
+        "fillings_key": "theatrical_chronicle",
+        "reset_days": [1, 15]
+      },
+      {
+        "template_key": "periodic",
+        "fillings_key": "wonder_tower",
+        "reset_days": [1]
+      }
+    ],
+    "full": {
+      "template_key": null,
+      "fillings_key": null
+    }
+  },
+  "templates": [
+    {
+      "key": "start_periodic",
+      "fragments": [
         "今期の ",
         "KEY__displays",
         " は今日からです！"
-      ],
-      "end": [
+      ]
+    },
+    {
+      "key": "end_periodic",
+      "fragments": [
         "今期の ",
         "KEY__displays",
         " は今日までです！"
       ]
     },
-    "oneshot": {
-      "start": [
+    {
+      "key": "start_oneshot",
+      "fragments": [
         ":x_pu01: :x_ku01: :x_ripo01: ",
         "KEY__displays",
         " です！ :x_exkun: :x_gyousha:"
-      ],
-      "end": [
+      ]
+    },
+    {
+      "key": "end_oneshot",
+      "fragments": [
         "明日は ",
         "KEY__displays",
         " です！"
       ]
     }
-  },
-  "contents": [
+  ],
+  "fillings": [
     {
-      "display": "テンの日" ,
-      "type": "oneshot",
-      "reset_days": [10]
+      "key": "ten_day",
+      "display": "テンの日"
     },
     {
-      "display": "プクの日",
-      "type": "oneshot",
-      "reset_days": [29]
+      "key": "puku_day",
+      "display": "プクの日"
     },
     {
-      "display": "シアトリカルクロニクル",
-      "type": "periodic",
-      "reset_days": [1, 15]
+      "key": "theatrical_chronicle",
+      "display": "シアトリカルクロニクル"
     },
     {
-      "display": "不思議の魔塔",
-      "type": "periodic",
-      "reset_days": [1]
+      "key": "wonder_tower",
+      "display": "不思議の魔塔"
     }
   ]
 }

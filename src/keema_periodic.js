@@ -33,7 +33,7 @@ export default class KeemaPeriodic {
     )
     .concat(  // Each contents
       new PeriodicContents().getMessage(now),
-      new WeeklyContents().getMessage(),
+      new WeeklyContents().getMessage(now),
       new BattlesOfDarkness().getMessage(now),
       new PalaceOfDevils().getMessage(now)
     )
