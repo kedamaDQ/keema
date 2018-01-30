@@ -41,41 +41,21 @@ export default class PeriodicContents extends ContentBase {
 
   getFillings(now, messageProps) {
     const offsetted = new Date(now.getTime() - OFFSET_HOURS);
-    const displays = this.contents.filter((c) => {
-      if (c.key === messageProps.fillings_key) {
-        return messageProps.reset_days.includes(offsetted.getDate()) ||
-               messageProps.reset_days.includes(nextDayOf(offsetted).getDate());
-      } else {
-        return false;
-      }
-    }).map(c => c.display);
-
-    if (displays.lengsh === 0) {
+    if (
+      !messageProps.reset_days.includes(offsetted.getDate()) &&
+      !messageProps.reset_days.includes(nextDayOf(offsetted).getDate())
+    ) {
       return null;
-    } else if (displays.length === 1) {
-      return {displays: displays[0]};
-    } else {
-      const foresdon = new Foresdon();
-      const displaysText = displays.map((d) => {
-        return `${foresdon.getMonster()} ${d}`
-      }).join('\n');
-      return {displays: `\n${displaysText}\n`};
     }
+
+    return {
+      display: this.contents.find((c) => {
+        return (c.key === messageProps.fillings_key);
+      }).display
+    };
   }
 
   getReply() {
     throw new Error('Not implemented.');
   }
 }
-
-/* for test, now buggy.
-const pc = new PeriodicContents();
-//console.log(pc.getMessage(new Date(2018, 0, 1, 6, 0, 0)));
-//console.log(pc.getMessage(new Date(2018, 0, 9, 6, 0, 0)));
-//console.log(pc.getMessage(new Date(2018, 0, 10, 6, 0, 0)));
-//console.log(pc.getMessage(new Date(2018, 0, 14, 6, 0, 0)));
-//console.log(pc.getMessage(new Date(2018, 0, 15, 6, 0, 0)));
-//console.log(pc.getMessage(new Date(2018, 0, 28, 6, 0, 0)));
-//console.log(pc.getMessage(new Date(2018, 0, 29, 6, 0, 0)));
-console.log(pc.getMessage(new Date(2018, 0, 31, 6, 0, 0)));
-*/

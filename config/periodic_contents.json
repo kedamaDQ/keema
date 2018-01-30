@@ -32,7 +32,7 @@
       "key": "start_periodic",
       "fragments": [
         "今期の ",
-        "KEY__displays",
+        "KEY__display",
         " は今日からです！"
       ]
     },
@@ -40,7 +40,7 @@
       "key": "end_periodic",
       "fragments": [
         "今期の ",
-        "KEY__displays",
+        "KEY__display",
         " は今日までです！"
       ]
     },
@@ -48,7 +48,7 @@
       "key": "start_oneshot",
       "fragments": [
         ":x_pu01: :x_ku01: :x_ripo01: ",
-        "KEY__displays",
+        "KEY__display",
         " です！ :x_exkun: :x_gyousha:"
       ]
     },
@@ -56,7 +56,7 @@
       "key": "end_oneshot",
       "fragments": [
         "明日は ",
-        "KEY__displays",
+        "KEY__display",
         " です！"
       ]
     }
