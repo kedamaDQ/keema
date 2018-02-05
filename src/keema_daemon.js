@@ -34,7 +34,7 @@ export default class KeemaDaemon {
 /* Post as a mention rather than reply. */
 //        msg.data.id,
           null,
-          this.buildMultiMessage(msg.data.content, this.oshieteContents) || ['？'],
+          this.buildMessage(msg.data.content, this.oshieteContents) || ['？'],
         );
       } else {
         if (!this.kantanNaKoto.hasReply(msg.data.content)) {
@@ -61,15 +61,7 @@ export default class KeemaDaemon {
     return REGEXP_OSHIETE_TRIGGER1.test(content) && REGEXP_OSHIETE_TRIGGER2.test(content);
   }
 
-
-  buildSingleMessage(content, contentsArray) {
-    const cl = contentsArray.find((c) => {
-      return c.hasReply(content);
-    });
-    return (cl) ? cl.getReply(content).message : null;
-  }
-
-  buildMultiMessage(content, contentsArray) {
+  buildMessage(content, contentsArray) {
     let replyContents = [];
 
     contentsArray.forEach((c) => {
