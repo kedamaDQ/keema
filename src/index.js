@@ -103,8 +103,8 @@ const loadEnv = async () => {
 };
 
 loadEnv()
-  .catch((e) => { throw e })
-  .then((env) => {
+.catch((e) => { throw e })
+.then((env) => {
   if (opts.get('d') && opts.get('o')) {
     console.error("Options 'd' and 'o' are exclusive.");
     opts.help();
@@ -117,5 +117,4 @@ loadEnv()
     opts.help();
     process.exit(0);
   }
-
 });

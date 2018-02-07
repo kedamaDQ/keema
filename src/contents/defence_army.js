@@ -47,7 +47,7 @@ export default class DefenceArmy extends ContentBase {
     return this.messageProps;
   }
 
-  getTemplate(now, messageProps) {
+  async getTemplate(now, messageProps) {
     if (!messageProps.template_key) {
       throw new Error('Periodical message is not Implemented.');
     }
@@ -56,7 +56,7 @@ export default class DefenceArmy extends ContentBase {
     });
   }
 
-  getFillings(now, messageProps) {
+  async getFillings(now, messageProps) {
     const fillings = {};
     let elapsed = this.getMinutesOfWeek(this.offsetTime(now)) % this.cycle;
     this.enemies.find((v, i) => {

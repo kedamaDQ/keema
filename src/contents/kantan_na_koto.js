@@ -19,17 +19,17 @@ export default class KantanNaKoto extends ContentBase {
     });
   }
 
-  getReply(subject) {
+  async getReply(subject) {
     const found = this.contents.find((v) => {
       return v.regexp.test(subject);
     });
-    return {
+    return [{
       pos: 0,
       message: found.fragments.join('')
-    };
+    }];
   }
 
-  getMessage() {
+  async getMessage() {
     throw new Error('Not implemented.');
   }
 }

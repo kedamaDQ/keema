@@ -59,7 +59,7 @@ export default class PalaceOfDevils extends ContentBase {
     return this.messageProps;
   }
 
-  getTemplate(now, messageProps) {
+  async getTemplate(now, messageProps) {
     if (messageProps.template_key) {
       return this.templates.find((template) => {
         return template.key === messageProps.template_key;
@@ -84,7 +84,7 @@ export default class PalaceOfDevils extends ContentBase {
     });
   }
 
-  getFillings(now, messageProps) {
+  async getFillings(now, messageProps) {
     const enemy = this.enemies[this.getEnemyIndex(this.offsetTime(now))];
     const nextEnemy = this.enemies[this.getNextEnemyIndex(now)];
     return {

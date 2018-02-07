@@ -24,7 +24,7 @@ export default class PeriodicContents extends ContentBase {
     return this.messageProps;
   }
 
-  getTemplate(now, messageProps) {
+  async getTemplate(now, messageProps) {
     const offsetted = new Date(now.getTime() - OFFSET_HOURS);
     let prefix = "";
     if (messageProps.reset_days.includes(offsetted.getDate())) {
@@ -39,7 +39,7 @@ export default class PeriodicContents extends ContentBase {
     });
   }
 
-  getFillings(now, messageProps) {
+  async getFillings(now, messageProps) {
     const offsetted = new Date(now.getTime() - OFFSET_HOURS);
     if (
       !messageProps.reset_days.includes(offsetted.getDate()) &&
