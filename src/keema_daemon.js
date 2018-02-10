@@ -87,7 +87,7 @@ export default class KeemaDaemon {
       return null;
     }
 
-    Promise.all(promises).then((values) => {
+    return Promise.all(promises).then((values) => {
       values.forEach((value) => {
         replyContents = replyContents.concat(value);
       })
