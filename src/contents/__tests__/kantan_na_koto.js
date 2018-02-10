@@ -25,19 +25,42 @@ describe('KantanNaKoto', () => {
   });
 
   describe('getReply', () => {
-    const expected = [
-      expect.stringMatching(/KEY__/)
-    ];
-
     const knk = new KantanNaKoto();
     for (const keyword of keywords) {
-      test(`Check length. ${keyword}`, () => {
-        expect(knk.getReply(keyword).message.length).toBeGreaterThan(0);
+      test(`Check properties: ${keyword}`, () => {
+        return knk.getReply(keyword)
+        .then((replies) => {
+          replies.forEach((reply) => {
+            expect(reply).toHaveProperty('pos');
+            expect(reply).toHaveProperty('message');
+          });
+        })
+        .catch((e) => {
+          console.log(e);
+        })
       });
+      test(`Check to message is not empty: ${keyword}`, () => {
+        return knk.getReply(keyword)
+        .then((replies) => {
+          replies.forEach((reply) => {
+            expect(reply).toEqual(expect.anything());
+          });
+        })
+        .catch((e) => {
+          console.log(e);
+        })
+      })
       test(`Check no placeholders left. ${keyword}`, () => {
-          expect(knk.getReply(keyword).message).not.toEqual(expected);
+        return knk.getReply(keyword)
+        .then((replies) => {
+          replies.forEach((reply) => {
+            expect(reply.message).not.toEqual(expect.stringMatching(/KEY__/));
+          });
+        })
+        .catch((e) => {
+          console.log(e);
+        })
       });
     }
-
   });
 });

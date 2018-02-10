@@ -28,10 +28,10 @@ export default class ContentBase {
     return new RegExp(/^KEY__([a-zA-Z]+)$/);
   }
 
-  buildMessage(now, prop) {
+  async buildMessage(now, prop) {
     const regExp = this.fillingKeyRegExp();
-    const template = this.getTemplate(now, prop);
-    const fillings = this.getFillings(now, prop);
+    const template = await this.getTemplate(now, prop);
+    const fillings = await this.getFillings(now, prop);
 
     if (!(template && fillings)) {
       return null;
@@ -53,13 +53,13 @@ export default class ContentBase {
     });
   }
 
-  getReply(subject, now = new Date()) {
+  async getReply(subject, now = new Date()) {
     const props = this.getMessageProps();
     const regExpFull = new RegExp(props[KEY_FULL].regexp, 'i');
     if (regExpFull.test(subject)) {
       return [{
         pos: subject.search(regExpFull),
-        message: this.buildMessage(now, props[KEY_FULL])
+        message: await this.buildMessage(now, props[KEY_FULL])
       }].filter((v) => v.message);
     }
 
@@ -73,21 +73,24 @@ export default class ContentBase {
       if (regExp.test(subject)) {
         replies.push({
           pos: subject.search(regExp),
-          message: this.buildMessage(now, props[key])
+          message: await this.buildMessage(now, props[key])
         });
       }
     };
     return replies.filter((v) => v.message);
   }
 
-  getMessage(now = new Date()) {
+  async getMessage(now = new Date()) {
+    const props = this.getMessageProps()[KEY_PERIODIC];
     const messages = [];
-    this.getMessageProps()[KEY_PERIODIC].forEach((prop) => {
+    const promises = [];
+
+    for (const prop of props) {
       messages.push({
         pos: 0,
-        message: this.buildMessage(now, prop)
+        message: await this.buildMessage(now, prop)
       });
-    });
+    }
     return messages.filter((v) => v.message);
   }
 
@@ -100,11 +103,11 @@ export default class ContentBase {
     throw new Error('Not implemented, Override is required.')
   }
 
-  getTemplate(now, messageProps) {
+  async getTemplate(now, messageProps) {
     throw new Error('Not impmelented, Override is required.')
   }
 
-  getFillings(now, messageProps) {
+  async getFillings(now, messageProps) {
     throw new Error('Not impmelented, Override is required.')
   }
 }

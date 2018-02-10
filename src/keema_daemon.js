@@ -29,22 +29,33 @@ export default class KeemaDaemon {
       }
   
       if (this.checkOshiete(msg.data.content)) {
-        this.postReplyMessage(
-          msg.data.account.acct,
-/* Post as a mention rather than reply. */
-//        msg.data.id,
-          null,
-          this.buildMultiMessage(msg.data.content, this.oshieteContents) || ['？'],
-        );
+        this.buildMessage(
+          msg.data.content, this.oshieteContents
+        ).then((res) => {
+          this.postReplyMessage(
+            msg.data.account.acct,
+            /* Post as a mention rather than reply. */
+            //msg.data.id,
+            null,
+            res|| ['？'],
+          );
+        });
       } else {
         if (!this.kantanNaKoto.hasReply(msg.data.content)) {
           return;
         }
-        this.postReplyMessage(
-          msg.data.account.acct,
-          msg.data.id,
-          this.kantanNaKoto.getReply(msg.data.content).message,
-        );
+        this.kantanNaKoto.getReply(
+          msg.data.content
+        ).then((replies) => {
+          this.postReplyMessage(
+            msg.data.account.acct,
+            msg.data.id,
+            replies.map((reply) => reply.message).join('\n\n')
+          )
+        })
+        .catch((e) => {
+          console.log(e);
+        });
       }
     });
   }
@@ -61,36 +72,35 @@ export default class KeemaDaemon {
     return REGEXP_OSHIETE_TRIGGER1.test(content) && REGEXP_OSHIETE_TRIGGER2.test(content);
   }
 
-
-  buildSingleMessage(content, contentsArray) {
-    const cl = contentsArray.find((c) => {
-      return c.hasReply(content);
-    });
-    return (cl) ? cl.getReply(content).message : null;
-  }
-
-  buildMultiMessage(content, contentsArray) {
+  async buildMessage(content, contentsArray) {
+    const promises = [];
     let replyContents = [];
 
     contentsArray.forEach((c) => {
       if (c.hasReply(content)) {
-        replyContents = replyContents.concat(c.getReply(content));
+        promises.push(c.getReply(content));
+//        replyContents = replyContents.concat(await c.getReply(content));
       }
     });
 
-    if (replyContents.length === 0) {
+    if (promises.length === 0) {
       return null;
     }
 
-    return replyContents.sort((a, b) => {
-      return a.pos - b.pos;
-    }).map((v) => {
-      return v.message;
-    }).join("\n\n");
+    return Promise.all(promises).then((values) => {
+      values.forEach((value) => {
+        replyContents = replyContents.concat(value);
+      })
+
+      return replyContents.sort((a, b) => {
+        return a.pos - b.pos;
+      }).map((v) => {
+        return v.message;
+      }).join("\n\n");
+    });
   }
 
   postReplyMessage(mention, reply_to, content) {
-
     if (!content) {
       return;
     }

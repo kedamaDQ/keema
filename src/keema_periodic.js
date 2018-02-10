@@ -26,16 +26,16 @@ export default class KeemaPeriodic {
     };
   }
 
-  buildMessage(now) {
+  async buildMessage(now) {
     return new Array()
     .concat(  // Header string
       this.buildDateString(now)
     )
     .concat(  // Each contents
-      new PeriodicContents().getMessage(now),
-      new WeeklyContents().getMessage(now),
-      new BattlesOfDarkness().getMessage(now),
-      new PalaceOfDevils().getMessage(now)
+      await new PeriodicContents().getMessage(now),
+      await new WeeklyContents().getMessage(now),
+      await new BattlesOfDarkness().getMessage(now),
+      await new PalaceOfDevils().getMessage(now)
     )
     .filter(v => v)
     .map(v => v.message)
@@ -57,6 +57,12 @@ export default class KeemaPeriodic {
   }
 
   toot(now = new Date()) {
-    this.postMessage(this.buildMessage(now));
+    this.buildMessage(now)
+    .then((res) => {
+      this.postMessage(res);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
   }
 }

@@ -19,22 +19,44 @@ describe('DefenceArmy', () => {
     }
   });
 
-
   describe('getReply', () => {
-    const expected = [
-      expect.stringMatching(/KEY__/)
-    ];
-
     const da = new DefenceArmy();
+
     for (const keyword of keywords) {
-      da.getReply(keyword).forEach((v) => {
-        test(`Check length. ${keyword}`, () => {
-          expect(v.message).toEqual(expect.anything());
+      test(`Check properties: ${keyword}`, () => {
+        return da.getReply(keyword)
+        .then((replies) => {
+          replies.forEach((reply) => {
+            expect(reply).toHaveProperty('pos');
+            expect(reply).toHaveProperty('message');
+          });
+        })
+        .catch((e) => {
+          console.log(e);
         });
-        test(`Check no placeholders left. ${keyword}`, () => {
-            expect(v.message).not.toEqual(expected);
+      });
+      test(`Check any value ${keyword}`, () => {
+        return da.getReply(keyword)
+        .then((replies) => {
+          replies.forEach((reply) => {
+            expect(reply.message).toEqual(expect.anything());
+          });
+        })
+        .catch((e) => {
+          console.log(e);
         });
-      })
+      });
+      test(`Check no placeholders left: ${keyword}`, () => {
+        return da.getReply(keyword)
+        .then((replies) => {
+          replies.forEach((reply) => {
+            expect(reply.message).not.toEqual(expect.stringMatching(/KEY__/));
+          });
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+      });
     }
   });
 });

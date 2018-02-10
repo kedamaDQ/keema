@@ -47,13 +47,13 @@ export default class BattlesOfDarkness extends ContentBase {
     return this.messageProps;
   }
 
-  getTemplate(now, messageProps) {
+  async getTemplate(now, messageProps) {
     return this.templates.find((template) => {
       return template.key === messageProps.template_key;
     });
   }
 
-  getFillings(now, messageProps) {
+  async getFillings(now, messageProps) {
     if (messageProps.fillings_key === KEY_PERIODIC || messageProps.fillings_key === KEY_FULL) {
       const fillings = {};
       const foresdon = new Foresdon();

@@ -21,13 +21,13 @@ export default class WeeklyContents extends ContentBase {
     return this.messageProps;
   }
 
-  getTemplate(now, messageProps) {
+  async getTemplate(now, messageProps) {
     return this.templates.find((t) => {
       return (t.key === messageProps.template_key);
     })
   }
 
-  getFillings(now, messageProps) {
+  async getFillings(now, messageProps) {
     const offsetted = new Date(now.getTime() - OFFSET_HOURS);
     const subject =
       (messageProps.fillings_key === 'start') ? offsetted.getDay() :
@@ -49,7 +49,7 @@ export default class WeeklyContents extends ContentBase {
     }
   }
 
-  getReply() {
+  async getReply() {
     throw new Error('Not implemented.');
   }
 }
