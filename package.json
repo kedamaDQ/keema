@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "babel src -d lib",
+    "build": "rm -rf lib && babel src -d lib --source-maps",
     "test-run": "node lib/index.js -d"
   },
   "author": "",

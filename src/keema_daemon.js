@@ -83,7 +83,7 @@ export default class KeemaDaemon {
       }
     });
 
-    if (primises.length === 0) {
+    if (promises.length === 0) {
       return null;
     }
 
