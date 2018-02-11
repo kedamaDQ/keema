@@ -57,11 +57,11 @@ export default class BattlesOfDarkness extends ContentBase {
     if (messageProps.fillings_key === KEY_PERIODIC || messageProps.fillings_key === KEY_FULL) {
       const fillings = {};
       const foresdon = new Foresdon();
-      this.enemies.forEach((enemy) => {
+      for (const enemy of this.enemies) {
         fillings[`${enemy.key}Level`] = this.getLevel(this.offsetTime(now), enemy.offset);
         fillings[`${enemy.key}Display`] = enemy.display;
-        fillings[`${enemy.key}Icon`] = foresdon.getMonster();
-      });
+        fillings[`${enemy.key}Icon`] = await foresdon.getMonster();
+      }
       return fillings;
     } else {
       const fillings = {};

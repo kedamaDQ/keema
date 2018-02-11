@@ -1,5 +1,4 @@
 import ContentBase from './content_base';
-import Foresdon from '../utils/foresdon_utils';
 import {
   HOUR,
   DAY,

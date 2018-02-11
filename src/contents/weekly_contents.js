@@ -41,11 +41,26 @@ export default class WeeklyContents extends ContentBase {
     } else if (displays.length === 1) {
       return {displays: displays[0]}
     } else {
-      const foresdon = new Foresdon();
-      const displaysText = displays.map((d) => {
-        return `${foresdon.getMonster()} ${d}`
-      }).join('\n');
-      return {displays: `\n${displaysText}\n`};
+      const foresdon = await new Foresdon();
+      const iconAppended = [];
+      for (const display of displays) {
+        iconAppended.push(`${await foresdon.getMonster()} ${display}`);
+      }
+      return {
+        displays: `\n${iconAppended.join('\n')}\n`
+      };
+      /*
+       * In this way, duplicate fetch requests to the API will occur.
+       * 
+      return Promise.all(displays.map(async (display) => {
+        return `${await foresdon.getMonster()} ${display}`;
+      }))
+      .then((displays) => {
+        return {
+          displays: `\n${displays.join('\n')}\n`
+        };
+      });
+      */
     }
   }
 

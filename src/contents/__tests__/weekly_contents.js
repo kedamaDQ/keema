@@ -1,5 +1,7 @@
 import WeeklyContents from '../weekly_contents';
 
+jest.mock('../../utils/foresdon_utils');
+
 describe('WeeklyContents', () => {
 
   describe('getMessage', () => {

@@ -5,6 +5,8 @@ import {
   DAY
 } from '../../utils/date_utils';
 
+jest.mock('../../utils/foresdon_utils');
+
 describe('BattlesOfDarkness', () => {
   const startDate = new BattlesOfDarkness('').startDate;
   const levelNumbers = new BattlesOfDarkness('').levelNumbers.slice(0);
