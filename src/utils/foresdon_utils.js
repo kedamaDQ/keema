@@ -41,4 +41,18 @@ export default class Foresdon {
       throw new Error(err);
     });
   }
+
+  async getActivityLastWeek() {
+    return fetch(`${this.apiUrl}/instance/activity`)
+    .then((resp) => {
+      return resp.json();
+    })
+    .then((activities) => {
+      return activities[1];
+    })
+    .catch((err) => {
+      console.log(err);
+      throw new Error(err);
+    })
+  }
 }

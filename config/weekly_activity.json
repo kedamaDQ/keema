@@ -1,0 +1,39 @@
+{
+  "toot_wdays": [
+    1
+  ],
+  "message_props": {
+    "periodic": [
+      {
+        "template_key": "full",
+        "fillings_key": null
+      }
+    ],
+    "full": {
+      "template_key": null,
+      "fillings_key": null
+    }
+  },
+  "templates": [
+    {
+      "key": "full",
+      "fragments": [
+        "先週[",
+        "KEY__startDate",
+        "〜",
+        "KEY__endDate",
+        "]の foresdon.jp はアクティブユーザーが",
+        "KEY__logins",
+        "名、総トゥート数は",
+        "KEY__statuses",
+        "トゥートでした！"
+      ]
+    }
+  ],
+  "fillings": [
+    {
+      "key": "full",
+      "dummy": "/* fillings is dummy in this json. */"
+    }
+  ]
+}
