@@ -2,8 +2,10 @@ import Mastodon from 'mastodon-api';
 
 import PeriodicContents from './contents/periodic_contents';
 import WeeklyContents from './contents/weekly_contents';
+import WeeklyActivity from './contents/weekly_activity';
 import BattlesOfDarkness from './contents/battles_of_darkness';
 import PalaceOfDevils from './contents/palace_of_devils';
+import { buildDateString } from './utils/date_utils';
 
 const POST_URL = '/statuses';
 
@@ -13,29 +15,20 @@ export default class KeemaPeriodic {
     this.M = new Mastodon(env);
   }
 
-  buildDateString(now) {
-    const dateString = [
-      now.getFullYear(),
-      ('0' + (now.getMonth() + 1).toString()).slice(-2),
-      ('0' + now.getDate().toString()).slice(-2)
-    ].join('-');
-
-    return {
-      pos: 0,
-      message: `[${dateString}]`
-    };
-  }
-
   async buildMessage(now) {
     return new Array()
     .concat(  // Header string
-      this.buildDateString(now)
+      [{
+        pos: 0,
+        message: `[${buildDateString(now)}]`
+      }]
     )
     .concat(  // Each contents
       await new PeriodicContents().getMessage(now),
       await new WeeklyContents().getMessage(now),
       await new BattlesOfDarkness().getMessage(now),
-      await new PalaceOfDevils().getMessage(now)
+      await new PalaceOfDevils().getMessage(now),
+      await new WeeklyActivity().getMessage(now)
     )
     .filter(v => v)
     .map(v => v.message)

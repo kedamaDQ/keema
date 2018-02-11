@@ -66,3 +66,11 @@ export const elapsedDays = (fromDate, toDate) => {
 export const nextDayOf = (date) => {
   return new Date(date.getTime() + 1 * DAY);
 }
+
+export const buildDateString = (date) => {
+  return [
+    date.getFullYear(),
+    ('0' + (date.getMonth() + 1).toString()).slice(-2),
+    ('0' + date.getDate().toString()).slice(-2)
+  ].join('-');
+}
