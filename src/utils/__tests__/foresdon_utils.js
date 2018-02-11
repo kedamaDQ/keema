@@ -5,11 +5,12 @@ describe('Foresdon', () => {
   const foresdon = new Foresdon();
 
   describe('getMonster', () => {
-    const length = foresdon.json.monsters.length;
-
-    for (let i = 0; i < length * 2; i++) {
-      test(`get ${i + 1} of ${length} monsters.`, () => {
-        expect(foresdon.getMonster()).toEqual(expect.anything());
+    for (let i = 0; i < 150; i++) {
+      test(`Re-fetch if monsters stock is empty.`, () => {
+        return foresdon.getMonster()
+        .then((monster) => {
+          expect(monster).toEqual(expect.anything());
+        })
       })
     }
   })
