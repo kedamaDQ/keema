@@ -83,7 +83,6 @@ export default class ContentBase {
   async getMessage(now = new Date()) {
     const props = this.getMessageProps()[KEY_PERIODIC];
     const messages = [];
-    const promises = [];
 
     for (const prop of props) {
       messages.push({
