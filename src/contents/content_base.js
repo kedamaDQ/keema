@@ -4,6 +4,12 @@ import deepFreeze from '../utils/deep_freeze';
 
 export const KEY_FULL = 'full';
 export const KEY_PERIODIC = 'periodic';
+export const WHEN_TODAY = 'today';
+export const WHEN_TOMORROW = 'tomorrow';
+export const REGEXP_TODAY = new RegExp(/(?:今日|本日|現在|今|きょう|ほんじつ|げんざい|いま)の/);
+export const REGEXP_TOMORROW = new RegExp(/(?:明日|あした)の/);
+export const STRING_TODAY = '本日';
+export const STRING_TOMORROW = '明日';
 
 const fs = require('fs');
 
@@ -13,7 +19,11 @@ export default class ContentBase {
     this.json = (config) ?
       JSON.parse(fs.readFileSync(`${this.configDir()}/${config}`, {encoding: 'utf8'})) :
       null;
+    this.whenStrings = {};
+    this.whenStrings[WHEN_TODAY] = STRING_TODAY;
+    this.whenStrings[WHEN_TOMORROW] = STRING_TOMORROW;
     deepFreeze(this.json);
+    deepFreeze(this.whenStrings);
   }
 
   config() {
@@ -26,6 +36,10 @@ export default class ContentBase {
 
   fillingKeyRegExp() {
     return new RegExp(/^KEY__([a-zA-Z]+)$/);
+  }
+
+  getWhenString(when) {
+    return this.whenStrings[when];
   }
 
   async buildMessage(now, prop) {
@@ -49,17 +63,20 @@ export default class ContentBase {
   hasReply(subject) {
     const props = this.getMessageProps();
     return Object.keys(props).some((key) => {
-      return (key === 'periodic') ? false : new RegExp(props[key].regexp, 'i').test(subject);
+      return (key === KEY_PERIODIC) ? false : new RegExp(props[key].regexp, 'i').test(subject);
     });
   }
 
   async getReply(subject, now = new Date()) {
     const props = this.getMessageProps();
+    const whenKey = (REGEXP_TOMORROW.test(subject)) ? WHEN_TOMORROW : WHEN_TODAY;
+
     const regExpFull = new RegExp(props[KEY_FULL].regexp, 'i');
     if (regExpFull.test(subject)) {
+      const propsFull = Object.assign({ when: whenKey }, props[KEY_FULL]);
       return [{
         pos: subject.search(regExpFull),
-        message: await this.buildMessage(now, props[KEY_FULL])
+        message: await this.buildMessage(now, propsFull)
       }].filter((v) => v.message);
     }
 
@@ -71,9 +88,10 @@ export default class ContentBase {
 
       const regExp = new RegExp(props[key].regexp, 'i');
       if (regExp.test(subject)) {
+        const propsSingle = Object.assign({ when: whenKey }, props[key]);
         replies.push({
           pos: subject.search(regExp),
-          message: await this.buildMessage(now, props[key])
+          message: await this.buildMessage(now, propsSingle)
         });
       }
     };
@@ -83,12 +101,14 @@ export default class ContentBase {
   async getMessage(now = new Date()) {
     const props = this.getMessageProps()[KEY_PERIODIC];
     const messages = [];
-    const promises = [];
 
     for (const prop of props) {
+      const propsSingle = Object.assign({
+        when: WHEN_TODAY
+      }, prop);
       messages.push({
         pos: 0,
-        message: await this.buildMessage(now, prop)
+        message: await this.buildMessage(now, propsSingle)
       });
     }
     return messages.filter((v) => v.message);

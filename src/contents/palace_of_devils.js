@@ -3,13 +3,16 @@
 import ContentBase from './content_base';
 import {
   KEY_FULL,
-  KEY_PERIODIC
+  KEY_PERIODIC,
+  WHEN_TODAY,
+  WHEN_TOMORROW
 } from './content_base';
 import {
   HOUR,
   elapsedPeriods,
   isStartOfPeriod,
-  isEndOfPeriod
+  isEndOfPeriod,
+  tomorrow
 } from '../utils/date_utils';
 
 const CONFIG = 'palace_of_devils.json';
@@ -30,8 +33,9 @@ export default class PalaceOfDevils extends ContentBase {
     this.enemies = this.config().fillings;
   }
 
-  offsetTime(now) {
-    return new Date(now.getTime() - OFFSET_HOURS);
+  offsetTime(now, when) {
+    const d = new Date(now.getTime() - OFFSET_HOURS);
+    return (when === WHEN_TOMORROW) ? tomorrow(d) : d;
   }
 
   getEnemyIndex(now) {
@@ -85,9 +89,11 @@ export default class PalaceOfDevils extends ContentBase {
   }
 
   async getFillings(now, messageProps) {
-    const enemy = this.enemies[this.getEnemyIndex(this.offsetTime(now))];
-    const nextEnemy = this.enemies[this.getNextEnemyIndex(now)];
+    const targetDate = this.offsetTime(now, messageProps.when);
+    const enemy = this.enemies[this.getEnemyIndex(targetDate)];
+    const nextEnemy = this.enemies[this.getNextEnemyIndex(targetDate)];
     return {
+      when: this.getWhenString(messageProps.when),
       display: enemy.display,
       nextDisplay: nextEnemy.display,
       members: enemy.members.join("と"),

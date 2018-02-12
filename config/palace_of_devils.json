@@ -23,7 +23,7 @@
     {
       "key": "full",
       "fragments": [
-        "本日の邪神の宮殿は ",
+        "KEY__when", "の邪神の宮殿は ",
         "KEY__display",
         " です！\n",
         "相手は",

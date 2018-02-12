@@ -3,7 +3,9 @@
 import ContentBase from './content_base';
 import {
   KEY_FULL,
-  KEY_PERIODIC
+  KEY_PERIODIC,
+  WHEN_TODAY,
+  WHEN_TOMORROW
 } from './content_base';
 import {
   HOUR
@@ -50,6 +52,11 @@ export default class DefenceArmy extends ContentBase {
   async getTemplate(now, messageProps) {
     if (!messageProps.template_key) {
       throw new Error('Periodical message is not Implemented.');
+    }
+    if (messageProps.when === WHEN_TOMORROW) {
+      return this.templates.find((template) => {
+        return template.key === 'unknown';
+      });
     }
     return this.templates.find((template) => {
       return template.key === messageProps.template_key;

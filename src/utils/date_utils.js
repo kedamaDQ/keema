@@ -74,3 +74,7 @@ export const buildDateString = (date) => {
     ('0' + date.getDate().toString()).slice(-2)
   ].join('-');
 }
+
+export const tomorrow = (date) => {
+  return new Date(date.getTime() + DAY);
+}
