@@ -2,8 +2,8 @@
   "message_props": {
     "periodic": [
       {
-        "template_key": "full",
-        "fillings_key": "full"
+        "template_key": null,
+        "fillings_key": null
       }
     ],
     "full": {
@@ -24,6 +24,10 @@
         "KEY__nextDisplay",
         "」が攻めてきます！"
       ]
+    },
+    {
+      "key": "unknown",
+      "fragments": ["あ…明日の…防衛軍…？ :f_sweat_smile_kyururu:"]
     }
   ],
   "fillings": [

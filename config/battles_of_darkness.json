@@ -40,7 +40,7 @@
     {
       "key": "full",
       "fragments": [
-        "本日の常闇の聖戦は……\n",
+        "KEY__when", "の常闇の聖戦は……\n",
         "KEY__regnadIcon", " ",  "KEY__regnadDisplay", "：", "KEY__regnadLevel", "\n",
         "KEY__darkkingIcon", " ", "KEY__darkkingDisplay", "：", "KEY__darkkingLevel", "\n",
         "KEY__medbIcon", " ", "KEY__medbDisplay", "：", "KEY__medbLevel", "\n",
@@ -50,7 +50,7 @@
     {
       "key": "single",
       "fragments": [
-        "KEY__name", "は ", "KEY__level", " です！"
+        "KEY__when", "の", "KEY__name", "は ", "KEY__level", " です！"
       ]
     }
   ],
