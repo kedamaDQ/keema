@@ -156,16 +156,19 @@
       }
     },
     {
-      "key": "someone03",
-      "display": "だれかさんず",
+      "key": "malucia_masako",
+      "display": "背離する魔幻の血統",
       "members": [
-        "へのへのさん",
-        "もへじさん"
+        "魔ちゃん",
+        "ジャックポットおじさん"
       ],
       "tolerance": {
         "sepalated": false,
         "tolerances": [
-          "優しい気持ち"
+          "麻痺",
+          "封印",
+          "どく",
+          "呪い"
         ]
       }
     },
