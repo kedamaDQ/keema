@@ -24,7 +24,10 @@ export default class KeemaDaemon {
 
   connectToStream() {
     this.M.stream(STREAM_URL).on('message', (msg) => {
-      if (!(this.checkLocal(msg) || this.checkUpdate(msg))) {
+      if (!this.checkUpdate(msg)) {
+        return;
+      }
+      if (!this.checkLocal(msg)) {
         return;
       }
   
