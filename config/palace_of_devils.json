@@ -1,11 +1,4 @@
 {
-  "start_date": {
-    "comment": "/* month starts with 0. */",
-    "year": 2017,
-    "month": 7,
-    "day": 10
-  },
-  "reset_days": [10, 25],
   "message_props": {
     "periodic": [
       {
@@ -66,142 +59,194 @@
       ]
     }
   ],
-  "fillings": [
+  "reset_days": [10, 25],
+  "start_dates": [
     {
-      "key": "saiyaku_dream",
-      "display": "災いの神話と暴虐の悪夢",
-      "members": [
-        "魔蝕おじさん",
-        "ギガスローおじさん"
-      ],
-      "tolerance": {
-        "sepalated": false,
-        "tolerances": [
-          "呪い",
-          "即死",
-          "麻痺",
-          "混乱",
-          "封印",
-          "幻惑",
-          "転び"
-        ]
-      }
+    "comment": "/* month starts with 0. */",
+    "year": 2017,
+    "month": 11,
+    "day": 10
     },
     {
-      "key": "malucia_saiyaku",
-      "display": "妖女と災獣",
-      "members": [
-        "魔ちゃん",
-        "魔蝕おじさん"
-      ],
-      "tolerance": {
-        "sepalated": false,
-        "tolerances": [
-          "呪い",
-          "幻惑",
-          "麻痺",
-          "混乱"
-        ]
-      }
-    },
-    {
-      "key": "masako_friends",
-      "display": "魔幻の覇王軍",
-      "members": [
-        "ジャックポットおじさん",
-        "ゆかいな絵画たち"
-      ],
-      "tolerance": {
-        "sepalated": true,
-        "tolerances": [
-          ["呪い", "麻痺", "どく", "眠り", "魅了"],
-          ["呪い", "麻痺", "どく", "混乱"],
-          ["呪い", "麻痺", "どく", "即死"],
-          ["呪い", "麻痺", "どく", "眠り", "魅了"]
-        ]
-      }
-    },
-    {
-      "key": "destroyer_and_creator",
-      "display": "破壊と創造の神々",
-      "members": [
-        "ギガスローおじさん",
-        "ジャックポットおじさん"
-      ],
-      "tolerance": {
-        "sepalated": false,
-        "tolerances": [
-          "混乱",
-          "麻痺",
-          "封印",
-          "どく",
-          "呪い"
-        ]
-      }
-    },
-    {
-      "key": "zel_raz",
-      "display": "覇道の双璧",
-      "members": [
-        "ゼルさん",
-        "ラズさん"
-      ],
-      "tolerance": {
-        "sepalated": false,
-        "tolerances": [
-          "呪い",
-          "麻痺",
-          "幻惑"
-        ]
-      }
-    },
-    {
-      "key": "malucia_masako",
-      "display": "背離する魔幻の血統",
-      "members": [
-        "魔ちゃん",
-        "ジャックポットおじさん"
-      ],
-      "tolerance": {
-        "sepalated": false,
-        "tolerances": [
-          "麻痺",
-          "封印",
-          "どく",
-          "呪い"
-        ]
-      }
-    },
-    {
-      "key": "malucia_thoma",
-      "display": "闇に堕ちた英雄の幻影",
-      "members": [
-        "魔ちゃん",
-        "お兄ちゃん"
-      ],
-      "tolerance": {
-        "sepalated": false,
-        "tolerances": [
-          "呪い",
-          "麻痺",
-          "封印",
-          "怯え"
-        ]
-      }
-    },
-    {
-      "key": "zel_thoma",
-      "display": "魔幻の最高幹部",
-      "members": [
-        "ゼルさん",
-        "お兄ちゃん"
-      ],
-      "tolerance": {
-        "sepalated": false,
-        "tolerances": [
-          "呪い"
-        ]
-      }
+    "comment": "/* month starts with 0. */",
+    "year": 2017,
+    "month": 10,
+    "day": 25
     }
+  ],
+  "fillings": [
+    [
+      {
+        "key": "saiyaku_dream",
+        "display": "災いの神話と暴虐の悪夢",
+        "members": [
+          "魔蝕おじさん",
+          "ギガスローおじさん"
+        ],
+        "tolerance": {
+          "sepalated": false,
+          "tolerances": [
+            "呪い",
+            "即死",
+            "麻痺",
+            "混乱",
+            "封印",
+            "幻惑",
+            "転び"
+          ]
+        }
+      },
+      {
+        "key": "masako_friends",
+        "display": "魔幻の覇王軍",
+        "members": [
+          "ジャックポットおじさん",
+          "ゆかいな絵画たち"
+        ],
+        "tolerance": {
+          "sepalated": true,
+          "tolerances": [
+            ["呪い", "麻痺", "どく", "眠り", "魅了"],
+            ["呪い", "麻痺", "どく", "混乱", "即死"],
+            ["呪い", "麻痺", "どく"],
+            ["呪い", "麻痺", "どく", "眠り", "魅了"]
+          ]
+        }
+      },
+      {
+        "key": "zel_raz",
+        "display": "覇道の双璧",
+        "members": [
+          "ゼルさん",
+          "ラズさん"
+        ],
+        "tolerance": {
+          "sepalated": false,
+          "tolerances": [
+            "呪い",
+            "麻痺",
+            "幻惑"
+          ]
+        }
+      },
+      {
+        "key": "malucia_thoma",
+        "display": "闇に堕ちた英雄の幻影",
+        "members": [
+          "魔ちゃん",
+          "お兄ちゃん"
+        ],
+        "tolerance": {
+          "sepalated": false,
+          "tolerances": [
+            "呪い",
+            "麻痺",
+            "封印",
+            "怯え"
+          ]
+        }
+      }
+    ],
+    [
+      {
+        "key": "zel_thoma",
+        "display": "魔幻の最高幹部",
+        "members": [
+          "ゼルさん",
+          "お兄ちゃん"
+        ],
+        "tolerance": {
+          "sepalated": false,
+          "tolerances": [
+            "呪い"
+          ]
+        }
+      },
+      {
+        "key": "malucia_saiyaku",
+        "display": "妖女と災獣",
+        "members": [
+          "魔ちゃん",
+          "魔蝕おじさん"
+        ],
+        "tolerance": {
+          "sepalated": false,
+          "tolerances": [
+            "呪い",
+            "幻惑",
+            "麻痺",
+            "混乱"
+          ]
+        }
+      },
+      {
+        "key": "destroyer_and_creator",
+        "display": "破壊と創造の神々",
+        "members": [
+          "ギガスローおじさん",
+          "ジャックポットおじさん"
+        ],
+        "tolerance": {
+          "sepalated": false,
+          "tolerances": [
+            "混乱",
+            "麻痺",
+            "封印",
+            "どく",
+            "呪い"
+          ]
+        }
+      },
+      {
+        "key": "malucia_masako",
+        "display": "背離する魔幻の血統",
+        "members": [
+          "魔ちゃん",
+          "ジャックポットおじさん"
+        ],
+        "tolerance": {
+          "sepalated": false,
+          "tolerances": [
+            "麻痺",
+            "封印",
+            "どく",
+            "呪い"
+          ]
+        }
+      },
+      {
+        "key": "raz_friends",  
+        "display": "魔宮の守護者たち",
+        "members": [
+          "ラズさん",
+          "愉快な絵画たち"
+        ],
+        "tolerance": {
+          "sepalated": true,
+          "tolerances": [
+            ["幻惑", "マヒ", "眠り", "魅了"],
+            ["幻惑", "マヒ", "混乱", "即死"],
+            ["幻惑", "マヒ", "呪い"],
+            ["幻惑", "マヒ", "眠り", "魅了"]
+          ]
+        }
+      },
+      {
+        "key": "unknown",
+        "display": "どちらさま?",
+        "members": [
+          "ななしのさん",
+          "ごんべいさん"
+        ],
+        "tolerance": {
+          "sepalated": false,
+          "tolerances": [
+            "愛しさ",
+            "切なさ",
+            "心強さ"
+          ]
+        }
+      }
+    ]
   ]
 }
