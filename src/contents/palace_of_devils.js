@@ -35,14 +35,9 @@ export default class PalaceOfDevils extends ContentBase {
   }
 
   getDataIndex(now) {
-//    if (now.getDate() < this.resetDays[0]) {
-//      return this.resetDays.length - 1;
-//    }
-
     const dataIdx = this.resetDays.findIndex((resetDay) => {
       return resetDay > now.getDate();
     }) - 1;
-//    return (dataIdx === -1) ? this.resetDays.length - 1 : dataIdx;
     return (dataIdx < 0) ? this.resetDays.length - 1 : dataIdx;
   }
 
@@ -129,26 +124,3 @@ export default class PalaceOfDevils extends ContentBase {
     };
   }
 }
-
-//const pod = new PalaceOfDevils();
-//pod.getMessage(new Date(2018, 1, 1, 7, 0, 0)).then(data => console.log(data));
-//pod.getMessage(new Date(2018, 1, 9, 7, 0, 0)).then(data => console.log(data));
-//pod.getMessage(new Date(2018, 1, 10, 7, 0, 0)).then(data => console.log(data));
-//pod.getMessage(new Date(2018, 1, 11, 7, 0, 0)).then(data => console.log(data));
-//pod.getMessage(new Date(2018, 1, 24, 7, 0, 0)).then(data => console.log(data));
-//pod.getMessage(new Date(2018, 1, 25, 7, 0, 0)).then(data => console.log(data));
-//
-//pod.getMessage(new Date(2018, 2, 1, 7, 0, 0)).then(data => console.log(data));
-//pod.getMessage(new Date(2018, 2, 9, 7, 0, 0)).then(data => console.log(data));
-//pod.getMessage(new Date(2018, 2, 10, 7, 0, 0)).then(data => console.log(data));
-//pod.getMessage(new Date(2018, 2, 15, 7, 0, 0)).then(data => console.log(data));
-//pod.getMessage(new Date(2018, 2, 24, 7, 0, 0)).then(data => console.log(data));
-//pod.getMessage(new Date(2018, 2, 25, 7, 0, 0)).then(data => console.log(data));
-//
-//pod.getMessage(new Date(2018, 3, 1, 7, 0, 0)).then(data => console.log(data));
-//pod.getMessage(new Date(2018, 3, 9, 7, 0, 0)).then(data => console.log(data));
-//pod.getMessage(new Date(2018, 3, 10, 7, 0, 0)).then(data => console.log(data));
-//pod.getMessage(new Date(2018, 3, 15, 7, 0, 0)).then(data => console.log(data));
-//pod.getMessage(new Date(2018, 3, 24, 7, 0, 0)).then(data => console.log(data));
-//pod.getMessage(new Date(2018, 3, 25, 7, 0, 0)).then(data => console.log(data));
-//
