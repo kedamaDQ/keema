@@ -13,26 +13,8 @@ describe('PalaceOfDevils', () => {
 
   })
 
-  describe('getEnemyIndex', () => {
-    const pod = new PalaceOfDevils();
-    const base = pod.getEnemyIndex(new Date(y, 0, resetDays[0], 6, 0, 0));
-    for (let i = 0; i < enemies.length; i++) {
-      const subject = new Date(
-        y,                                // year
-        Math.floor(i / resetDays.length), // month
-        resetDays[i % resetDays.length],  // day
-        6, 0, 0);
+  describe.skip('getEnemyIndex', () => {
 
-      const expected = (base + i) % enemies.length;
-      test(`on: ${subject} expected: ${expected}`, () => {
-        expect(pod.getEnemyIndex(pod.offsetTime(subject))).toBe(expected);
-      });
-
-      const before = new Date(subject.getTime() - 1000);
-      test(`Switching. subject: ${subject}, before: ${before}`, () => {
-        expect(pod.getEnemyIndex(pod.offsetTime(subject))).not.toBe(pod.getEnemyIndex(pod.offsetTime(before)));
-      });
-    }
   });
 
   describe.skip('getNextEnemyIndex', () => {

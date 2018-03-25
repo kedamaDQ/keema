@@ -22,11 +22,7 @@ export default class PalaceOfDevils extends ContentBase {
 
   constructor() {
     super(CONFIG);
-    this.startDate = new Date(
-      this.config().start_date.year,
-      this.config().start_date.month,
-      this.config().start_date.day
-    );
+    this.startDates = this.config().start_dates;
     this.resetDays = this.config().reset_days;
     this.messageProps = this.config().message_props;
     this.templates = this.config().templates;
@@ -38,14 +34,38 @@ export default class PalaceOfDevils extends ContentBase {
     return (when === WHEN_TOMORROW) ? tomorrow(d) : d;
   }
 
+  getDataIndex(now) {
+    const dataIdx = this.resetDays.findIndex((resetDay) => {
+      return resetDay > now.getDate();
+    }) - 1;
+    return (dataIdx < 0) ? this.resetDays.length - 1 : dataIdx;
+  }
+
   getEnemyIndex(now) {
+    const idx = this.getDataIndex(now);
     return elapsedPeriods(
-      this.startDate, now, this.resetDays
-    ) % this.enemies.length;
+      new Date(
+        this.startDates[idx].year,
+        this.startDates[idx].month,
+        this.startDates[idx].day
+      ),
+      now,
+      [this.resetDays[idx]]
+    ) % this.enemies[idx].length;
   }
 
   getNextEnemyIndex(now) {
-    return (this.getEnemyIndex(now) + 1) % this.enemies.length;
+    const idx = (this.getDataIndex(now) + 1) % this.resetDays.length;
+    const currentIndex = elapsedPeriods(
+      new Date(
+        this.startDates[idx].year,
+        this.startDates[idx].month,
+        this.startDates[idx].day,
+      ),
+      now,
+      [this.resetDays[idx]]
+    ) + 1;
+    return currentIndex % this.enemies[idx].length;
   }
 
   buildTolerances(tolerance) {
@@ -71,13 +91,15 @@ export default class PalaceOfDevils extends ContentBase {
     }
 
     // messageProps.template_key === null
-    if (isStartOfPeriod(this.offsetTime(now), this.resetDays)) {
+    const offsetted = this.offsetTime(now);
+    const idx = this.getDataIndex(offsetted);
+    if (isStartOfPeriod(offsetted, this.resetDays)) {
       return this.templates.find((template) => {
         return template.key === 'first_day';
       });
     }
 
-    if (isEndOfPeriod(this.offsetTime(now), this.resetDays)) {
+    if (isEndOfPeriod(offsetted, this.resetDays)) {
       return this.templates.find((template) => {
         return template.key === 'last_day';
       });
@@ -90,8 +112,9 @@ export default class PalaceOfDevils extends ContentBase {
 
   async getFillings(now, messageProps) {
     const targetDate = this.offsetTime(now, messageProps.when);
-    const enemy = this.enemies[this.getEnemyIndex(targetDate)];
-    const nextEnemy = this.enemies[this.getNextEnemyIndex(targetDate)];
+    const idx = this.getDataIndex(targetDate);
+    const enemy = this.enemies[idx][this.getEnemyIndex(targetDate)];
+    const nextEnemy = this.enemies[(idx + 1) % this.resetDays.length][this.getNextEnemyIndex(targetDate)];
     return {
       when: this.getWhenString(messageProps.when),
       display: enemy.display,
