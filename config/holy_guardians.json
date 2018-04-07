@@ -25,7 +25,7 @@
     {
       "key": "periodic",
       "fragments": [
-        "KEY__display", "は ", "KEY__level"
+        "KEY__display", "は ", "KEY__level",  " です！"
       ]
     },
     {

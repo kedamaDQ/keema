@@ -6,6 +6,7 @@ import WeeklyActivity from './contents/weekly_activity';
 import BattlesOfDarkness from './contents/battles_of_darkness';
 import PalaceOfDevils from './contents/palace_of_devils';
 import { buildDateString } from './utils/date_utils';
+import HolyGuardians from './contents/holy_guardians';
 
 const POST_URL = '/statuses';
 
@@ -23,10 +24,15 @@ export default class KeemaPeriodic {
         message: `[${buildDateString(now)}]`
       }]
     )
-    .concat(  // Each contents
+    .concat(
       await new PeriodicContents().getMessage(now),
       await new WeeklyContents().getMessage(now),
+    )
+    .concat(  // These are exist everyday.
       await new BattlesOfDarkness().getMessage(now),
+      await new HolyGuardians().getMessage(now),
+    )
+    .concat(
       await new PalaceOfDevils().getMessage(now),
       await new WeeklyActivity().getMessage(now)
     )
