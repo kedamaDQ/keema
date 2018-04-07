@@ -2,6 +2,7 @@ import Mastodon from 'mastodon-api';
 
 import DefenceArmy from './contents/defence_army';
 import BattlesOfDarkness from './contents/battles_of_darkness';
+import HolyGuardians from './contents/holy_guardians';
 import PalaceOfDevils from './contents/palace_of_devils';
 import KantanNaKoto from './contents/kantan_na_koto';
 
@@ -15,6 +16,7 @@ export default class KeemaDaemon {
   constructor(env) {
     this.oshieteContents = [
       new BattlesOfDarkness(),
+      new HolyGuardians(),
       new PalaceOfDevils(),
       new DefenceArmy()
     ];
@@ -82,7 +84,6 @@ export default class KeemaDaemon {
     contentsArray.forEach((c) => {
       if (c.hasReply(content)) {
         promises.push(c.getReply(content));
-//        replyContents = replyContents.concat(await c.getReply(content));
       }
     });
 

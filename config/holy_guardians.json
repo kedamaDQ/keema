@@ -1,0 +1,45 @@
+{
+  "start_date": {
+    "comment": "/* month starts with 0. */",
+    "year": 2018,
+    "month": 3,
+    "day": 12
+  },
+  "level_numbers": [
+    "Ⅰ", "Ⅱ", "Ⅲ"
+  ],
+  "message_props": {
+    "periodic": [
+      {
+        "template_key": "periodic",
+        "fillings_key": "full"
+      }
+    ],
+    "full": {
+      "regexp": "(?:聖守護者|闘戦記)",
+      "template_key": "full",
+      "fillings_key": "full"
+    }
+  },
+  "templates": [
+    {
+      "key": "periodic",
+      "fragments": [
+        "KEY__display", "は ", "KEY__level",  " です！"
+      ]
+    },
+    {
+      "key": "full",
+      "fragments": [
+        "KEY__when", "の", "KEY__display", "は ", "KEY__level", " です！"
+      ]
+    }
+  ],
+  "fillings": [
+    {
+      "key": "reg_lor",
+      "display": "聖守護者の闘戦記",
+      "offset": 0
+    }
+  ]
+}

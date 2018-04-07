@@ -12,6 +12,8 @@ const APPS_PATH = `${API_PATH}/apps`
 const DEF_INSTANCE_URL = 'https://st.foresdon.jp';
 const DEF_CLIENT_APP_NAME = 'bot';
 
+const REGEXP_DATE_STR = new RegExp('([0-9]{4})([0-9]{2})([0-9]{2})');
+
 // Command-line options
 const opts = require('opts');
 const options = [
@@ -112,7 +114,17 @@ loadEnv()
   } else if (opts.get('d')) {
     new KeemaDaemon(env).connectToStream();
   } else if (opts.get('o')) {
-    new KeemaPeriodic(env).toot();
+    const dateStr = opts.args()[0];
+    if (dateStr && REGEXP_DATE_STR.test(dateStr)) {
+      new KeemaPeriodic(env).toot(new Date(
+        parseInt(RegExp.$1, 10),
+        parseInt(RegExp.$2, 10) - 1,
+        parseInt(RegExp.$3, 10),
+        6, 0, 0
+      ));
+    } else {
+      new KeemaPeriodic(env).toot();
+    }
   } else {
     opts.help();
     process.exit(0);

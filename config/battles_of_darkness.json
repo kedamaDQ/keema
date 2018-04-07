@@ -11,7 +11,7 @@
   "message_props": {
     "periodic": [
       {
-        "template_key": "full",
+        "template_key": "periodic",
         "fillings_key": "full"
       }
     ],
@@ -37,6 +37,15 @@
     }
   },
   "templates": [
+    {
+      "key": "periodic",
+      "fragments": [
+        "KEY__when", "の常闇の聖戦は\n",
+        "KEY__regnadIcon", " ",  "KEY__regnadDisplay", "：", "KEY__regnadLevel", "\n",
+        "KEY__darkkingIcon", " ", "KEY__darkkingDisplay", "：", "KEY__darkkingLevel", "\n",
+        "KEY__medbIcon", " ", "KEY__medbDisplay", "：", "KEY__medbLevel", "\n"
+      ]
+    },
     {
       "key": "full",
       "fragments": [
