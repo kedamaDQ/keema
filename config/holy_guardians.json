@@ -1,9 +1,16 @@
 {
+  "first_start_date": {
+    "comment": "/* month starts with 0. */",
+    "year": 2018,
+    "month": 3,
+    "day": 12,
+    "replaced": "This is first release. Found bug and stopped level3."
+  },
   "start_date": {
     "comment": "/* month starts with 0. */",
     "year": 2018,
     "month": 3,
-    "day": 12
+    "day": 20 
   },
   "level_numbers": [
     "Ⅰ", "Ⅱ", "Ⅲ"
