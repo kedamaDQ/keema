@@ -232,6 +232,24 @@
         }
       },
       {
+        "key": "deram_thoma",
+        "display": "昏き悪夢の衝撃",
+        "members": [
+          "ギガスローおじさん",
+          "お兄ちゃん"
+        ],
+        "tolerance": {
+          "sepalated": false,
+          "tolerances": [
+            "呪い",
+            "封印",
+            "混乱",
+            "幻惑",
+            "マヒ"
+          ]
+        }
+      },
+      {
         "key": "unknown",
         "display": "どちらさま?",
         "members": [
