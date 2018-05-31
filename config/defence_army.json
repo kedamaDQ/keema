@@ -1,4 +1,11 @@
 {
+  "start_date": {
+    "comment": "/* month starts with 0. */",
+    "year": 2018,
+    "month": 4,
+    "day": 30,
+    "hour": 12
+  },
   "message_props": {
     "periodic": [
       {
@@ -44,6 +51,11 @@
     {
       "key": "green",
       "display": "真碧の造魔兵団",
+      "duration": 120
+    },
+    {
+      "key": "blue",
+      "display": "蒼怨の屍獄兵団",
       "duration": 120
     },
     {

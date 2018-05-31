@@ -8,7 +8,8 @@ import {
   WHEN_TOMORROW
 } from './content_base';
 import {
-  HOUR
+  HOUR,
+  elapsedMinutes
 } from '../utils/date_utils';
 
 const CONFIG = 'defence_army.json';
@@ -18,20 +19,19 @@ export default class DefenceArmy extends ContentBase {
 
   constructor() {
     super(CONFIG);
+    this.startDate = new Date(
+      this.config().start_date.year,
+      this.config().start_date.month,
+      this.config().start_date.day,
+      this.config().start_date.hour,
+      0, 0, 0
+    );
     this.templates = this.config().templates;
     this.messageProps = this.config().message_props;
     this.enemies = this.config().fillings;
     this.cycle = this.enemies.reduce((acc, value) => {
       return acc + value.duration;
     }, 0);
-  }
-
-  offsetTime(now) {
-    return new Date(now.getTime() - OFFSET_HOURS);
-  }
-
-  getMinutesOfWeek(now) {
-    return (now.getDay() * 24 * 60) + (now.getHours() * 60) + now.getMinutes();
   }
 
   readableMinutes(minutes) {
@@ -65,7 +65,7 @@ export default class DefenceArmy extends ContentBase {
 
   async getFillings(now, messageProps) {
     const fillings = {};
-    let elapsed = this.getMinutesOfWeek(this.offsetTime(now)) % this.cycle;
+    let elapsed = elapsedMinutes(this.startDate, now) % this.cycle;
     this.enemies.find((v, i) => {
       if (elapsed - this.enemies[i].duration < 0) {
         fillings.currentDisplay = v.display;

@@ -67,6 +67,10 @@ export const nextDayOf = (date) => {
   return new Date(date.getTime() + 1 * DAY);
 }
 
+export const elapsedMinutes = (fromDate, toDate) => {
+  return Math.floor((toDate - fromDate) / MINUTE);
+}
+
 export const buildDateString = (date) => {
   return [
     date.getFullYear(),
