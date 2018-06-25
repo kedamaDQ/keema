@@ -267,20 +267,34 @@
         }
       },
       {
-        "key": "unknown",
-        "display": "だれですか?",
+        "key": "masako_zel",
+        "display": "覇業の君臣",
         "members": [
-          "部屋",
-          "ワイシャツ",
-          "私"
+          "ジャックポットおじさん",
+          "幹部のゼルおじさん"
         ],
         "tolerance": {
           "sepalated": false,
           "tolerances": [
-            "酒",
-            "泪",
-            "男",
-            "女"
+            "麻痺",
+            "どく",
+            "呪い"
+          ]
+        }
+      },
+      {
+        "key": "unknown",
+        "display": "どちらさま?",
+        "members": [
+          "愛しさ",
+          "切なさ",
+          "心強さ"
+        ],
+        "tolerance": {
+          "sepalated": false,
+          "tolerances": [
+            "夢",
+            "希望"
           ]
         }
       }
