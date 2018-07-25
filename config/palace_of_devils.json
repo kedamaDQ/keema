@@ -283,6 +283,23 @@
         }
       },
       {
+        "key": "saiyaku_thoma",
+        "display": "悲劇の英雄譚",
+        "members": [
+          "魔蝕おじさん",
+          "お兄ちゃん"
+        ],
+        "tolerance": {
+          "sepalated": false,
+          "tolerances": [
+            "混乱",
+            "幻惑",
+            "麻痺",
+            "呪い"
+          ]
+        }
+      },
+      {
         "key": "unknown",
         "display": "どちらさま?",
         "members": [
