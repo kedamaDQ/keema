@@ -33,6 +33,20 @@
       ]
     },
     {
+      "key": "full_with_tolerances",
+      "fragments": [
+        "現在のアストルティア防衛軍は「",
+        "KEY__currentDisplay",
+        "」に攻められています！",
+        "KEY__tolerances",
+        "の耐性があると良いようです！\nあと",
+        "KEY__remain",
+        "で「",
+        "KEY__nextDisplay",
+        "」が攻めてきます！"
+      ]
+    },
+    {
       "key": "unknown",
       "fragments": ["あ…明日の…防衛軍…？ :f_sweat_smile_kyururu:"]
     }
@@ -41,22 +55,34 @@
     {
       "key": "red",
       "display": "闇朱の獣牙兵団",
-      "duration": 120
+      "duration": 120,
+      "tolerances": [
+        "怯え", "転び"
+      ]
     },
     {
       "key": "purple",
       "display": "紫炎の鉄機兵団",
-      "duration": 120
+      "duration": 120,
+      "tolerances": [
+        "転び"
+      ]
     },
     {
       "key": "green",
       "display": "深碧の造魔兵団",
-      "duration": 120
+      "duration": 120,
+      "tolerances": [
+        "麻痺"
+      ]
     },
     {
       "key": "blue",
       "display": "蒼怨の屍獄兵団",
-      "duration": 120
+      "duration": 120,
+      "tolerances": [
+        "麻痺", "呪い"
+      ]
     },
     {
       "key": "random",

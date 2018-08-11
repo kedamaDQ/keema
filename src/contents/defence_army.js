@@ -44,6 +44,19 @@ export default class DefenceArmy extends ContentBase {
     }
   }
 
+  currentEnemy(now) {
+    let elapsed = elapsedMinutes(this.startDate, now) % this.cycle;
+    const index = this.enemies.findIndex((v) => {
+      if (elapsed - v.duration < 0) {
+        return true;
+      } else {
+        elapsed -= v.duration;
+        return false;
+      }
+    });
+    return { index, elapsed };
+  }
+
   /* Override pseudo abstract methods. */
   getMessageProps() {
     return this.messageProps;
@@ -58,25 +71,27 @@ export default class DefenceArmy extends ContentBase {
         return template.key === 'unknown';
       });
     }
+
+    const key = (this.enemies[this.currentEnemy(now).index].key === "random") ?
+      "full" : "full_with_tolerances";
     return this.templates.find((template) => {
-      return template.key === messageProps.template_key;
+      return template.key === key;
     });
   }
 
   async getFillings(now, messageProps) {
-    const fillings = {};
-    let elapsed = elapsedMinutes(this.startDate, now) % this.cycle;
-    this.enemies.find((v, i) => {
-      if (elapsed - this.enemies[i].duration < 0) {
-        fillings.currentDisplay = v.display;
-        fillings.nextDisplay = this.enemies[(i + 1) % this.enemies.length].display;
-        fillings.remain = this.readableMinutes(v.duration - elapsed);
-        return true;
-      } else {
-        elapsed -= v.duration;
-        return false;
-      }
-    });
+    const currentEnemy = this.currentEnemy(now);
+    const currentIndex = currentEnemy.index;
+    const nextIndex = (currentIndex + 1) % this.enemies.length;
+    const fillings = {
+      currentDisplay: this.enemies[currentIndex].display,
+      nextDisplay: this.enemies[nextIndex].display,
+      remain: this.readableMinutes(this.enemies[currentIndex].duration - currentEnemy.elapsed),
+    };
+
+    if (this.enemies[currentIndex].tolerances) {
+      fillings.tolerances = this.enemies[currentIndex].tolerances.join("・");
+    }
     return fillings;
   }
 }
