@@ -6,8 +6,8 @@ export const KEY_FULL = 'full';
 export const KEY_PERIODIC = 'periodic';
 export const WHEN_TODAY = 'today';
 export const WHEN_TOMORROW = 'tomorrow';
-export const REGEXP_TODAY = new RegExp(/(?:今日|本日|現在|今|きょう|ほんじつ|げんざい|いま)の/);
-export const REGEXP_TOMORROW = new RegExp(/(?:明日|あした)の/);
+export const REGEXP_TODAY = new RegExp(/(?:今日|本日|現在|今|きょう|ほんじつ|げんざい|いま|トゥデ[イィ]|とぅで[いぃ]|ナ[ウゥ]|な[うぅ])の/);
+export const REGEXP_TOMORROW = new RegExp(/(?:明日|あした|トゥモロ[ーウゥ]|とぅもろ[ーうぅ])[のズ]/);
 export const STRING_TODAY = '本日';
 export const STRING_TOMORROW = '明日';
 
