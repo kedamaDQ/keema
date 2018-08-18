@@ -9,7 +9,7 @@ import KantanNaKoto from './contents/kantan_na_koto';
 const STREAM_URL = '/streaming/public/local';
 const POST_URL = '/statuses';
 const REGEXP_OSHIETE_TRIGGER1 = new RegExp(/(?:キーマ|きーま)さん/);
-const REGEXP_OSHIETE_TRIGGER2 = new RegExp(/(?:教|おし)えて/);
+const REGEXP_OSHIETE_TRIGGER2 = new RegExp(/(?:(?:教|おし)えて|(?:ティーチ|てぃーち)\s*(?:ミー|みー))/);
 
 export default class KeemaDaemon {
 
