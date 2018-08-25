@@ -300,6 +300,24 @@
         }
       },
       {
+        "key": "dream_malucia",
+        "display": "見果てぬ夢の蛮勇",
+        "members": [
+          "ギガスローおじさん",
+          "魔ちゃん"
+        ],
+        "tolerance": {
+          "sepalated": false,
+          "tolerances": [
+            "混乱",
+            "封印",
+            "麻痺",
+            "呪い",
+            "怯え"
+          ]
+        }
+      },
+      {
         "key": "unknown",
         "display": "どちらさま?",
         "members": [
