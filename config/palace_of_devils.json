@@ -316,22 +316,6 @@
             "怯え"
           ]
         }
-      },
-      {
-        "key": "unknown",
-        "display": "どちらさま?",
-        "members": [
-          "愛しさ",
-          "切なさ",
-          "心強さ"
-        ],
-        "tolerance": {
-          "sepalated": false,
-          "tolerances": [
-            "夢",
-            "希望"
-          ]
-        }
       }
     ]
   ]
