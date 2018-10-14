@@ -23,30 +23,58 @@
       }
     ],
     "full": {
-      "regexp": "(?:聖守護者|闘戦記)",
+      "regexp": "(?:聖守護者|闘戦記|せいしゅごしゃ|とうせんき)",
       "template_key": "full",
       "fillings_key": "full"
+    },
+    "reglor": {
+      "regexp": "(?:冥骸魔|レギルラッゾ|れぎるらっぞ|ローガスト|ろーがすと|レギロガ|れぎろが|ﾚｷﾞﾛｶﾞ|犬骨|イッ?ヌ|ホッ?ネ|いっ?ぬ|ほっ?ね|ｲｯ?ﾇ|ﾎｯ?ﾈ)",
+      "template_key": "single",
+      "fillings_key": "reglor"
+    },
+    "scorpide": {
+      "regexp": "(?:紅殻魔|スコルパイド|すこるぱいど|サソリ|さそり|ｻｿﾘ)",
+      "template_key": "single",
+      "fillings_key": "scorpide"
     }
   },
   "templates": [
     {
       "key": "periodic",
       "fragments": [
-        "KEY__display", "は ", "KEY__level",  " です！"
+        "KEY__when", "の聖守護者の闘戦記は\n",
+        "KEY__reglorIcon", " ", "KEY__reglorDisplay", "：", "KEY__reglorLevel", "\n",
+        "KEY__scorpideIcon", " ", "KEY__scorpideDisplay", "：", "KEY__scorpideLevel", "\n"
       ]
     },
     {
       "key": "full",
       "fragments": [
-        "KEY__when", "の", "KEY__display", "は ", "KEY__level", " です！"
+        "KEY__when", "の聖守護者の闘戦記は……\n",
+        "KEY__reglorIcon", " ", "KEY__reglorDisplay", "：", "KEY__reglorLevel", "\n",
+        "KEY__scorpideIcon", " ", "KEY__scorpideDisplay", "：", "KEY__scorpideLevel", "\n",
+        "……です！"
+      ]
+    },
+    {
+      "key": "single",
+      "fragments": [
+        "KEY__when", "の", "KEY__name", "は ", "KEY__level", " です！"
       ]
     }
   ],
   "fillings": [
     {
-      "key": "reg_lor",
-      "display": "聖守護者の闘戦記",
+      "key": "reglor",
+      "display": "冥骸魔＆獣魔",
+      "name": "冥骸魔レギルラッゾ＆獣魔ローガスト",
       "offset": 0
+    },
+    {
+      "key": "scorpide",
+      "display": "紅殻魔　　　",
+      "name": "紅殻魔スコルパイド",
+      "offset": 2
     }
   ]
 }

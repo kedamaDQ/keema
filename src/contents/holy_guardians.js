@@ -12,6 +12,8 @@ import {
   elapsedDays
 } from '../utils/date_utils';
 
+import Foresdon from '../utils/foresdon_utils';
+
 const CONFIG = 'holy_guardians.json';
 const OFFSET_HOURS = 6 * HOUR;
 
@@ -25,12 +27,12 @@ export default class HolyGuardians extends ContentBase {
       this.config().start_date.day
     );
     this.templates = this.config().templates;
-    this.fillings = this.config().fillings;
+    this.enemies = this.config().fillings;
     this.levelNumbers = this.config().level_numbers;
     this.messageProps = this.config().message_props;
   }
 
-  offsetDate(now, when) {
+  offsetTime(now, when) {
     const d = new Date(now.getTime() - OFFSET_HOURS);
     return (when === WHEN_TOMORROW) ? tomorrow(d) : d;
   }
@@ -53,16 +55,32 @@ export default class HolyGuardians extends ContentBase {
   }
 
   async getFillings(now, messageProps) {
-    const targetDate = this.offsetDate(now, messageProps.when);
+    const targetDate = this.offsetTime(now, messageProps.when);
     if (targetDate.getTime() < this.startDate.getTime()) {
       return null;
     }
 
-    const enemy = this.fillings[0];
-    return {
-      when: this.getWhenString(messageProps.when),
-      level: this.getLevel(targetDate, enemy.offset),
-      display: enemy.display
+    const fillings = {
+      when: this.getWhenString(messageProps.when)
+    };
+
+    if (messageProps.fillings_key === KEY_PERIODIC || messageProps.fillings_key === KEY_FULL) {
+      const foresdon = new Foresdon();
+      for (const enemy of this.enemies) {
+        fillings[`${enemy.key}Level`] = this.getLevel(targetDate, enemy.offset);
+        fillings[`${enemy.key}Display`] = enemy.display;
+        fillings[`${enemy.key}Icon`] = await foresdon.getMonster();
+      }
+    } else {
+      this.enemies.find((enemy) => {
+        if (enemy.key === messageProps.fillings_key) {
+          fillings['name'] = enemy.name;
+          fillings['level'] = this.getLevel(targetDate, enemy.offset);
+          return true;
+        }
+        return false;
+      });
     }
+    return fillings;
   }
 }
