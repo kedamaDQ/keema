@@ -2,8 +2,8 @@
   "start_date": {
     "comment": "/* month starts with 0. */",
     "year": 2018,
-    "month": 8,
-    "day": 6,
+    "month": 11,
+    "day": 5,
     "hour": 11
   },
   "message_props": {
@@ -52,7 +52,31 @@
     }
   ],
   "fillings": [
-   {
+    {
+      "key": "red",
+      "display": "闇朱の獣牙兵団",
+      "duration": 60,
+      "tolerances": [
+        "怯え", "転び"
+      ]
+    },
+    {
+      "key": "purple",
+      "display": "紫炎の鉄機兵団",
+      "duration": 60,
+      "tolerances": [
+        "転び"
+      ]
+    },
+    {
+      "key": "silver",
+      "display": "銀甲の凶蟲兵団",
+      "duration": 60,
+      "tolerances": [
+        "転び"
+      ]
+    },
+    {
       "key": "green",
       "display": "深碧の造魔兵団",
       "duration": 60,
@@ -69,33 +93,17 @@
       ]
     },
     {
-      "key": "random",
-      "display": "ランダム軍団",
-      "duration": 120
-    },
-    {
-      "key": "red",
-      "display": "闇朱の獣牙兵団",
-      "duration": 60,
-      "tolerances": [
-        "怯え", "転び"
-      ]
-    },
-    {
-      "key": "blue",
-      "display": "蒼怨の屍獄兵団",
-      "duration": 60,
-      "tolerances": [
-        "麻痺", "呪い"
-      ]
-    },
-    {
-      "key": "purple",
-      "display": "紫炎の鉄機兵団",
+      "key": "silver",
+      "display": "銀甲の凶蟲兵団",
       "duration": 60,
       "tolerances": [
         "転び"
       ]
+    },
+    {
+      "key": "random",
+      "display": "ランダム軍団",
+      "duration": 60
     }
   ]
 }
