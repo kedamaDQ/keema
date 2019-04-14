@@ -36,6 +36,11 @@
       "regexp": "(?:紅殻魔|[スすｽ][コこｺ][ルるﾙ][パぱﾊﾟ][イいｲ][ドどﾄﾞ]|[サさｻ][ソそｿ][リりﾘ])",
       "template_key": "single",
       "fillings_key": "scorpide"
+    },
+    "jelzarg": {
+      "regexp": "(?:翠将鬼|すいしょうき|[ジじｼﾞ][ェぇｪ][ルるﾙ][ザざｻﾞ][ー〜～][グぐｸﾞ])",
+      "template_key": "single",
+      "fillings_key": "jelzarg"
     }
   },
   "templates": [
@@ -44,7 +49,8 @@
       "fragments": [
         "KEY__when", "の聖守護者の闘戦記は\n",
         "KEY__reglorIcon", " ", "KEY__reglorDisplay", "：", "KEY__reglorLevel", "\n",
-        "KEY__scorpideIcon", " ", "KEY__scorpideDisplay", "：", "KEY__scorpideLevel", "\n"
+        "KEY__scorpideIcon", " ", "KEY__scorpideDisplay", "：", "KEY__scorpideLevel", "\n",
+        "KEY__jelzargIcon", " ", "KEY__jelzargDisplay", "：", "KEY__jelzargLevel", "\n"
       ]
     },
     {
@@ -53,6 +59,7 @@
         "KEY__when", "の聖守護者の闘戦記は……\n",
         "KEY__reglorIcon", " ", "KEY__reglorDisplay", "：", "KEY__reglorLevel", "\n",
         "KEY__scorpideIcon", " ", "KEY__scorpideDisplay", "：", "KEY__scorpideLevel", "\n",
+        "KEY__jelzargIcon", " ", "KEY__jelzargDisplay", "：", "KEY__jelzargLevel", "\n",
         "……です！"
       ]
     },
@@ -75,6 +82,12 @@
       "display": "紅殻魔　　　",
       "name": "紅殻魔スコルパイド",
       "offset": 2
+    },
+    {
+      "key": "jelzarg",
+      "display": "翠将鬼　　　",
+      "name": "翠将鬼ジェルザーグ",
+      "offset": 1
     }
   ]
 }
