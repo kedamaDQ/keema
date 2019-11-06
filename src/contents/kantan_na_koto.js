@@ -8,7 +8,7 @@ export default class KantanNaKoto extends ContentBase {
     this.contents = this.config().contents.map((v) => {
       return {
         regexp: new RegExp(v.regexp),
-        fragments: v.fragments
+        fragments_list: v.fragments_list
       };
     });
   }
@@ -23,9 +23,11 @@ export default class KantanNaKoto extends ContentBase {
     const found = this.contents.find((v) => {
       return v.regexp.test(subject);
     });
+
+    const index = new Date().getSeconds() % found.fragments_list.length;
     return [{
       pos: 0,
-      message: found.fragments.join('')
+      message: found.fragments_list[index].join('')
     }];
   }
 
@@ -33,3 +35,5 @@ export default class KantanNaKoto extends ContentBase {
     throw new Error('Not implemented.');
   }
 }
+
+new KantanNaKoto().getReply("ﾍﾟｯﾀﾝｺ").then((res) => console.log(res));
