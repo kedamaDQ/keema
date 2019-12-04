@@ -35,6 +35,10 @@
   ],
   "fillings": [
     {
+      "display": "万魔の塔",
+      "reset_days": [0]
+    },
+    {
       "display": "レンダーシア討伐",
       "reset_days": [0]
     },
