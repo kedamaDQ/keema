@@ -35,5 +35,3 @@ export default class KantanNaKoto extends ContentBase {
     throw new Error('Not implemented.');
   }
 }
-
-new KantanNaKoto().getReply("ﾍﾟｯﾀﾝｺ").then((res) => console.log(res));
