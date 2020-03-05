@@ -41,6 +41,11 @@
       "regexp": "(?:翠将鬼|すいしょうき|[ジじｼﾞ][ェぇｪ][ルるﾙ][ザざｻﾞ][ー〜～][グぐｸﾞ])",
       "template_key": "single",
       "fillings_key": "jelzarg"
+    },
+    "gardodon": {
+      "regexp": "(?剛獣鬼|ごうじゅうき|[ガがｶﾞ][ルるﾙ][ドどﾄﾞ][ドどﾄﾞ][ンんﾝ])",
+      "template_key": "single",
+      "fillings_key": "gardodon"
     }
   },
   "templates": [
@@ -50,7 +55,8 @@
         "KEY__when", "の聖守護者の闘戦記は\n",
         "KEY__reglorIcon", " ", "KEY__reglorDisplay", "：", "KEY__reglorLevel", "\n",
         "KEY__scorpideIcon", " ", "KEY__scorpideDisplay", "：", "KEY__scorpideLevel", "\n",
-        "KEY__jelzargIcon", " ", "KEY__jelzargDisplay", "：", "KEY__jelzargLevel", "\n"
+        "KEY__jelzargIcon", " ", "KEY__jelzargDisplay", "：", "KEY__jelzargLevel", "\n",
+        "KEY__gardodonIcon", " ", "KEY__gardodonDisplay", "：", "KEY__gardodonLevel", "\n"
       ]
     },
     {
@@ -60,6 +66,7 @@
         "KEY__reglorIcon", " ", "KEY__reglorDisplay", "：", "KEY__reglorLevel", "\n",
         "KEY__scorpideIcon", " ", "KEY__scorpideDisplay", "：", "KEY__scorpideLevel", "\n",
         "KEY__jelzargIcon", " ", "KEY__jelzargDisplay", "：", "KEY__jelzargLevel", "\n",
+        "KEY__gardodonIcon", " ", "KEY__gardodonDisplay", "：", "KEY__gardodonLevel", "\n"
         "……です！"
       ]
     },
