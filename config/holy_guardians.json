@@ -88,6 +88,12 @@
       "display": "翠将鬼　　　",
       "name": "翠将鬼ジェルザーグ",
       "offset": 1
+    },
+    {
+      "key": "gardodon",
+      "display": "剛獣鬼　　　",
+      "name": "剛獣鬼ガルドドン",
+      "offset": 1
     }
   ]
 }
