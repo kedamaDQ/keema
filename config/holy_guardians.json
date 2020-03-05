@@ -43,7 +43,7 @@
       "fillings_key": "jelzarg"
     },
     "gardodon": {
-      "regexp": "(?剛獣鬼|ごうじゅうき|[ガがｶﾞ][ルるﾙ][ドどﾄﾞ][ドどﾄﾞ][ンんﾝ])",
+      "regexp": "(?:剛獣鬼|ごうじゅうき|[ガがｶﾞ][ルるﾙ][ドどﾄﾞ][ドどﾄﾞ][ンんﾝ])",
       "template_key": "single",
       "fillings_key": "gardodon"
     }
