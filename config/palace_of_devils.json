@@ -77,6 +77,39 @@
   "fillings": [
     [
       {
+        "key": "zel_raz",
+        "display": "魔宮の守護者たち",
+        "members": [
+          "聖塔ガーディアンズのみなさん"
+        ],
+        "tolerance": {
+          "sepalated": true,
+          "tolerances": [
+            ["状態異常はありませんが呪文とブレス"],
+            ["呪い", "麻痺", "どく", "転び"],
+            ["呪い", "麻痺", "どく", "眠り"],
+            ["呪い", "麻痺", "どく", "転び"]
+          ]
+        }
+      },
+      {
+        "key": "malucia_thoma",
+        "display": "闇に堕ちた英雄の幻影",
+        "members": [
+          "魔ちゃん",
+          "お兄ちゃん"
+        ],
+        "tolerance": {
+          "sepalated": false,
+          "tolerances": [
+            "呪い",
+            "麻痺",
+            "封印",
+            "怯え"
+          ]
+        }
+      },
+      {
         "key": "saiyaku_dream",
         "display": "災いの神話と暴虐の悪夢",
         "members": [
@@ -126,39 +159,6 @@
             "呪い",
             "麻痺",
             "幻惑"
-          ]
-        }
-      },
-      {
-        "key": "zel_raz",
-        "display": "魔宮の守護者たち",
-        "members": [
-          "聖塔ガーディアンズのみなさん"
-        ],
-        "tolerance": {
-          "sepalated": true,
-          "tolerances": [
-            ["状態異常はありませんが呪文とブレス"],
-            ["呪い", "麻痺", "どく", "転び"],
-            ["呪い", "麻痺", "どく", "眠り"],
-            ["呪い", "麻痺", "どく", "転び"]
-          ]
-        }
-      },
-      {
-        "key": "malucia_thoma",
-        "display": "闇に堕ちた英雄の幻影",
-        "members": [
-          "魔ちゃん",
-          "お兄ちゃん"
-        ],
-        "tolerance": {
-          "sepalated": false,
-          "tolerances": [
-            "呪い",
-            "麻痺",
-            "封印",
-            "怯え"
           ]
         }
       }
