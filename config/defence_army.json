@@ -71,12 +71,18 @@
     {
       "key": "green",
       "display": "翠煙の海妖兵団",
-      "duration": 60
+      "duration": 60,
+      "tolerances": [
+        "強いて言うなら氷……かな?"
+      ]
     },
     {
       "key": "select",
       "display": "全兵団",
-      "duration": 60
+      "duration": 60,
+      "tolerances": [
+        "それぞれ"
+      ]
     },
     {
       "key": "bluegreen",
