@@ -1,10 +1,10 @@
 {
   "start_date": {
     "comment": "/* month starts with 0. */",
-    "year": 2019,
-    "month": 10,
+    "year": 2020,
+    "month": 5,
     "day": 5,
-    "hour": 9
+    "hour": 15
   },
   "message_props": {
     "periodic": [
@@ -69,11 +69,19 @@
       ]
     },
     {
-      "key": "green",
-      "display": "翠煙の海妖兵団",
+      "key": "bluegreen",
+      "display": "深碧の造魔兵団",
       "duration": 60,
       "tolerances": [
-        "強いて言うなら氷……かな?"
+        "麻痺"
+      ]
+    },
+    {
+      "key": "gray",
+      "display": "灰燼の竜鱗兵団",
+      "duration": 60,
+      "tolerances": [
+        "転び", "ブレス"
       ]
     },
     {
@@ -82,14 +90,6 @@
       "duration": 60,
       "tolerances": [
         "それぞれ"
-      ]
-    },
-    {
-      "key": "bluegreen",
-      "display": "深碧の造魔兵団",
-      "duration": 60,
-      "tolerances": [
-        "麻痺"
       ]
     },
     {
@@ -111,7 +111,18 @@
     {
       "key": "green",
       "display": "翠煙の海妖兵団",
-      "duration": 60
+      "duration": 60,
+      "tolerances": [
+        "強いて言うなら氷……かな？"
+      ]
+    },
+    {
+      "key": "gray",
+      "display": "灰燼の竜鱗兵団",
+      "duration": 60,
+      "tolerances": [
+        "転び", "ブレス"
+      ]
     },
     {
       "key": "select",
