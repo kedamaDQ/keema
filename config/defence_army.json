@@ -127,7 +127,10 @@
     {
       "key": "select",
       "display": "全兵団",
-      "duration": 60
+      "duration": 60,
+      "tolerances": [
+        "それぞれ"
+      ]
     }
   ]
 }
